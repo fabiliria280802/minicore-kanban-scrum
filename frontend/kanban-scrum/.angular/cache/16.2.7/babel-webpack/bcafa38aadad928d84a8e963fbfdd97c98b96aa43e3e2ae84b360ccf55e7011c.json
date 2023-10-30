@@ -1,0 +1,16 @@
+{
+  "ast": null,
+  "code": "export function noop() {}",
+  "map": {
+    "version": 3,
+    "names": ["noop"],
+    "sources": [
+      "C:/Users/PC/Desktop/angular/minicore-kanban-scrum/minicore-kanban-scrum/frontend/kanban-scrum/node_modules/rxjs/dist/esm/internal/util/noop.js"
+    ],
+    "sourcesContent": ["export function noop() { }\n"],
+    "mappings": "AAAA,OAAO,SAASA,IAAIA,CAAA,EAAG,CAAE"
+  },
+  "metadata": {},
+  "sourceType": "module",
+  "externalDependencies": []
+}
