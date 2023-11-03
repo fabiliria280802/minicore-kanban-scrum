@@ -1,4 +1,3 @@
-//Librerias e llamados a componentes
 import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
@@ -13,11 +12,6 @@ import {
 import { Observable, tap } from "rxjs";
 import { AuthService } from "../services/auth.service";
 
-/*
-* ¿Qué es Injectable?*
-  Es una decoraador que Angular pone sobre un servicio (o clase)
-  y le da la capacidad de manejar la inyección de dependencias.
-*/
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanMatch, CanActivate {
   constructor(
@@ -25,7 +19,6 @@ export class AuthGuard implements CanMatch, CanActivate {
     private router: Router,
   ) {}
 
-  //Validación de uatenticacion
   private checkAuthStatus(): boolean | Observable<boolean> {
     return this.authService.checkAuthentication().pipe(
       tap((isAuthenticated) => console.log("Authenticated:", isAuthenticated)),
@@ -37,9 +30,6 @@ export class AuthGuard implements CanMatch, CanActivate {
     );
   }
 
-  /*
-   * para que sirve
-   */
   canMatch(
     route: Route,
     segments: UrlSegment[],
@@ -51,9 +41,6 @@ export class AuthGuard implements CanMatch, CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): boolean | Observable<boolean> {
-    // console.log('Can Activate');
-    // console.log({ route, state })
-
     return this.checkAuthStatus();
   }
 }
