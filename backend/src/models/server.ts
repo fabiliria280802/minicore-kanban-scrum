@@ -6,8 +6,9 @@ class Server{
     private app: Application;
     private port: string;
     constructor(){
-        this.port = process.env.PORT ?? '4000';
         this.app = express();
+        this.port = process.env.PORT ?? '4000';
+        this.middlewares();
         this.routes();
     }
     listen(){
@@ -17,6 +18,9 @@ class Server{
     }
     routes(){
         this.app.use('/api/users', routesUsers);
+    }
+    middlewares(){
+        this.app.use(express.json());
     }
 }
 

@@ -8,8 +8,9 @@ var user_routes_1 = __importDefault(require("../routes/user.routes"));
 var Server = /** @class */ (function () {
     function Server() {
         var _a;
-        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : '4000';
         this.app = (0, express_1.default)();
+        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : '4000';
+        this.middlewares();
         this.routes();
     }
     Server.prototype.listen = function () {
@@ -20,6 +21,9 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.routes = function () {
         this.app.use('/api/users', user_routes_1.default);
+    };
+    Server.prototype.middlewares = function () {
+        this.app.use(express_1.default.json());
     };
     return Server;
 }());
