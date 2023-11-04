@@ -72,3 +72,5 @@ $ docker-compose up
 The application will be running on port 3000. You can access it through your browser at http://localhost:3000.
 ## Reference
 https://www.youtube.com/watch?v=2jRYxuuWGFI
+https://www.youtube.com/watch?v=ivmY43PdXbw
+https://www.youtube.com/watch?v=lxYB79ANJM8

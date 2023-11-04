@@ -3,11 +3,11 @@ export interface User {
   user: string;
   email: string;
   password: string;
-  cargo: string;
-  tipo: tipo;
+  position: string;
+  type: type;
 }
 
-export enum tipo {
+export enum type {
   Admin = "Administrador",
   Dev = "Desarrollador",
 }
