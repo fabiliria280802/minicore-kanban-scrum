@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
-  styles: [],
+  styleUrls: /*["./login-page.component.css"]*/[],
 })
 export class LoginPageComponent {
   constructor(
@@ -15,7 +15,7 @@ export class LoginPageComponent {
 
   onLogin(): void {
     this.authService
-      .login("fabiliria@gmail.com", "123456")
+      .login("admin@kanbanscrum.com", "admin")
       .subscribe((user) => {
         this.router.navigate(["/"]);
       });
