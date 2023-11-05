@@ -1,5 +1,8 @@
 import express, { Application } from 'express';
-import routesUsers from '../routes/user.routes'
+import routesUsers from '../routes/user.routes';
+import routesSprints from '../routes/sprint.routes';
+import routesTasks from '../routes/task.routes';
+import routesSubtasks from '../routes/subtask.routes';
 import connection from '../db/connection';
 class Server{
     
@@ -22,6 +25,9 @@ class Server{
     }
     routes(){
         this.app.use('/api/users', routesUsers);
+        this.app.use('/api/sprints', routesSprints);
+        this.app.use('/api/tasks', routesTasks);
+        this.app.use('/api/subtasks', routesSubtasks);
     }
     connectDB(){
         connection.connect((err)=>{

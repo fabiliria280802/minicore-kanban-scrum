@@ -5,6 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var user_routes_1 = __importDefault(require("../routes/user.routes"));
+var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
+var task_routes_1 = __importDefault(require("../routes/task.routes"));
+var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
 var connection_1 = __importDefault(require("../db/connection"));
 var Server = /** @class */ (function () {
     function Server() {
@@ -26,6 +29,9 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.routes = function () {
         this.app.use('/api/users', user_routes_1.default);
+        this.app.use('/api/sprints', sprint_routes_1.default);
+        this.app.use('/api/tasks', task_routes_1.default);
+        this.app.use('/api/subtasks', subtask_routes_1.default);
     };
     Server.prototype.connectDB = function () {
         connection_1.default.connect(function (err) {
