@@ -16,7 +16,6 @@ export const getSprint = (req: Request, res: Response) => {
     });
 };
 
-
 export const getSprints = (req: Request,res: Response)=>{
     connection.query('SELECT * FROM sprint',(error, data)=>{
         if(error) throw error;
@@ -39,7 +38,6 @@ export const postSprint = (req: Request, res: Response) => {
         }
     });
 };
-
 
 export const putSprint = (req: Request,res: Response)=>{
     const {id} = req.params;

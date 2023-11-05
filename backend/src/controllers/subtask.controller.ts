@@ -16,7 +16,6 @@ export const getSubtask = (req: Request, res: Response) => {
     });
 };
 
-
 export const getSubtasks = (req: Request,res: Response)=>{
     connection.query('SELECT * FROM subtask',(error, data)=>{
         if(error) throw error;
@@ -39,7 +38,6 @@ export const postSubtask = (req: Request, res: Response) => {
         }
     });
 };
-
 
 export const putSubtask = (req: Request,res: Response)=>{
     const {id} = req.params;

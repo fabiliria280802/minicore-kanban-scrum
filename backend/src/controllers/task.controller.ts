@@ -16,7 +16,6 @@ export const getTask = (req: Request, res: Response) => {
     });
 };
 
-
 export const getTasks = (req: Request,res: Response)=>{
     connection.query('SELECT * FROM task',(error, data)=>{
         if(error) throw error;
@@ -39,7 +38,6 @@ export const postTask = (req: Request, res: Response) => {
         }
     });
 };
-
 
 export const putTask = (req: Request,res: Response)=>{
     const {id} = req.params;
