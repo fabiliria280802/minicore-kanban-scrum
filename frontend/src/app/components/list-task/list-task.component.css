@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 90%;
+  margin-right: 10px;
+}
+
+td, th {
+  width: 25%;
+}
+
+.btnEdit, .btnDelete, .btnVisibility{
+  cursor: pointer;
+}
+
+.btnVisibility{
+  color: #FA95FA;
+}
+
+.btnEdit{
+  color: #7E9DF5;
+}
+
+.btnDelete{
+  color: #F55C47;
+}
