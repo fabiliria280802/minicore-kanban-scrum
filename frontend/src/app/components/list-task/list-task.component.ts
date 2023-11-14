@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Task, points, status } from 'src/app/interfaces/task.interface';
+import { CreateUpdateTaskComponent } from '../create-update-task/create-update-task.component';
 
 const listTask: Task[] =[
   {
@@ -23,7 +25,7 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(){
+  constructor(public dialog: MatDialog){
     this.dataSource = new MatTableDataSource(listTask);
   }
 
@@ -39,5 +41,12 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  addEditTask(){
+    const dialogRef = this.dialog.open(CreateUpdateTaskComponent, {
+      //data: {name: this.name, animal: this.animal},
+      width:'550px',
+      disableClose: true,
+    });
   }
 }

@@ -2,11 +2,11 @@ table {
   width: 100%;
 }
 
-.mat-mdc-form-field {
+mat-form-field {
   font-size: 14px;
   width: 90%;
   margin-right: 10px;
-}
+ }
 
 td, th {
   width: 25%;

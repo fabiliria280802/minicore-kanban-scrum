@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-update-task',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./create-update-task.component.css']
 })
 export class CreateUpdateTaskComponent {
-
+  constructor(public dialogRef: MatDialogRef<CreateUpdateTaskComponent>){
+  }
+  ngOnInit(): void {}
+  cancelar(){
+    
+  }
 }
