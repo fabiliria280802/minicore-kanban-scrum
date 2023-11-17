@@ -2,9 +2,6 @@
 
 MVP version of a minicore web application that help teams to organize their HUs
 
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 You need to have installed:
 * [Node.js](https://nodejs.org/en/) - JavaScript runtime built on Chrome's V8 JavaScript engine.
@@ -22,7 +19,6 @@ $ sudo apt-get install docker
 $ sudo apt-get install git
 ```
 ### Installation and Running the Application
-A step by step series of examples that tell you how to get a development env running.
 Clone this repository into your local machine using Git:
 bash
 ```

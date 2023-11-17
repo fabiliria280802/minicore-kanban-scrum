@@ -4,6 +4,8 @@ import routesSprints from '../routes/sprint.routes';
 import routesTasks from '../routes/task.routes';
 import routesSubtasks from '../routes/subtask.routes';
 import connection from '../db/connection';
+import cors from 'cors';
+
 class Server{
     
     private app: Application;
@@ -22,6 +24,7 @@ class Server{
     }
     middlewares(){
         this.app.use(express.json());
+        this.app.use();
     }
     routes(){
         this.app.use('/api/users', routesUsers);

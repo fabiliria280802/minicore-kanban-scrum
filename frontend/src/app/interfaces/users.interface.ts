@@ -3,12 +3,12 @@ export enum type {
   Desarrollador = "Desarrollador",
 }
 
-export interface User{
+export interface Users{
   iduser?: number,
   fullname: string,
-  username: string,
-  password: string,
-  password_confirm: string,
+  username?: string,
+  password?: string,
+  password_confirm?: string,
   email: string,
   type: type,
   position: string ,

@@ -3,36 +3,43 @@
   <!--
 <h3>Speed &amp; Performance</h3>
   -->
-  <div class="row"></div>
-  <mat-form-field appearance="fill">
-    <mat-label>Titulo</mat-label>
-    <input matInput placeholder="Ingresa el titulo" autocomplete="off">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Descripción</mat-label>
-    <input matInput placeholder="Ingresa la descripción" autocomplete="off">
-  </mat-form-field>
-  <!--
-    <mat-form-field>
-  <mat-label>Choose one</mat-label>
-  <mat-select [formControl]="selected" [errorStateMatcher]="matcher">
-    <mat-option>Clear</mat-option>
-    <mat-option value="valid">Valid option</mat-option>
-    <mat-option value="invalid">Invalid option</mat-option>
-  </mat-select>
-  <mat-hint>Errors appear instantly!</mat-hint>
-  @if (selected.hasError('required')) {
-    <mat-error>You must make a selection</mat-error>
-  }
-  @if (selected.hasError('pattern') && !selected.hasError('required')) {
-    <mat-error>Your selection is invalid</mat-error>
-  }
-</mat-form-field>
-  -->
-  <mat-form-field appearance="fill">
-    <mat-label>Story points</mat-label>
-    <input matInput placeholder="points" autocomplete="off">
-  </mat-form-field>
+  <div class="column">
+    <mat-form-field appearance="fill">
+      <mat-label>Titulo</mat-label>
+      <input matInput placeholder="Ingresa el titulo" minlength="5" autocomplete="off" required="title">
+    </mat-form-field>
+  </div>
+
+  <div class="column">
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <input matInput placeholder="Ingresa la descripción" minlength="5" autocomplete="off" required="description">
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <mat-form-field appearance="fill">
+        <mat-label>Puntos</mat-label>
+        <mat-select [(ngModel)]="selectedValuePoints" name="points">
+          <mat-option *ngFor="let point of pointOptions" [value]="point.value">
+          {{ point.viewValue }}
+        </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="column">
+      <mat-form-field appearance="fill">
+        <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="selectedValueStatus" name="status">
+            <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+            {{ status.viewValue }}
+          </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
   </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="cancelar()">Cancelar</button>

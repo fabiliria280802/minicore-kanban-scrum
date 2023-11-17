@@ -1,7 +1,7 @@
-import { configDotenv } from 'dotenv';
+import  dotenv  from 'dotenv';
 import Server from "./models/server";
 
-configDotenv();
+dotenv.config();
 
 const server = new Server();
 

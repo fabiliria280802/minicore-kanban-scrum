@@ -20,6 +20,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule} from '@angular/material/table';
 import { MatTooltipModule} from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+
 @NgModule({
   declarations: [],
   imports: [
@@ -43,7 +47,9 @@ import { MatTooltipModule} from '@angular/material/tooltip';
     MatSnackBarModule,
     MatTooltipModule,
     MatToolbarModule,
-    MatPaginatorModule
+    FormsModule,
+    MatPaginatorModule,
+    HttpClientModule
   ],
   exports: [
     MatSlideToggleModule,
@@ -53,6 +59,7 @@ import { MatTooltipModule} from '@angular/material/tooltip';
     MatCardModule,
     MatTableModule,
     MatChipsModule,
+    FormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatGridListModule,
@@ -65,7 +72,8 @@ import { MatTooltipModule} from '@angular/material/tooltip';
     MatSnackBarModule,
     MatTooltipModule,
     MatToolbarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    HttpClientModule
   ]
 })
 export class SharedModule { }
