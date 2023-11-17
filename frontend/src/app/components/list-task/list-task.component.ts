@@ -44,7 +44,6 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
   }
   addEditTask(){
     const dialogRef = this.dialog.open(CreateUpdateTaskComponent, {
-      //data: {name: this.name, animal: this.animal},
       width:'550px',
       disableClose: true,
     });

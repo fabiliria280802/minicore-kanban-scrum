@@ -13,7 +13,7 @@ export class SprintService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/Sprints'
+    this.myApiUrl = 'api/sprints'
   }
 
   getSprints(): Observable<Sprint[]>{

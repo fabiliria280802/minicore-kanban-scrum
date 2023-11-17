@@ -1,9 +1,20 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateUser = exports.deleteUser = exports.putUser = exports.postUser = exports.getUsers = exports.getUser = void 0;
+exports.validateUser = exports.deleteUser = exports.putUser = exports.postUser = exports.getUsers = exports.loginUser = exports.getUser = void 0;
 var connection_1 = __importDefault(require("../db/connection"));
 var getUser = function (req, res) {
     var id = req.params.id;
@@ -22,6 +33,28 @@ var getUser = function (req, res) {
     });
 };
 exports.getUser = getUser;
+var loginUser = function (req, res) {
+    var _a = req.body, username = _a.username, password = _a.password;
+    connection_1.default.query('SELECT * FROM user WHERE username = ? AND password = ?', [username, password], function (error, data) {
+        if (error) {
+            res.status(500).json({ msg: "Error al consultar la base de datos" });
+            return;
+        }
+        if (data.length === 0) {
+            res.status(404).json({ msg: "Usuario no encontrado o contraseña incorrecta" });
+        }
+        else {
+            var user = data[0];
+            if (user.role === 'Administrador') {
+                res.json(__assign(__assign({}, user), { isAdmin: true }));
+            }
+            else {
+                res.json(__assign(__assign({}, user), { isAdmin: false }));
+            }
+        }
+    });
+};
+exports.loginUser = loginUser;
 var getUsers = function (req, res) {
     connection_1.default.query('SELECT * FROM user', function (error, data) {
         if (error)

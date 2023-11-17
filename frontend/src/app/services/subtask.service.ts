@@ -13,7 +13,7 @@ export class SubtaskService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/Subtasks'
+    this.myApiUrl = 'api/subtasks'
   }
 
   getSubtasks(): Observable<Subtask[]>{

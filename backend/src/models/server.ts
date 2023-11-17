@@ -31,6 +31,7 @@ class Server{
         this.app.use('/api/sprints', routesSprints);
         this.app.use('/api/tasks', routesTasks);
         this.app.use('/api/subtasks', routesSubtasks);
+        this.app.use('/api/users/login', routesUsers);
     }
     connectDB(){
         connection.connect((err)=>{

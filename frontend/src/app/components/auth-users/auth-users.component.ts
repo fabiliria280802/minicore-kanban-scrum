@@ -11,15 +11,17 @@ export class AuthUsersComponent {
   password: string = '';
 
   constructor(private http: HttpClient) { }
+
   loginUser() {
-    this.http.post('.././backend/controllers/user.controller.ts', { username: this.username, password: this.password })
-        .subscribe(
-            response => {
-                console.log('Login exitoso', response);
-            },
-            error => {
-                console.error('Error en el login', error);
-            }
-        );
-}
+    this.http.post('/api/users/login', { username: this.username, password: this.password })
+      .subscribe((response: any) => {
+        if (response.isAdmin) {
+          // Redirigir al dashboard de administrador o realizar acciones de administrador
+        } else {
+          // Manejar usuarios que no son administradores
+        }
+      }, error => {
+        // Manejar errores (usuario no encontrado, error de servidor, etc.)
+      });
+  }
 }

@@ -16,6 +16,26 @@ export const getUser = (req: Request, res: Response) => {
     });
 };
 
+export const loginUser = (req: Request, res: Response) => {
+    const { username, password } = req.body;
+    connection.query('SELECT * FROM user WHERE username = ? AND password = ?', [username, password], (error, data) => {
+        if (error) {
+            res.status(500).json({ msg: "Error al consultar la base de datos" });
+            return;
+        }
+        if (data.length === 0) {
+            res.status(404).json({ msg: "Usuario no encontrado o contraseña incorrecta" });
+        } else {
+            const user = data[0];
+            if (user.role === 'Administrador') {
+                res.json({ ...user, isAdmin: true });
+            } else {
+                res.json({ ...user, isAdmin: false });
+            }
+        }
+    });
+};
+
 export const getUsers = (req: Request,res: Response)=>{
     connection.query('SELECT * FROM user',(error, data)=>{
         if(error) throw error;

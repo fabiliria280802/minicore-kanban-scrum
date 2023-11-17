@@ -34,6 +34,7 @@ var Server = /** @class */ (function () {
         this.app.use('/api/sprints', sprint_routes_1.default);
         this.app.use('/api/tasks', task_routes_1.default);
         this.app.use('/api/subtasks', subtask_routes_1.default);
+        this.app.use('/api/users/login', user_routes_1.default);
     };
     Server.prototype.connectDB = function () {
         connection_1.default.connect(function (err) {
