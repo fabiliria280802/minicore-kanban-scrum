@@ -24,7 +24,7 @@ class Server{
     }
     middlewares(){
         this.app.use(express.json());
-        this.app.use();
+        this.app.use(cors());
     }
     routes(){
         this.app.use('/api/users', routesUsers);

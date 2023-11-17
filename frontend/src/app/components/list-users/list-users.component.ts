@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Users, type } from 'src/app/interfaces/users.interface';
 import { CreateUpdateUsersComponent } from '../create-update-users/create-update-users.component';
+import { UserService } from 'src/app/services/user.service';
 
 const listUsers: Users[] =[
   {
@@ -26,15 +27,23 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(public dialog: MatDialog){
+  constructor(public dialog: MatDialog, private _userService: UserService){
     this.dataSource = new MatTableDataSource(listUsers);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUsers();
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     (this.paginator as MatPaginator)._intl.itemsPerPageLabel = "Items por pagina";
+  }
+
+  getUsers(){
+    this._userService.getUsers().subscribe(data => {
+      console.log(data);
+    })
   }
 
   applyFilter(event: Event) {

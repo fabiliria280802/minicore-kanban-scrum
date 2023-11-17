@@ -9,6 +9,7 @@ var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
 var task_routes_1 = __importDefault(require("../routes/task.routes"));
 var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
 var connection_1 = __importDefault(require("../db/connection"));
+var cors_1 = __importDefault(require("cors"));
 var Server = /** @class */ (function () {
     function Server() {
         var _a;
@@ -26,6 +27,7 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.middlewares = function () {
         this.app.use(express_1.default.json());
+        this.app.use((0, cors_1.default)());
     };
     Server.prototype.routes = function () {
         this.app.use('/api/users', user_routes_1.default);
