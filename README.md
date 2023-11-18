@@ -4,7 +4,7 @@ MVP version of a minicore web application that help teams to organize their HUs
 
 ### Diagrama de ingeniera
 
-<img src="/minicore-kanban-scrum/images/Diagrama.PNG" />
+<img src="/minicore-kanban-scrum/images/Diagrama.png"/>
 
 el Actor simboliza al usuario que interactúa con el sistema de una aplicación web. La interacción principal es el Login, que es el caso de uso principal y representa el proceso por el cual el usuario intenta acceder al sistema proporcionando sus credenciales de acceso.
 <br/><br/>
