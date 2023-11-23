@@ -43,6 +43,7 @@ export const getUsers = (req: Request,res: Response)=>{
     })
 }
 
+//new user equal
 export const postUser = (req: Request, res: Response) => {
     const { body } = req;
     const query = 'INSERT INTO user SET ?';
@@ -98,16 +99,3 @@ export const deleteUser = (req: Request, res: Response) => {
     });
 };
 
-export const validateUser = (req: Request, res: Response) => {
-    const { username, password } = req.body;
-    const query = 'SELECT * FROM user WHERE username = ? AND password = ?';
-    connection.query(query, [username, password], (error, data) => {
-        if (error) {
-            res.status(500).json({ error: "Error interno del servidor" });
-        } else if (data.length === 0) {
-            res.status(404).json({ msg: "Usuario o contraseña incorrectos" });
-        } else {
-            res.json({ msg: "Login exitoso", user: data[0] });
-        }
-    });
-};

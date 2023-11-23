@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateUser = exports.deleteUser = exports.putUser = exports.postUser = exports.getUsers = exports.loginUser = exports.getUser = void 0;
+exports.deleteUser = exports.putUser = exports.postUser = exports.getUsers = exports.loginUser = exports.getUser = void 0;
 var connection_1 = __importDefault(require("../db/connection"));
 var getUser = function (req, res) {
     var id = req.params.id;
@@ -63,6 +63,7 @@ var getUsers = function (req, res) {
     });
 };
 exports.getUsers = getUsers;
+//new user equal
 var postUser = function (req, res) {
     var body = req.body;
     var query = 'INSERT INTO user SET ?';
@@ -124,19 +125,3 @@ var deleteUser = function (req, res) {
     });
 };
 exports.deleteUser = deleteUser;
-var validateUser = function (req, res) {
-    var _a = req.body, username = _a.username, password = _a.password;
-    var query = 'SELECT * FROM user WHERE username = ? AND password = ?';
-    connection_1.default.query(query, [username, password], function (error, data) {
-        if (error) {
-            res.status(500).json({ error: "Error interno del servidor" });
-        }
-        else if (data.length === 0) {
-            res.status(404).json({ msg: "Usuario o contraseña incorrectos" });
-        }
-        else {
-            res.json({ msg: "Login exitoso", user: data[0] });
-        }
-    });
-};
-exports.validateUser = validateUser;
