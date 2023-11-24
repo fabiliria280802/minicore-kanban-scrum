@@ -1,79 +1,81 @@
-import {Request, Response, query} from 'express';
-import connection from '../db/connection';
+import { Request, Response } from 'express';
+import Sprint from '../models/sprint';
 
-export const getSprint = (req: Request, res: Response) => {
-    const { id } = req.params;
-    connection.query('SELECT * FROM sprint WHERE idsprint = ?', id, (error, data) => {
-        if (error) throw error;
-        if (data.length === 0) {
-            res.status(404).json({
-                msg: "sprint not found",
-                id: id
-            });
-        } else {
-            res.json(data[0]);
+export const getSprint = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const sprint = await Sprint.findByPk(id);
+        if (!sprint) {
+            return res.status(404).json({ msg: "Sprint not found", id });
         }
-    });
+        res.json(sprint);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "An unexpected error occurred" });
+        }
+    }
 };
 
-export const getSprints = (req: Request,res: Response)=>{
-    connection.query('SELECT * FROM sprint',(error, data)=>{
-        if(error) throw error;
-        res.json(data)
-    })
-}
-
-export const postSprint = (req: Request, res: Response) => {
-    const { body } = req;
-    const query = 'INSERT INTO sprint SET ?';
-    connection.query(query, body, (error, data) => {
-        if (error) {
-            res.status(500).json({
-                error: "Error al insertar usuario"
-            });
+export const getSprints = async (req: Request, res: Response) => {
+    try {
+        const sprints = await Sprint.findAll();
+        res.json(sprints);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
         } else {
-            res.json({
-                msg: "sprint agregada con éxito"
-            });
+            res.status(500).json({ error: "An unexpected error occurred" });
         }
-    });
+    }
 };
 
-export const putSprint = (req: Request,res: Response)=>{
-    const {id} = req.params;
-    const {body} = req;
-    const query = 'UPDATE sprint SET ? WHERE idsprint =?';
-    connection.query(query,[body,id],(error, data)=>{
-        if(error) throw error;
-        if(data.length === 0){
-            res.status(404).json({
-                msg: "sprint not found",
-                id: id
-            });
-        }else{
-            res.json({
-                msg: "sprint updated"
-            });
-        }
-    })
-}
-
-export const deleteSprint = (req: Request, res: Response) => {
-    const { id } = req.params;
-    connection.query('SELECT * FROM sprint WHERE idsprint = ?', id, (error, result) => {
-        if (error) throw error;
-        if (result.length === 0) {
-            res.status(404).json({
-                msg: "sprint not found",
-                id: id
-            });
+export const postSprint = async (req: Request, res: Response) => {
+    try {
+        const newSprint = await Sprint.create(req.body);
+        res.status(201).json(newSprint);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
         } else {
-            connection.query('DELETE FROM sprint WHERE idsprint = ?', id, (deleteError, data) => {
-                if (deleteError) throw deleteError;
-                res.json({
-                    msg: "sprint deleted"
-                });
-            });
+            res.status(500).json({ error: "Error al insertar sprint" });
         }
-    });
+    }
+};
+
+export const putSprint = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const sprint = await Sprint.findByPk(id);
+        if (!sprint) {
+            return res.status(404).json({ msg: "Sprint not found", id });
+        }
+        await sprint.update(req.body);
+        res.json({ msg: "Sprint updated", sprint });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "Error al actualizar sprint" });
+        }
+    }
+};
+
+export const deleteSprint = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const sprint = await Sprint.findByPk(id);
+        if (!sprint) {
+            return res.status(404).json({ msg: "Sprint not found", id });
+        }
+        await sprint.destroy();
+        res.json({ msg: "Sprint deleted" });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "Error al eliminar sprint" });
+        }
+    }
 };

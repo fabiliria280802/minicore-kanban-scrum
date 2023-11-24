@@ -1,6 +1,6 @@
 export interface Sprint{
-  idsprint?: number,
-  title?: string,
+  idsprint: number,
+  title: string,
   initialDate: Date,
   finalDate: Date,
   committedPoints?: number,

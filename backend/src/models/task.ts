@@ -1,34 +1,40 @@
-import { DataType } from 'sequelize';
 import sequelize from '../db/connection';
+import { DataTypes } from 'sequelize';
 
 const Task = sequelize.define('task',{
     idtask:{
-        type: DataType.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     title:{
-        type: DataType.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     description:{
-        type: DataType.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     status:{
-        type: DataType.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     priority:{
-        type: DataType.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     iduser:{
-        type: DataType.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     idsprint:{
-        type: DataType.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false
+    },
+    assignedUser:{
+        type: DataTypes.STRING,
+        allowNull: true
     }
-})
+});
+
+export default Task;

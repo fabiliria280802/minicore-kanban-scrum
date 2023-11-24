@@ -1,79 +1,81 @@
-import {Request, Response, query} from 'express';
-import connection from '../db/connection';
+import { Request, Response } from 'express';
+import Subtask from '../models/subtask';
 
-export const getSubtask = (req: Request, res: Response) => {
-    const { id } = req.params;
-    connection.query('SELECT * FROM subtask WHERE idsubtask = ?', id, (error, data) => {
-        if (error) throw error;
-        if (data.length === 0) {
-            res.status(404).json({
-                msg: "Subtask not found",
-                id: id
-            });
-        } else {
-            res.json(data[0]);
+export const getSubtask = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const subtask = await Subtask.findByPk(id);
+        if (!subtask) {
+            return res.status(404).json({ msg: "Subtask not found", id });
         }
-    });
+        res.json(subtask);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "An unexpected error occurred" });
+        }
+    }
 };
 
-export const getSubtasks = (req: Request,res: Response)=>{
-    connection.query('SELECT * FROM subtask',(error, data)=>{
-        if(error) throw error;
-        res.json(data)
-    })
-}
-
-export const postSubtask = (req: Request, res: Response) => {
-    const { body } = req;
-    const query = 'INSERT INTO subtask SET ?';
-    connection.query(query, body, (error, data) => {
-        if (error) {
-            res.status(500).json({
-                error: "Error al insertar subtask"
-            });
+export const getSubtasks = async (req: Request, res: Response) => {
+    try {
+        const subtasks = await Subtask.findAll();
+        res.json(subtasks);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
         } else {
-            res.json({
-                msg: "subtask agregada con éxito"
-            });
+            res.status(500).json({ error: "An unexpected error occurred" });
         }
-    });
+    }
 };
 
-export const putSubtask = (req: Request,res: Response)=>{
-    const {id} = req.params;
-    const {body} = req;
-    const query = 'UPDATE subtask SET ? WHERE idsubtask =?';
-    connection.query(query,[body,id],(error, data)=>{
-        if(error) throw error;
-        if(data.length === 0){
-            res.status(404).json({
-                msg: "subtask not found",
-                id: id
-            });
-        }else{
-            res.json({
-                msg: "subtask updated"
-            });
-        }
-    })
-}
-
-export const deleteSubtask = (req: Request, res: Response) => {
-    const { id } = req.params;
-    connection.query('SELECT * FROM subtask WHERE idsubtask = ?', id, (error, result) => {
-        if (error) throw error;
-        if (result.length === 0) {
-            res.status(404).json({
-                msg: "subtask not found",
-                id: id
-            });
+export const postSubtask = async (req: Request, res: Response) => {
+    try {
+        const newSubtask = await Subtask.create(req.body);
+        res.status(201).json(newSubtask);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
         } else {
-            connection.query('DELETE FROM subtask WHERE idsubtask = ?', id, (deleteError, data) => {
-                if (deleteError) throw deleteError;
-                res.json({
-                    msg: "subtask deleted"
-                });
-            });
+            res.status(500).json({ error: "Error al insertar subtask" });
         }
-    });
+    }
+};
+
+export const putSubtask = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const subtask = await Subtask.findByPk(id);
+        if (!subtask) {
+            return res.status(404).json({ msg: "Subtask not found", id });
+        }
+        await subtask.update(req.body);
+        res.json({ msg: "Subtask updated", subtask });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "Error al actualizar subtask" });
+        }
+    }
+};
+
+export const deleteSubtask = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const subtask = await Subtask.findByPk(id);
+        if (!subtask) {
+            return res.status(404).json({ msg: "Subtask not found", id });
+        }
+        await subtask.destroy();
+        res.json({ msg: "Subtask deleted" });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "Error al eliminar subtask" });
+        }
+    }
 };

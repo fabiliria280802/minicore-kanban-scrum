@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var connection_1 = __importDefault(require("../db/connection"));
 var sequelize_1 = require("sequelize");
-var Task = connection_1.default.define('task', {
-    idtask: {
+var Subtask = connection_1.default.define('subtask', {
+    idsubtask: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -27,11 +27,7 @@ var Task = connection_1.default.define('task', {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    iduser: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
-    },
-    idsprint: {
+    idtask: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
@@ -40,4 +36,4 @@ var Task = connection_1.default.define('task', {
         allowNull: true
     }
 });
-exports.default = Task;
+exports.default = Subtask;

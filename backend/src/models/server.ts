@@ -1,9 +1,16 @@
-import express, { Application } from 'express';
+//rutas
 import routesUsers from '../routes/user.routes';
 import routesSprints from '../routes/sprint.routes';
 import routesTasks from '../routes/task.routes';
 import routesSubtasks from '../routes/subtask.routes';
+//models
+import Task from './task';
+import Subtask from './subtask';
+import Sprint from './sprint';
+//conexion db
 import connection from '../db/connection';
+//adicionales
+import express, { Application } from 'express';
 import cors from 'cors';
 
 class Server{
@@ -32,14 +39,22 @@ class Server{
         this.app.use('/api/tasks', routesTasks);
         this.app.use('/api/subtasks', routesSubtasks);
     }
-    connectDB(){
-        connection.connect((err)=>{
+    async connectDB(){
+        /*connection.connect((err)=>{
             if(err){
                 console.log(err);
                 return;
             }
             console.log("Base de datos online");
-        })
+        })*/
+        try{
+            await Task.sync();
+            await Subtask.sync();
+            await Sprint.sync();
+            console.log("Base de datos online");
+        }catch (error){
+            console.log("No se pudo conectar");
+        }
     }
 }
 

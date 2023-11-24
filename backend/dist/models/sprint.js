@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var connection_1 = __importDefault(require("../db/connection"));
 var sequelize_1 = require("sequelize");
-var Task = connection_1.default.define('task', {
-    idtask: {
+var Sprint = connection_1.default.define('sprint', {
+    idsprint: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -15,29 +15,37 @@ var Task = connection_1.default.define('task', {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    description: {
-        type: sequelize_1.DataTypes.STRING,
+    initialDate: {
+        type: sequelize_1.DataTypes.DATE,
         allowNull: false
     },
-    status: {
-        type: sequelize_1.DataTypes.STRING,
+    finalDate: {
+        type: sequelize_1.DataTypes.DATE,
         allowNull: false
     },
-    priority: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
-    iduser: {
+    committedPoints: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
-    idsprint: {
+    fulfilledPoints: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
-    assignedUser: {
-        type: sequelize_1.DataTypes.STRING,
+    noFulfilledPoints: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
+    },
+    toDoPorcentage: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
+    },
+    doingPorcentage: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
+    },
+    donePorcentage: {
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: true
     }
 });
-exports.default = Task;
+exports.default = Sprint;

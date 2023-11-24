@@ -5,8 +5,8 @@ export enum status {
 }
 
 export interface Subtask{
-  idsubtask?: number,
-  idtask?: number,
+  idsubtask: number,
+  idtask: number,
   title: string,
   description: string,
   status: status,

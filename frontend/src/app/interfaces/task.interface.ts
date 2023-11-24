@@ -13,8 +13,8 @@ export enum points {
 }
 
 export interface Task{
-  idtask?: number,
-  idsprint?: number,
+  idtask: number,
+  idsprint: number,
   title: string,
   description: string,
   status: status,

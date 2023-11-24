@@ -39,17 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//rutas
+var express_1 = __importDefault(require("express"));
 var user_routes_1 = __importDefault(require("../routes/user.routes"));
 var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
 var task_routes_1 = __importDefault(require("../routes/task.routes"));
 var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
-//models
-var task_1 = __importDefault(require("./task"));
-var subtask_1 = __importDefault(require("./subtask"));
-var sprint_1 = __importDefault(require("./sprint"));
-//adicionales
-var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
 var Server = /** @class */ (function () {
     function Server() {
@@ -83,20 +77,18 @@ var Server = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, task_1.default.sync()];
+                        return [4 /*yield*/, Task];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, subtask_1.default.sync()];
+                        return [4 /*yield*/, Subtask];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, sprint_1.default.sync()];
+                        return [4 /*yield*/, sprint_interface_1.Sprint];
                     case 3:
                         _a.sent();
-                        console.log("Base de datos online");
                         return [3 /*break*/, 5];
                     case 4:
                         error_1 = _a.sent();
-                        console.log("No se pudo conectar");
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
