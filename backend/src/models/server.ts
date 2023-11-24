@@ -7,6 +7,7 @@ import routesSubtasks from '../routes/subtask.routes';
 import Task from './task';
 import Subtask from './subtask';
 import Sprint from './sprint';
+import User from './user';
 //conexion db
 import connection from '../db/connection';
 //adicionales
@@ -48,6 +49,7 @@ class Server{
             console.log("Base de datos online");
         })*/
         try{
+            await User.sync();
             await Task.sync();
             await Subtask.sync();
             await Sprint.sync();

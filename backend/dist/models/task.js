@@ -11,6 +11,14 @@ var Task = connection_1.default.define('task', {
         primaryKey: true,
         autoIncrement: true
     },
+    iduser: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+    },
+    idsprint: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
@@ -27,17 +35,9 @@ var Task = connection_1.default.define('task', {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    iduser: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
-    },
-    idsprint: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
-    },
     assignedUser: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     }
 });
 exports.default = Task;

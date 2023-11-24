@@ -48,6 +48,7 @@ var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
 var task_1 = __importDefault(require("./task"));
 var subtask_1 = __importDefault(require("./subtask"));
 var sprint_1 = __importDefault(require("./sprint"));
+var user_1 = __importDefault(require("./user"));
 //adicionales
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
@@ -82,23 +83,26 @@ var Server = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, task_1.default.sync()];
+                        _a.trys.push([0, 5, , 6]);
+                        return [4 /*yield*/, user_1.default.sync()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, subtask_1.default.sync()];
+                        return [4 /*yield*/, task_1.default.sync()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, sprint_1.default.sync()];
+                        return [4 /*yield*/, subtask_1.default.sync()];
                     case 3:
                         _a.sent();
-                        console.log("Base de datos online");
-                        return [3 /*break*/, 5];
+                        return [4 /*yield*/, sprint_1.default.sync()];
                     case 4:
+                        _a.sent();
+                        console.log("Base de datos online");
+                        return [3 /*break*/, 6];
+                    case 5:
                         error_1 = _a.sent();
                         console.log("No se pudo conectar");
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

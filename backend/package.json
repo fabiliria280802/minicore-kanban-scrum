@@ -2,7 +2,7 @@
   "scripts": {
     "test": "node ./bin/www",
     "dev": "nodemon dist/index.js",
-    "twatch":"tsc --watch"
+    "twatch": "tsc --watch"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -17,6 +17,7 @@
     "sequelize": "^6.35.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.16",
     "@types/express": "^4.17.20",
     "nodemon": "^3.0.1"

@@ -29,7 +29,7 @@ const Subtask = sequelize.define('subtask', {
     },
     assignedUser:{
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     }
 });
 
