@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+//TODO: Eliminar esta pestaña
 @Component({
   selector: 'app-auth-users',
   templateUrl: './auth-users.component.html',

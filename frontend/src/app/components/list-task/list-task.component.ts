@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Task, points, status } from 'src/app/interfaces/task.interface';
 import { CreateUpdateTaskComponent } from '../create-update-task/create-update-task.component';
-
+//TODO: Arreglar errores de cargar (task)
 const listTask: Task[] =[
   {
     title: "string",

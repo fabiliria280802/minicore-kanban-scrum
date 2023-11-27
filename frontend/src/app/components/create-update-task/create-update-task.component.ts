@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Task, points, status } from 'src/app/interfaces/task.interface';
+//TODO: Agregar funcionalidad de esta pestaña (task)
 @Component({
   selector: 'app-create-update-task',
   templateUrl: './create-update-task.component.html',

@@ -14,6 +14,9 @@ import { CreateUpdateSprintComponent } from './components/create-update-sprint/c
 import { CreateUpdateUsersComponent } from './components/create-update-users/create-update-users.component';
 import { AuthUsersComponent } from './components/auth-users/auth-users.component';
 import { SharedModule } from './shared/shared.module';
+import { LoginComponent } from './components/login/login.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { SharedModule } from './shared/shared.module';
     CreateUpdateTaskComponent,
     CreateUpdateSprintComponent,
     CreateUpdateUsersComponent,
-    AuthUsersComponent
+    AuthUsersComponent,
+    LoginComponent,
+    SignInComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
