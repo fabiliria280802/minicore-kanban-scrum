@@ -56,8 +56,8 @@ export const postUser = async (req: Request, res: Response) => {
     const query = 'INSERT INTO user SET ?';
     const hashedPassword = await bcrypt.hash(password,10);
     try{
-        await 
-    }catch(error){
+        
+    } catch(error){
 
     }
     

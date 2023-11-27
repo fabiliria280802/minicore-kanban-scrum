@@ -91,7 +91,7 @@ var getUsers = function (req, res) {
 exports.getUsers = getUsers;
 //new user equal
 var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, query, hashedPassword, error_1;
+    var _a, username, password, query, hashedPassword;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -100,17 +100,11 @@ var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
             case 1:
                 hashedPassword = _b.sent();
-                _b.label = 2;
-            case 2:
-                _b.trys.push([2, 4, , 5]);
-                return [4 /*yield*/, ];
-            case 3:
-                _b.sent();
-                return [3 /*break*/, 5];
-            case 4:
-                error_1 = _b.sent();
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                try {
+                }
+                catch (error) {
+                }
+                return [2 /*return*/];
         }
     });
 }); };
