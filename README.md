@@ -34,6 +34,18 @@ Si el usuario validado no tiene privilegios de administrador, la función aún a
 <br/><br/>
 En esencia, esta función se ocupa no solo de validar las credenciales del usuario sino también de determinar y comunicar si el usuario cuenta con privilegios de administrador, enviando esta información de regreso al cliente que inició la solicitud de inicio de sesión.
 
+## Códigos para probar local
+
+Correr el backend:
+```
+npm run dev
+```
+
+Correr el frontend:
+```
+ng serve --o
+```
+
 ## Video explicativo backend
 
 https://clipchamp.com/watch/4gclg5aTy1u
