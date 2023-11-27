@@ -41,6 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.putUser = exports.postUser = exports.getUsers = exports.loginUser = exports.getUser = void 0;
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var user_1 = __importDefault(require("../models/user"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var getUser = function (req, res) {
     var id = req.params.id;
     var query = 'SELECT * FROM user WHERE iduser = ?';
@@ -58,27 +60,37 @@ var getUser = function (req, res) {
     });*/
 };
 exports.getUser = getUser;
-var loginUser = function (req, res) {
-    var _a = req.body, username = _a.username, password = _a.password;
-    var query = 'SELECT * FROM user WHERE username = ? AND password = ?';
-    /*
-    connection.query(query, [username, password], (error, data) => {
-        if (error) {
-            res.status(500).json({ msg: "Error al consultar la base de datos" });
-            return;
+var loginUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, username, password, user, passwordValid, token;
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                _a = req.body, username = _a.username, password = _a.password;
+                return [4 /*yield*/, user_1.default.findOne({ where: { username: username } })];
+            case 1:
+                user = _c.sent();
+                if (user) {
+                    return [2 /*return*/, res.status(400).json({
+                            msg: "No existe un usuario con el nombre ".concat(username, " en la base de datos")
+                        })];
+                }
+                return [4 /*yield*/, bcrypt_1.default.compare(password, user.password)];
+            case 2:
+                passwordValid = _c.sent();
+                if (!passwordValid) {
+                    return [2 /*return*/, res.status(400).json({
+                            msg: 'Password Incorrecta'
+                        })];
+                }
+                token = jsonwebtoken_1.default.sign({
+                    username: username
+                }, (_b = process.env.SECRET_KEY) !== null && _b !== void 0 ? _b : '773H3LL');
+                res.json(token);
+                return [2 /*return*/];
         }
-        if (data.length === 0) {
-            res.status(404).json({ msg: "Usuario no encontrado o contraseña incorrecta" });
-        } else {
-            const user = data[0];
-            if (user.role === 'Administrador') {
-                res.json({ ...user, isAdmin: true });
-            } else {
-                res.json({ ...user, isAdmin: false });
-            }
-        }
-    });*/
-};
+    });
+}); };
 exports.loginUser = loginUser;
 var getUsers = function (req, res) {
     var query = 'SELECT * FROM user';
@@ -91,24 +103,60 @@ var getUsers = function (req, res) {
 exports.getUsers = getUsers;
 //new user equal
 var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, query, hashedPassword;
+    var _a, username, password, user, hashedPassword, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = req.body, username = _a.username, password = _a.password;
-                query = 'INSERT INTO user SET ?';
-                return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
+                return [4 /*yield*/, user_1.default.findOne({ where: { username: username } })];
             case 1:
+                user = _b.sent();
+                if (user) {
+                    return [2 /*return*/, res.status(400).json({
+                            msg: "Ya existe un usuario con el nombre ".concat(username)
+                        })];
+                }
+                console.log('sigo');
+                return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
+            case 2:
                 hashedPassword = _b.sent();
-                try {
-                }
-                catch (error) {
-                }
-                return [2 /*return*/];
+                _b.label = 3;
+            case 3:
+                _b.trys.push([3, 5, , 6]);
+                return [4 /*yield*/, user_1.default.create({
+                        username: username,
+                        password: hashedPassword
+                    })];
+            case 4:
+                _b.sent();
+                res.json({
+                    msg: "Usuario ".concat(username, " creado exitosamente")
+                });
+                return [3 /*break*/, 6];
+            case 5:
+                error_1 = _b.sent();
+                res.status(404).json({
+                    msg: "Ups ocurrio un error",
+                    error: error_1
+                });
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
 exports.postUser = postUser;
+/*
+connection.query(query, body, (error, data) => {
+    if (error) {
+        res.status(500).json({
+            error: "Error al insertar usuario"
+        });
+    } else {
+        res.json({
+            msg: "Persona agregada con éxito"
+        });
+    }
+});*/
 var putUser = function (req, res) {
     var id = req.params.id;
     var body = req.body;

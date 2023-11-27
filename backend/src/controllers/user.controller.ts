@@ -1,6 +1,8 @@
 import {Request, Response, query} from 'express';
 import connection from '../db/connection';
 import bcrypt from 'bcrypt';
+import User from '../models/user';
+import jwt from 'jsonwebtoken';
 
 export const getUser = (req: Request, res: Response) => {
     const { id } = req.params;
@@ -19,27 +21,28 @@ export const getUser = (req: Request, res: Response) => {
     });*/
 };
 
-export const loginUser = (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response) => {
     const { username, password } = req.body;
-    const query = 'SELECT * FROM user WHERE username = ? AND password = ?';
-    /*
-    connection.query(query, [username, password], (error, data) => {
-        if (error) {
-            res.status(500).json({ msg: "Error al consultar la base de datos" });
-            return;
-        }
-        if (data.length === 0) {
-            res.status(404).json({ msg: "Usuario no encontrado o contraseña incorrecta" });
-        } else {
-            const user = data[0];
-            if (user.role === 'Administrador') {
-                res.json({ ...user, isAdmin: true });
-            } else {
-                res.json({ ...user, isAdmin: false });
-            }
-        }
-    });*/
+    const user: any = await User.findOne({ where: { username: username } });
+    if (user) {
+      return res.status(400).json({
+        msg: `No existe un usuario con el nombre ${username} en la base de datos`
+      });
+    }
+
+    const passwordValid = await bcrypt.compare(password, user.password);
+    if (!passwordValid) {
+        return res.status(400).json({
+            msg: 'Password Incorrecta'
+        });
+    }
+
+    const token = jwt.sign({
+        username: username
+    },process.env.SECRET_KEY ?? '773H3LL');
+    res.json(token);
 };
+  
 
 export const getUsers = (req: Request,res: Response)=>{
     const query = 'SELECT * FROM user';
@@ -52,14 +55,36 @@ export const getUsers = (req: Request,res: Response)=>{
 
 //new user equal
 export const postUser = async (req: Request, res: Response) => {
-    const { username,  password} = req.body;
-    const query = 'INSERT INTO user SET ?';
-    const hashedPassword = await bcrypt.hash(password,10);
-    try{
-        
-    } catch(error){
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username: username } });
 
+    if (user) {
+      return res.status(400).json({
+        msg: `Ya existe un usuario con el nombre ${username}`
+      });
     }
+    
+    console.log('sigo');
+    
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    try{
+        await User.create({
+            username: username,
+            password: hashedPassword
+          });
+        
+          res.json({
+            msg: `Usuario ${username} creado exitosamente`
+          });
+    }catch(error){
+        res.status(404).json({
+            msg:"Ups ocurrio un error", 
+            error
+        })
+    }
+  };
+  
     
     /*
     connection.query(query, body, (error, data) => {
@@ -73,7 +98,6 @@ export const postUser = async (req: Request, res: Response) => {
             });
         }
     });*/
-};
 
 export const putUser = (req: Request,res: Response)=>{
     const {id} = req.params;
