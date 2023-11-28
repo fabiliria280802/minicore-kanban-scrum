@@ -1,7 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+//componentes
+import { LoginComponent } from './components/login/login.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CreateUpdateSprintComponent } from './components/create-update-sprint/create-update-sprint.component';
+import { CreateUpdateTaskComponent } from './components/create-update-task/create-update-task.component';
+import { CreateUpdateSubtaskComponent } from './components/create-update-subtask/create-update-subtask.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'login',pathMatch:'full'},
+  {path: 'login', component: LoginComponent},
+  {path: 'signIn', component: SignInComponent},
+  {path: 'dashboard', component: DashboardComponent},
+  {path:'create-update-sprint', component: CreateUpdateSprintComponent},
+  {path:'create-update-task', component: CreateUpdateTaskComponent},
+  {path:'create-update-subtask', component: CreateUpdateSubtaskComponent},
+  {path:'**', redirectTo:'login',pathMatch:'full'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
