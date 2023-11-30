@@ -8,26 +8,29 @@ import { Task, points, status } from 'src/app/interfaces/task.interface';
   styleUrls: ['./create-update-task.component.css']
 })
 export class CreateUpdateTaskComponent implements OnInit {
-  pointOptions: {value: points, viewValue: string}[] = [];
-  selectedValuePoints: points = points.one;
-
-  statusOptions: { value: status, viewValue: string}[] = []; // Debe ser un array
-  selectedValueStatus: status = status.todo;
-
-  constructor(public dialogRef: MatDialogRef<CreateUpdateTaskComponent>){
-    Object.entries(points).forEach(([key, value]) => {
-      if (!isNaN(Number(value))) {
-        this.pointOptions.push({ value: value as points, viewValue: key });
-      }
-    });
-    Object.entries(status).forEach(([key, value]) => {
-      if (isNaN(Number(key))) {
-        this.statusOptions.push({ value: value as status, viewValue: key });
-      }
-    });
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
-  ngOnInit(): void {}
-  cancelar(){
+  //pointOptions: {value: points, viewValue: string}[] = [];
+  //selectedValuePoints: points = points.one;
 
-  }
+  //statusOptions: { value: status, viewValue: string}[] = []; // Debe ser un array
+  //selectedValueStatus: status = status.todo;
+
+  //constructor(public dialogRef: MatDialogRef<CreateUpdateTaskComponent>){
+    //Object.entries(points).forEach(([key, value]) => {
+      //if (!isNaN(Number(value))) {
+        //this.pointOptions.push({ value: value as points, viewValue: key });
+      //}
+    //});
+    //Object.entries(status).forEach(([key, value]) => {
+      //if (isNaN(Number(key))) {
+        //this.statusOptions.push({ value: value as status, viewValue: key });
+     // }
+    //});
+ // }
+  //ngOnInit(): void {}
+  //cancelar(){
+
+  //}
 }
