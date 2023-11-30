@@ -27,7 +27,7 @@
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css",
-              "minicore-kanban-scrum/frontend/node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
