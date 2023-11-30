@@ -6,7 +6,7 @@ import { Users, type } from 'src/app/interfaces/users.interface';
 import { CreateUpdateUsersComponent } from '../create-update-users/create-update-users.component';
 import { UserService } from 'src/app/services/user.service';
 //TODO: Arreglar errores de cargar (users)
-const listUsers: Users[] =[
+/*const listUsers: Users[] =[
   {
     iduser: 1,
     fullname:"string",
@@ -15,14 +15,14 @@ const listUsers: Users[] =[
     position: "string"
   }
 ];
-
+*/
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.css']
 })
-export class ListUsersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['fullname','email','type','position'];
+export class ListUsersComponent /*implements OnInit, AfterViewInit*/ {
+  /*displayedColumns: string[] = ['fullname','email','type','position'];
   dataSource: MatTableDataSource<Users>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -70,7 +70,7 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     type: type.Administrador,
     position: ""
   };
-/*
+
   isUserActive(element) {
     return element.id === this.activeUser.iduser;
  }*/

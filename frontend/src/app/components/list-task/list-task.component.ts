@@ -5,22 +5,22 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Task, points, status } from 'src/app/interfaces/task.interface';
 import { CreateUpdateTaskComponent } from '../create-update-task/create-update-task.component';
 //TODO: Arreglar errores de cargar (task)
-const listTask: Task[] =[
+/*const listTask: Task[] =[
   {
     title: "string",
     description: "string",
     status: status.doing,
     points: points.one,
     assignedUser: "string"},
-];
+];*/
 
 @Component({
   selector: 'app-list-task',
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css']
 })
-export class ListTaskComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['title','description','status','points','assignedUser','acciones'];
+export class ListTaskComponent /*implements OnInit, AfterViewInit*/ {
+  /*displayedColumns: string[] = ['title','description','status','points','assignedUser','acciones'];
   dataSource: MatTableDataSource<Task>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,5 +47,5 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
       width:'550px',
       disableClose: true,
     });
-  }
+  }*/
 }
