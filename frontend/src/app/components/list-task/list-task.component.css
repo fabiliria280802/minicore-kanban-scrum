@@ -6,24 +6,27 @@ mat-form-field {
   font-size: 14px;
   width: 90%;
   margin-right: 10px;
- }
+}
 
-td, th {
+td,
+th {
   width: 25%;
 }
 
-.btnEdit, .btnDelete, .btnVisibility{
+.btnEdit,
+.btnDelete,
+.btnVisibility {
   cursor: pointer;
 }
 
-.btnVisibility{
-  color: #FA95FA;
+.btnVisibility {
+  color: #fa95fa;
 }
 
-.btnEdit{
-  color: #7E9DF5;
+.btnEdit {
+  color: #7e9df5;
 }
 
-.btnDelete{
-  color: #F55C47;
+.btnDelete {
+  color: #f55c47;
 }

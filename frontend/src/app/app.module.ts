@@ -34,15 +34,15 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LoginComponent,
     SignInComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

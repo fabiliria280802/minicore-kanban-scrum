@@ -15,14 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTableModule} from '@angular/material/table';
-import { MatTooltipModule} from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 
 @NgModule({
   declarations: [],
@@ -49,7 +48,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     FormsModule,
     MatPaginatorModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports: [
     MatSlideToggleModule,
@@ -73,7 +72,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatTooltipModule,
     MatToolbarModule,
     MatPaginatorModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

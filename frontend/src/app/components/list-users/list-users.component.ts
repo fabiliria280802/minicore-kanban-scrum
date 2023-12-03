@@ -19,7 +19,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
-  styleUrls: ['./list-users.component.css']
+  styleUrls: ['./list-users.component.css'],
 })
 export class ListUsersComponent /*implements OnInit, AfterViewInit*/ {
   /*displayedColumns: string[] = ['fullname','email','type','position'];
@@ -75,4 +75,3 @@ export class ListUsersComponent /*implements OnInit, AfterViewInit*/ {
     return element.id === this.activeUser.iduser;
  }*/
 }
-

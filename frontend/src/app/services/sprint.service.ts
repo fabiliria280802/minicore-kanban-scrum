@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Sprint } from '../interfaces/sprint.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SprintService {
   private myAppUrl: string;
@@ -13,10 +13,10 @@ export class SprintService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/sprints'
+    this.myApiUrl = 'api/sprints';
   }
 
-  getSprints(): Observable<Sprint[]>{
+  getSprints(): Observable<Sprint[]> {
     return this.http.get<Sprint[]>(this.myAppUrl);
   }
 }

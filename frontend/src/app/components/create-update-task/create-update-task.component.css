@@ -1,16 +1,16 @@
 mat-form-field {
   width: 100%;
- }
+}
 
-h3{
+h3 {
   align-self: center;
 }
 
-.row{
+.row {
   display: flex;
 }
 
-.column{
+.column {
   flex: 50%;
   margin: 0px 5px;
 }

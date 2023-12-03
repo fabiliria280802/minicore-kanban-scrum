@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Users } from '../interfaces/users.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private myAppUrl: string;
@@ -13,10 +13,10 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/users'
+    this.myApiUrl = 'api/users';
   }
 
-  getUsers(): Observable<Users[]>{
+  getUsers(): Observable<Users[]> {
     return this.http.get<Users[]>(this.myAppUrl);
   }
 }

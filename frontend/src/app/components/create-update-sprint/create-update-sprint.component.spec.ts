@@ -8,7 +8,7 @@ describe('CreateUpdateSprintComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateUpdateSprintComponent]
+      declarations: [CreateUpdateSprintComponent],
     });
     fixture = TestBed.createComponent(CreateUpdateSprintComponent);
     component = fixture.componentInstance;

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Subtask } from '../interfaces/subtask.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubtaskService {
   private myAppUrl: string;
@@ -13,10 +13,10 @@ export class SubtaskService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/subtasks'
+    this.myApiUrl = 'api/subtasks';
   }
 
-  getSubtasks(): Observable<Subtask[]>{
+  getSubtasks(): Observable<Subtask[]> {
     return this.http.get<Subtask[]>(this.myAppUrl);
   }
 }

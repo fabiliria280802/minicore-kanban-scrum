@@ -8,7 +8,7 @@ describe('ListSubtaskComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListSubtaskComponent]
+      declarations: [ListSubtaskComponent],
     });
     fixture = TestBed.createComponent(ListSubtaskComponent);
     component = fixture.componentInstance;

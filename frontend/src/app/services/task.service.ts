@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Task } from '../interfaces/task.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private myAppUrl: string;
@@ -13,10 +13,10 @@ export class TaskService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'api/tasks'
+    this.myApiUrl = 'api/tasks';
   }
 
-  getTasks(): Observable<Task[]>{
+  getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.myAppUrl);
   }
 }

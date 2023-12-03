@@ -10,18 +10,18 @@ import { CreateUpdateTaskComponent } from './components/create-update-task/creat
 import { CreateUpdateSubtaskComponent } from './components/create-update-subtask/create-update-subtask.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'login',pathMatch:'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'signIn', component: SignInComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path:'create-update-sprint', component: CreateUpdateSprintComponent},
-  {path:'create-update-task', component: CreateUpdateTaskComponent},
-  {path:'create-update-subtask', component: CreateUpdateSubtaskComponent},
-  {path:'**', redirectTo:'login',pathMatch:'full'}
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signIn', component: SignInComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'create-update-sprint', component: CreateUpdateSprintComponent },
+  { path: 'create-update-task', component: CreateUpdateTaskComponent },
+  { path: 'create-update-subtask', component: CreateUpdateSubtaskComponent },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
