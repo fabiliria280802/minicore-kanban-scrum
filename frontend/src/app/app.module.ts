@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { BacklogComponent } from './components/backlog/backlog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     SignInComponent,
     NavbarComponent,
     DashboardComponent,
+    BacklogComponent,
   ],
   imports: [
     BrowserModule,
