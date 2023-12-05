@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Users, type } from 'src/app/interfaces/users.interface';
+import { User, type } from '../../interfaces/user.interface';
 import { CreateUpdateUsersComponent } from '../create-update-users/create-update-users.component';
-import { UserService } from 'src/app/services/user.service';
-//TODO: Arreglar errores de cargar (users)
+import { UserService } from '../../services/user.service';
+//TODO: Arreglar errores de cargar (user)
 /*const listUsers: Users[] =[
   {
     iduser: 1,

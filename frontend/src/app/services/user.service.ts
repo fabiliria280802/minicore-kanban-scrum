@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Users } from '../interfaces/users.interface';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,11 @@ export class UserService {
     this.myApiUrl = 'api/users';
   }
 
-  getUsers(): Observable<Users[]> {
-    return this.http.get<Users[]>(this.myAppUrl);
+  signIn(user: User): Observable<any> {
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}`, user);
+  }
+
+  login(user: User): Observable<any> {
+    return this.http.get(`${this.myAppUrl}${this.myApiUrl}`);
   }
 }

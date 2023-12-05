@@ -9,6 +9,8 @@ import { CreateUpdateSprintComponent } from './components/create-update-sprint/c
 import { CreateUpdateTaskComponent } from './components/create-update-task/create-update-task.component';
 import { CreateUpdateSubtaskComponent } from './components/create-update-subtask/create-update-subtask.component';
 import { CreateUpdateUsersComponent } from './components/create-update-users/create-update-users.component';
+import { IndexComponent } from './components/index/index.component';
+import { ListTaskComponent } from './components/list-task/list-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'create-update-task', component: CreateUpdateTaskComponent },
   { path: 'create-update-subtask', component: CreateUpdateSubtaskComponent },
   { path: 'create-update-users', component: CreateUpdateUsersComponent},
+  { path: 'index', component: IndexComponent},
+  { path: 'list-task', component:ListTaskComponent},
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

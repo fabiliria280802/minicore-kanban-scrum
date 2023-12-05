@@ -1,0 +1,17 @@
+<!-- sprint-active.component.html -->
+<div class="container">
+  <div class="row">
+    <div class="col" *ngFor="let status of statuses">
+      <div class="card">
+        <div class="card-header">
+          {{ status }}
+        </div>
+        <div class="card-body">
+          <!-- Pass the tasks of the current status to the ListTaskComponent -->
+          <app-list-task [tasks]="tasks[status]"></app-list-task>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
