@@ -1,8 +1,10 @@
-// Angular
+// Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +27,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
 import { IndexComponent } from './components/index/index.component';
 import { SprintActiveComponent } from './components/sprint-active/sprint-active.component';
+
 
 
 @NgModule({
@@ -52,6 +55,13 @@ import { SprintActiveComponent } from './components/sprint-active/sprint-active.
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
