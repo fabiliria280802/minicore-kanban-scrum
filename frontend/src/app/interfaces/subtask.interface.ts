@@ -1,4 +1,4 @@
-export enum status {
+export enum subtaskstatus {
   todo = 'Por hacer',
   doing = 'Avanzada',
   done = 'Finalizada',
@@ -9,6 +9,6 @@ export interface Subtask {
   idtask: number;
   title: string;
   description: string;
-  status: status;
+  Subtaskstatus: subtaskstatus;
   assignedUser?: string;
 }

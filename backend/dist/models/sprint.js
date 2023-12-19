@@ -13,7 +13,14 @@ var Sprint = connection_1.default.define('sprint', {
     },
     title: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isCorrectFormat: function (value) {
+                if (!value.startsWith('Sprint #')) {
+                    throw new Error('El título debe empezar con "Sprint #"');
+                }
+            }
+        }
     },
     initialDate: {
         type: sequelize_1.DataTypes.DATE,
@@ -36,16 +43,16 @@ var Sprint = connection_1.default.define('sprint', {
         allowNull: true
     },
     toDoPorcentage: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.DECIMAL,
         allowNull: true
     },
     doingPorcentage: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.DECIMAL,
         allowNull: true
     },
     donePorcentage: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.DECIMAL,
         allowNull: true
-    }
+    },
 });
 exports.default = Sprint;

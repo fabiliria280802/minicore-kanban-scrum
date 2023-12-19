@@ -32,17 +32,32 @@ export const getSprints = async (req: Request, res: Response) => {
 };
 
 export const postSprint = async (req: Request, res: Response) => {
+    const { title, initialDate, finalDate } = req.body;
     try {
+        const startDate = new Date(initialDate);
+        const endDate = new Date(finalDate);
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+            return res.status(400).json({ error: 'Las fechas proporcionadas no son válidas.' });
+        }
+        if (endDate <= startDate) {
+            return res.status(400).json({ error: 'La fecha final no puede ser anterior o igual a la fecha inicial.' });
+        }
+        const timeDiff = endDate.getTime() - startDate.getTime();
+        const dayDiff = timeDiff / (1000 * 3600 * 24);
+        if (dayDiff > 15) {
+            return res.status(400).json({ error: 'La diferencia entre la fecha inicial y final no puede ser mayor a 15 días.' });
+        }
         const newSprint = await Sprint.create(req.body);
         res.status(201).json(newSprint);
     } catch (error) {
         if (error instanceof Error) {
             res.status(500).json({ error: error.message });
         } else {
-            res.status(500).json({ error: "Error al insertar sprint" });
+            res.status(500).json({ error: 'Error al insertar sprint' });
         }
     }
 };
+
 
 export const putSprint = async (req: Request, res: Response) => {
     try {

@@ -1,3 +1,4 @@
+//modulos de angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -11,18 +12,21 @@ import { CreateUpdateSubtaskComponent } from './components/create-update-subtask
 import { CreateUpdateUsersComponent } from './components/create-update-users/create-update-users.component';
 import { IndexComponent } from './components/index/index.component';
 import { ListTaskComponent } from './components/list-task/list-task.component';
+import { BacklogComponent } from './components/backlog/backlog.component';
 
+//definicion de rutas
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signIn', component: SignInComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'backlog', component: BacklogComponent },
   { path: 'create-update-sprint', component: CreateUpdateSprintComponent },
   { path: 'create-update-task', component: CreateUpdateTaskComponent },
   { path: 'create-update-subtask', component: CreateUpdateSubtaskComponent },
-  { path: 'create-update-users', component: CreateUpdateUsersComponent},
-  { path: 'index', component: IndexComponent},
-  { path: 'list-task', component:ListTaskComponent},
+  { path: 'create-update-users', component: CreateUpdateUsersComponent },
+  { path: 'index', component: IndexComponent },
+  { path: 'list-task', component: ListTaskComponent },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

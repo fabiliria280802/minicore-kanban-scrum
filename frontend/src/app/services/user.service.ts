@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/user.interface';
+import { LoginPayload, User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +17,13 @@ export class UserService {
   }
 
   signIn(user: User): Observable<any> {
-    return this.http.post(`${this.myAppUrl}${this.myApiUrl}`, user);
+    return this.http.post<User>(`${this.myAppUrl}${this.myApiUrl}/signIn`, user);
   }
 
-  login(user: User): Observable<any> {
-    return this.http.get(`${this.myAppUrl}${this.myApiUrl}`);
+  login(user: LoginPayload): Observable<any> {
+    return this.http.post<LoginPayload>(
+      `${this.myAppUrl}${this.myApiUrl}/login`,
+      user,
+    );
   }
 }

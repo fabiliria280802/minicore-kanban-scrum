@@ -96,26 +96,42 @@ var getSprints = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.getSprints = getSprints;
 var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var newSprint, error_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, title, initialDate, finalDate, startDate, endDate, timeDiff, dayDiff, newSprint, error_3;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, sprint_1.default.create(req.body)];
+                _a = req.body, title = _a.title, initialDate = _a.initialDate, finalDate = _a.finalDate;
+                _b.label = 1;
             case 1:
-                newSprint = _a.sent();
-                res.status(201).json(newSprint);
-                return [3 /*break*/, 3];
+                _b.trys.push([1, 3, , 4]);
+                startDate = new Date(initialDate);
+                endDate = new Date(finalDate);
+                if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                    return [2 /*return*/, res.status(400).json({ error: 'Las fechas proporcionadas no son válidas.' })];
+                }
+                if (endDate <= startDate) {
+                    return [2 /*return*/, res.status(400).json({ error: 'La fecha final no puede ser anterior o igual a la fecha inicial.' })];
+                }
+                timeDiff = endDate.getTime() - startDate.getTime();
+                dayDiff = timeDiff / (1000 * 3600 * 24);
+                if (dayDiff > 15) {
+                    return [2 /*return*/, res.status(400).json({ error: 'La diferencia entre la fecha inicial y final no puede ser mayor a 15 días.' })];
+                }
+                return [4 /*yield*/, sprint_1.default.create(req.body)];
             case 2:
-                error_3 = _a.sent();
+                newSprint = _b.sent();
+                res.status(201).json(newSprint);
+                return [3 /*break*/, 4];
+            case 3:
+                error_3 = _b.sent();
                 if (error_3 instanceof Error) {
                     res.status(500).json({ error: error_3.message });
                 }
                 else {
-                    res.status(500).json({ error: "Error al insertar sprint" });
+                    res.status(500).json({ error: 'Error al insertar sprint' });
                 }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

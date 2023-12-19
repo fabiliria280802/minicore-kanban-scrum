@@ -1,17 +1,42 @@
-<!-- sprint-active.component.html -->
-<div class="container">
-  <div class="row">
-    <div class="col" *ngFor="let status of statuses">
-      <div class="card">
-        <div class="card-header">
-          {{ status }}
-        </div>
-        <div class="card-body">
-          <!-- Pass the tasks of the current status to the ListTaskComponent -->
-          <app-list-task [tasks]="tasks[status]"></app-list-task>
-        </div>
+<div class="container mt-2">
+  <h2>Dashboard</h2>
+  <!-- Iterar sobre cada sprint -->
+  <div *ngFor="let sprint of sprints" class="sprint-container">
+    <div class="sprint-header">
+      <h3>{{ sprint.title }}</h3>
+      <div class="sprint-dates">
+        {{ sprint.initialDate | date }} - {{ sprint.finalDate | date }}
       </div>
+      <!-- Más información del sprint aquí -->
+    </div>
+    <div class="sprint-tasks">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Título</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Puntos</th>
+            <th scope="col">Usuario Asignado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Asumiendo que quieres mostrar tareas relacionadas con este sprint -->
+          <tr
+            *ngFor="
+              let task of tasks | filterBySprint: sprint.idsprint;
+              let i = index
+            "
+            [class]="{ 'task-done': task.status === 'Finalizada' }"
+          >
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ task.title }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.points }}</td>
+            <td>{{ task.assignedUser }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
-

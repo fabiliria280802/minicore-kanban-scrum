@@ -22,9 +22,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [SpinnerComponent],
   imports: [
     CommonModule,
     MatSlideToggleModule,
@@ -49,6 +50,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     MatPaginatorModule,
     HttpClientModule,
+    //al importar spinnner component vale kk
+    //SpinnerComponent,
   ],
   exports: [
     MatSlideToggleModule,
@@ -73,6 +76,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatPaginatorModule,
     HttpClientModule,
+    SpinnerComponent,
   ],
 })
 export class SharedModule {}

@@ -28,7 +28,9 @@ import { BacklogComponent } from './components/backlog/backlog.component';
 import { IndexComponent } from './components/index/index.component';
 import { SprintActiveComponent } from './components/sprint-active/sprint-active.component';
 
-
+//pipes
+import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
+import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { SprintActiveComponent } from './components/sprint-active/sprint-active.
     BacklogComponent,
     IndexComponent,
     SprintActiveComponent,
+    FilterBySprintPipe,
+    FilterByTaskPipe,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +62,7 @@ import { SprintActiveComponent } from './components/sprint-active/sprint-active.
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 4000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),

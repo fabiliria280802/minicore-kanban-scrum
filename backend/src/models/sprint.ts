@@ -7,10 +7,17 @@ const Sprint = sequelize.define('sprint',{
         primaryKey: true,
         autoIncrement: true
     },
-    title:{
+    title: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
+        allowNull: false,
+        validate: {
+          isCorrectFormat(value: string) {
+            if (!value.startsWith('Sprint #')) {
+              throw new Error('El título debe empezar con "Sprint #"');
+            }
+          }
+        }
+      },
     initialDate:{
         type: DataTypes.DATE,
         allowNull: false
@@ -32,17 +39,17 @@ const Sprint = sequelize.define('sprint',{
         allowNull: true
     },
     toDoPorcentage:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: true
     },
     doingPorcentage:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: true
     },
     donePorcentage:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: true
-    }
+    },
 });
 
 export default Sprint;

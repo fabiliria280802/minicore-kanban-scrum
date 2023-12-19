@@ -5,6 +5,7 @@
 </mat-table>
 
 <!-- If you have a paginator -->
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" *ngIf="dataSource.data.length"></mat-paginator>
-
-
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  *ngIf="dataSource.data.length"
+></mat-paginator>

@@ -1,2 +1,53 @@
 <app-navbar></app-navbar>
-<p>backlog works!</p>
+<div class="container mt-2">
+  <h2>Dashboard</h2>
+  <!-- Iterar sobre cada sprint -->
+  <div *ngFor="let sprint of sprints" class="sprint-container">
+    <div class="sprint-header">
+      <h3>{{ sprint.title }}</h3>
+      <div class="sprint-dates">
+        {{ sprint.initialDate | date }} - {{ sprint.finalDate | date }}
+      </div>
+      <div class="sprint-points">
+        <div class="sprint-committed">
+          {{ sprint.committedPoints | number }}
+        </div>
+        <div class="sprint-fulfilled">
+          {{ sprint.fulfilledPoints | number }}
+        </div>
+        <div class="sprint-noFulfilled">
+          {{ sprint.noFulfilledPoints | number }}
+        </div>
+      </div>
+    </div>
+    <div class="sprint-tasks">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Título</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Puntos</th>
+            <th scope="col">Usuario Asignado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Asumiendo que quieres mostrar tareas relacionadas con este sprint -->
+          <tr
+            *ngFor="
+              let task of tasks | filterBySprint: sprint.idsprint;
+              let i = index
+            "
+            [class]="{ 'task-done': task.status === 'Finalizada' }"
+          >
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ task.title }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.points }}</td>
+            <td>{{ task.assignedUser }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

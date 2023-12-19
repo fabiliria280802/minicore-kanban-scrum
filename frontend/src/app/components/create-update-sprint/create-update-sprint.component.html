@@ -1,1 +1,50 @@
-<p>create-update-sprint works!</p>
+<div class="wrapper">
+  <div class="login-container">
+    <h1>Crear un sprint</h1>
+    <form action="/your-login-endpoint" method="post">
+      <div class="form-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          placeholder="Titulo del sprint"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <input
+          type="password"
+          class="form-control"
+          id="initialDate"
+          name="initialDate"
+          placeholder="Fecha de inicio"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <input
+          type="password"
+          class="form-control"
+          id="finalDate"
+          name="finalDate"
+          placeholder="Fecha de fin"
+        />
+      </div>
+      <div class="d-grid gap-2 mb-3">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          routerLink="/backlog"
+        >
+          Aceptar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          routerLink="/backlog"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

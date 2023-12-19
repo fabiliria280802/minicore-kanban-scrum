@@ -15,6 +15,10 @@ var User = connection_1.default.define('user', {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
+    username: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
     email: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false

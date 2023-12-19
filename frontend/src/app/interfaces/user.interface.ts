@@ -12,3 +12,8 @@ export interface User {
   type: type;
   position: string;
 }
+
+export interface LoginPayload {
+  login: string;
+  password: string;
+}

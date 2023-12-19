@@ -9,7 +9,7 @@ var validateToken = function (req, res, next) {
     var headerToken = req.headers['authorization'];
     if (headerToken && headerToken.startsWith('Bearer ')) {
         var bearerToken = headerToken.slice(7);
-        jsonwebtoken_1.default.verify(bearerToken, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : '773H3LL', next);
+        jsonwebtoken_1.default.verify(bearerToken, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : '^H:E{Ll', next);
     }
     else {
         res.status(401).json({

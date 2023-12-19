@@ -1,19 +1,62 @@
 <div class="wrapper">
   <div class="login-container">
-    <img class="logo" src="../../assets/icons/usuario.png" alt="User Login Logo" />
+    <img
+      class="logo"
+      src="../../assets/icons/usuario.png"
+      alt="User Login Logo"
+    />
     <h1>Registro de usuarios</h1>
-    <form action="/your-login-endpoint" method="post">
+    <form (submit)="addUser()">
       <div class="form-group mb-3">
-        <input type="text" [(ngModel)]="username" class="form-control" placeholder="Usuario" required />
+        <input
+          type="text"
+          [(ngModel)]="fullname"
+          name="fullname"
+          class="form-control"
+          placeholder="Nombre completo"
+        />
       </div>
       <div class="form-group mb-3">
-        <input type="password" [(ngModel)]="password" class="form-control" placeholder="Contraseña" required />
+        <input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          class="form-control"
+          placeholder="Usuario"
+        />
       </div>
       <div class="form-group mb-3">
-        <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Repetir Contraseña" required />
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          class="form-control"
+          placeholder="Correo"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          class="form-control"
+          placeholder="Contraseña"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <input
+          type="password"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          class="form-control"
+          placeholder="Repetir Contraseña"
+        />
       </div>
       <div class="d-grid gap-2 mb-3">
-        <button type="submit" (click)="addUser" class="btn btn-primary btn-lg">Aceptar</button>
+        <button type="submit" class="btn btn-primary btn-lg">Aceptar</button>
+      </div>
+      <div class="text-center">
+        <p><a routerLink="/Login">Volver</a></p>
       </div>
     </form>
   </div>

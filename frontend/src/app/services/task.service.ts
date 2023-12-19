@@ -19,4 +19,9 @@ export class TaskService {
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.myAppUrl);
   }
+
+  //Metodos nuevos
+  saveTask(task: Task): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, task);
+  }
 }
