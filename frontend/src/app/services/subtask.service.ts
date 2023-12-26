@@ -19,4 +19,8 @@ export class SubtaskService {
   getSubtasks(): Observable<Subtask[]> {
     return this.http.get<Subtask[]>(this.myAppUrl);
   }
+
+  saveSprints(subtask: Subtask): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, subtask);
+  }
 }

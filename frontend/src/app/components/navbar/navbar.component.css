@@ -1,0 +1,81 @@
+.navbar {
+  display: flex;
+  justify-content: flex-start; /* Alinea los elementos al inicio */
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  margin-right: 20px;
+  font-size: 1.25rem;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  position: relative;
+  margin-right: 15px;
+  font-size: 1.25rem;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 15px;
+  color: #333; /* Color del texto */
+  text-decoration: none; /* Elimina el subrayado */
+  font-size: 1.25rem; /* Tamaño de la fuente igual al del logo */
+}
+
+/* Asegúrate de que el enlace no cambie de color o se subraye al pasar el mouse */
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+  color: #333; /* Color del texto al pasar el mouse */
+  text-decoration: none; /* Elimina el subrayado al pasar el mouse */
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f1f1f1;
+}
+
+.btn-logout {
+  border: 1px solid #28a745;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  margin-left: auto;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  color: #28a745;
+  background-color: transparent;
+}
+
+.btn-logout:hover {
+  color: #fff;
+  background-color: #28a745;
+}
+

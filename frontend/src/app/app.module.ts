@@ -18,7 +18,6 @@ import { CreateUpdateSubtaskComponent } from './components/create-update-subtask
 import { CreateUpdateTaskComponent } from './components/create-update-task/create-update-task.component';
 import { CreateUpdateSprintComponent } from './components/create-update-sprint/create-update-sprint.component';
 import { CreateUpdateUsersComponent } from './components/create-update-users/create-update-users.component';
-import { AuthUsersComponent } from './components/auth-users/auth-users.component';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './components/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -42,7 +41,6 @@ import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
     CreateUpdateTaskComponent,
     CreateUpdateSprintComponent,
     CreateUpdateUsersComponent,
-    AuthUsersComponent,
     LoginComponent,
     SignInComponent,
     NavbarComponent,

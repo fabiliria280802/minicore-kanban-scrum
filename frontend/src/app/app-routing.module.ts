@@ -13,7 +13,8 @@ import { CreateUpdateUsersComponent } from './components/create-update-users/cre
 import { IndexComponent } from './components/index/index.component';
 import { ListTaskComponent } from './components/list-task/list-task.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
-
+import { ListSubtaskComponent } from './components/list-subtask/list-subtask.component';
+import { ListUsersComponent } from './components/list-users/list-users.component';
 //definicion de rutas
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,7 +28,9 @@ const routes: Routes = [
   { path: 'create-update-users', component: CreateUpdateUsersComponent },
   { path: 'index', component: IndexComponent },
   { path: 'list-task', component: ListTaskComponent },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'list-subtask',component: ListSubtaskComponent},
+  { path: 'list-users',component:ListUsersComponent},
+  //{ path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({

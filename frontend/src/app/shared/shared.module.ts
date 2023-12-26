@@ -23,6 +23,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [SpinnerComponent],
@@ -47,7 +49,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatSnackBarModule,
     MatTooltipModule,
     MatToolbarModule,
+    MatSortModule,
     FormsModule,
+    MatDatepickerModule,
     MatPaginatorModule,
     HttpClientModule,
     //al importar spinnner component vale kk
@@ -65,12 +69,14 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatDialogModule,
     MatFormFieldModule,
     MatGridListModule,
+    MatDatepickerModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSortModule,
     MatSnackBarModule,
     MatTooltipModule,
     MatToolbarModule,

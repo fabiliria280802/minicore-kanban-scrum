@@ -19,4 +19,7 @@ export class SprintService {
   getSprints(): Observable<Sprint[]> {
     return this.http.get<Sprint[]>(this.myAppUrl);
   }
+  saveSprints(sprint: Sprint): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, sprint);
+  }
 }

@@ -1,27 +1,25 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/index">KS</a>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Crear
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/create-update-sprint">Sprint</a>
-          <a class="dropdown-item" routerLink="/create-update-task">task</a>
-        </div>
-      </li>
-    </ul>
+<nav class="navbar">
+  <a class="navbar-brand" href="/">
+    <img src="favicon.ico" width="30" height="30" alt="">
+    SKAM
+  </a>
 
-    <button class="btn btn-outline-success" type="button" routerLink="/Login">
-      Logout
-    </button>
+  <div class="navbar-menu">
+    <div class="nav-item" (click)="toggleDropdown()">
+      <a class="dropdown-toggle">Crear</a>
+      <ul class="dropdown-menu" [class.show]="dropdownOpen">
+        <li><a (click)="navigate('/create-update-sprint')">Sprint</a></li>
+        <li><a (click)="navigate('/create-update-task')">Task</a></li>
+        <li><a (click)="navigate('/create-update-subtask')">Subtask</a></li>
+      </ul>
+    </div>
   </div>
+  <!--TODO: borrae subtask cuando ya este ready-->
+<div class="nav-item" (click)="navigate('/list-subtask')">Subtask</div>
+<div class="nav-item" (click)="navigate('/list-users')">Equipo</div>
+<div class="nav-item" (click)="navigate('/x')">Incidencias</div>
+<div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>
+  <button class="btn-logout" (click)="logout()">Logout</button>
 </nav>
+
+
