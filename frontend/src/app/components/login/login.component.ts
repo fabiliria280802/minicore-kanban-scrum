@@ -7,14 +7,12 @@ import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from 'src/app/services/error.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   login: string = '';
   password: string = '';
   loading: boolean = true;
@@ -60,6 +58,4 @@ export class LoginComponent implements OnInit {
       },
     });
   }
-
 }
-

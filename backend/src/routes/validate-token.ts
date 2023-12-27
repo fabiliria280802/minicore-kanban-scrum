@@ -1,16 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
 const validateToken = (req: Request, res: Response, next: NextFunction) => {
-  const headerToken = req.headers['authorization'];
+  const headerToken = req.headers["authorization"];
 
-  if (headerToken && headerToken.startsWith('Bearer ')) {
+  if (headerToken && headerToken.startsWith("Bearer ")) {
     const bearerToken = headerToken.slice(7);
 
-    jwt.verify(bearerToken, process.env.SECRET_KEY ?? '^H:E{Ll', next);
+    jwt.verify(bearerToken, process.env.SECRET_KEY ?? "^H:E{Ll", next);
   } else {
     res.status(401).json({
-      msg: 'Acceso denegado'
+      msg: "Acceso denegado",
     });
   }
 };

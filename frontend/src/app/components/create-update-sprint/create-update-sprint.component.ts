@@ -20,7 +20,7 @@ export class CreateUpdateSprintComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private _errorService: ErrorService,
-    private _sprintService: SprintService
+    private _sprintService: SprintService,
   ) {}
   ngOnInit(): void {}
 

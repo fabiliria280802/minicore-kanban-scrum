@@ -1,6 +1,6 @@
 <nav class="navbar">
   <a class="navbar-brand" href="/">
-    <img src="favicon.ico" width="30" height="30" alt="">
+    <img src="favicon.ico" width="30" height="30" alt="" />
     SKAM
   </a>
 
@@ -15,11 +15,9 @@
     </div>
   </div>
   <!--TODO: borrae subtask cuando ya este ready-->
-<div class="nav-item" (click)="navigate('/list-subtask')">Subtask</div>
-<div class="nav-item" (click)="navigate('/list-users')">Equipo</div>
-<div class="nav-item" (click)="navigate('/x')">Incidencias</div>
-<div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>
+  <div class="nav-item" (click)="navigate('/list-subtask')">Subtask</div>
+  <div class="nav-item" (click)="navigate('/list-users')">Equipo</div>
+  <div class="nav-item" (click)="navigate('/x')">Incidencias</div>
+  <div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>
   <button class="btn-logout" (click)="logout()">Logout</button>
 </nav>
-
-

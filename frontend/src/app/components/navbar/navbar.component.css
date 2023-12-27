@@ -36,7 +36,8 @@
 }
 
 /* Asegúrate de que el enlace no cambie de color o se subraye al pasar el mouse */
-.dropdown-toggle:hover, .dropdown-toggle:focus {
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
   color: #333; /* Color del texto al pasar el mouse */
   text-decoration: none; /* Elimina el subrayado al pasar el mouse */
 }
@@ -78,4 +79,3 @@
   color: #fff;
   background-color: #28a745;
 }
-

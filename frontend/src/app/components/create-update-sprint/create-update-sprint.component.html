@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="login-container">
     <h1>Crear un sprint</h1>
-    <form (submit)=" addSprint()">
+    <form (submit)="addSprint()">
       <div class="form-group mb-3">
         <input
           type="text"
@@ -20,8 +20,11 @@
             placeholder="Fecha de inicio"
             [(ngModel)]="initialDate"
             name="initialDate"
-          >
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
       </div>
@@ -34,8 +37,11 @@
             placeholder="Fecha de fin"
             [(ngModel)]="finalDate"
             name="finalDate"
-          >
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>

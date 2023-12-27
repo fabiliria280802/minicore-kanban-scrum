@@ -56,7 +56,7 @@ var Server = /** @class */ (function () {
     function Server() {
         var _a;
         this.app = (0, express_1.default)();
-        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : '4000';
+        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4000";
         this.middlewares();
         this.routes();
         this.connectDB();
@@ -64,7 +64,7 @@ var Server = /** @class */ (function () {
     Server.prototype.listen = function () {
         var _this = this;
         this.app.listen(this.port, function () {
-            console.log('Servidor corriendo en puerto ' + _this.port);
+            console.log("Servidor corriendo en puerto " + _this.port);
         });
     };
     Server.prototype.middlewares = function () {
@@ -72,10 +72,10 @@ var Server = /** @class */ (function () {
         this.app.use((0, cors_1.default)());
     };
     Server.prototype.routes = function () {
-        this.app.use('/api/users', user_routes_1.default);
-        this.app.use('/api/sprints', sprint_routes_1.default);
-        this.app.use('/api/tasks', task_routes_1.default);
-        this.app.use('/api/subtasks', subtask_routes_1.default);
+        this.app.use("/api/users", user_routes_1.default);
+        this.app.use("/api/sprints", sprint_routes_1.default);
+        this.app.use("/api/tasks", task_routes_1.default);
+        this.app.use("/api/subtasks", subtask_routes_1.default);
     };
     Server.prototype.connectDB = function () {
         return __awaiter(this, void 0, void 0, function () {

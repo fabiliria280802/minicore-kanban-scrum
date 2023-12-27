@@ -28,8 +28,8 @@ const routes: Routes = [
   { path: 'create-update-users', component: CreateUpdateUsersComponent },
   { path: 'index', component: IndexComponent },
   { path: 'list-task', component: ListTaskComponent },
-  { path: 'list-subtask',component: ListSubtaskComponent},
-  { path: 'list-users',component:ListUsersComponent},
+  { path: 'list-subtask', component: ListSubtaskComponent },
+  { path: 'list-users', component: ListUsersComponent },
   //{ path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

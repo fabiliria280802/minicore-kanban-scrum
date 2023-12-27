@@ -55,22 +55,22 @@ var getUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, user_1.default.findOne({
-                        where: { iduser: id }
+                        where: { iduser: id },
                     })];
             case 2:
                 user = _a.sent();
                 if (!user) {
                     return [2 /*return*/, res.status(404).json({
-                            msg: "User not found"
+                            msg: "User not found",
                         })];
                 }
                 res.json(user);
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
-                console.error('Database query error:', error_1);
+                console.error("Database query error:", error_1);
                 res.status(500).json({
-                    msg: "Error retrieving user"
+                    msg: "Error retrieving user",
                 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -91,17 +91,14 @@ var loginUser = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 _d.trys.push([1, 4, , 5]);
                 return [4 /*yield*/, user_1.default.findOne({
                         where: (_b = {},
-                            _b[sequelize_1.Op.or] = [
-                                { username: login },
-                                { email: login }
-                            ],
-                            _b)
+                            _b[sequelize_1.Op.or] = [{ username: login }, { email: login }],
+                            _b),
                     })];
             case 2:
                 user = _d.sent();
                 if (!user) {
                     return [2 /*return*/, res.status(400).json({
-                            msg: "No existe un usuario con el nombre o correo ".concat(login)
+                            msg: "No existe un usuario con el nombre o correo ".concat(login),
                         })];
                 }
                 return [4 /*yield*/, bcrypt_1.default.compare(password, user.password)];
@@ -109,20 +106,20 @@ var loginUser = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 passwordValid = _d.sent();
                 if (!passwordValid) {
                     return [2 /*return*/, res.status(400).json({
-                            msg: 'Password Incorrecta'
+                            msg: "Password Incorrecta",
                         })];
                 }
                 token = jsonwebtoken_1.default.sign({
                     id: user.id,
-                    username: user.username
-                }, (_c = process.env.SECRET_KEY) !== null && _c !== void 0 ? _c : '^H:E{Ll');
+                    username: user.username,
+                }, (_c = process.env.SECRET_KEY) !== null && _c !== void 0 ? _c : "^H:E{Ll");
                 res.json({ token: token });
                 return [3 /*break*/, 5];
             case 4:
                 error_2 = _d.sent();
                 console.error("Login error: ", error_2);
                 res.status(500).json({
-                    msg: "Ocurrió un error al intentar iniciar sesión"
+                    msg: "Ocurrió un error al intentar iniciar sesión",
                 });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
@@ -136,16 +133,16 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, connection_1.default.query('SELECT * FROM users')];
+                return [4 /*yield*/, connection_1.default.query("SELECT * FROM users")];
             case 1:
                 _a = _b.sent(), results = _a[0], metadata = _a[1];
                 res.json(results);
                 return [3 /*break*/, 3];
             case 2:
                 error_3 = _b.sent();
-                console.error('Database query error:', error_3);
+                console.error("Database query error:", error_3);
                 res.status(500).json({
-                    msg: "Error retrieving users"
+                    msg: "Error retrieving users",
                 });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
@@ -173,27 +170,29 @@ var signInUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, user_1.default.findOne({ where: { email: email } })];
             case 2:
                 userExistsEmail = _b.sent();
-                return [4 /*yield*/, user_1.default.findOne({ where: { username: username } })];
+                return [4 /*yield*/, user_1.default.findOne({
+                        where: { username: username },
+                    })];
             case 3:
                 userExistsUsername = _b.sent();
                 if (userExistsEmail) {
                     return [2 /*return*/, res.status(400).json({
-                            msg: "Ya existe un usuario con el correo ".concat(email)
+                            msg: "Ya existe un usuario con el correo ".concat(email),
                         })];
                 }
                 if (userExistsUsername) {
                     return [2 /*return*/, res.status(400).json({
-                            msg: "Ya existe un usuario con el username ".concat(username)
+                            msg: "Ya existe un usuario con el username ".concat(username),
                         })];
                 }
                 if (!/.*@skam\.com$/.test(email)) {
                     return [2 /*return*/, res.status(400).json({
-                            msg: "Este correo ".concat(email, " no cumple con los estandares de la organizaci\u00F3n")
+                            msg: "Este correo ".concat(email, " no cumple con los estandares de la organizaci\u00F3n"),
                         })];
                 }
                 if (!isValidPassword(password)) {
                     return [2 /*return*/, res.status(400).json({
-                            msg: 'La contraseña no cumple con los requisitos de seguridad'
+                            msg: "La contraseña no cumple con los requisitos de seguridad",
                         })];
                 }
                 return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
@@ -205,18 +204,18 @@ var signInUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                         email: email,
                         password: hashedPassword,
                         type: type,
-                        position: position
+                        position: position,
                     })];
             case 5:
                 newUser = _b.sent();
                 res.json({
-                    msg: "Usuario ".concat(fullname, " creado exitosamente")
+                    msg: "Usuario ".concat(fullname, " creado exitosamente"),
                 });
                 return [3 /*break*/, 7];
             case 6:
                 error_4 = _b.sent();
                 res.status(500).json({
-                    msg: "Ocurrió un error al crear el usuario"
+                    msg: "Ocurrió un error al crear el usuario",
                 });
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
@@ -240,10 +239,10 @@ var putUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 if (!user) {
                     return [2 /*return*/, res.status(404).json({
                             msg: "User not found",
-                            id: id
+                            id: id,
                         })];
                 }
-                if (!(updateData.hasOwnProperty('password') && updateData.password)) return [3 /*break*/, 4];
+                if (!(updateData.hasOwnProperty("password") && updateData.password)) return [3 /*break*/, 4];
                 _a = updateData;
                 return [4 /*yield*/, bcrypt_1.default.hash(updateData.password, 10)];
             case 3:
@@ -254,14 +253,14 @@ var putUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 _b.sent();
                 res.json({
                     msg: "User updated",
-                    user: user
+                    user: user,
                 });
                 return [3 /*break*/, 7];
             case 6:
                 error_5 = _b.sent();
-                console.error('Database query error:', error_5);
+                console.error("Database query error:", error_5);
                 res.status(500).json({
-                    msg: "Error updating user"
+                    msg: "Error updating user",
                 });
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
@@ -279,25 +278,25 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, user_1.default.destroy({
-                        where: { iduser: id }
+                        where: { iduser: id },
                     })];
             case 2:
                 result = _a.sent();
                 if (result === 0) {
                     return [2 /*return*/, res.status(404).json({
                             msg: "User not found",
-                            id: id
+                            id: id,
                         })];
                 }
                 res.json({
-                    msg: "User deleted successfully"
+                    msg: "User deleted successfully",
                 });
                 return [3 /*break*/, 4];
             case 3:
                 error_6 = _a.sent();
-                console.error('Database query error:', error_6);
+                console.error("Database query error:", error_6);
                 res.status(500).json({
-                    msg: "Error deleting user"
+                    msg: "Error deleting user",
                 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];

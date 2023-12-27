@@ -1,5 +1,5 @@
-table{
-  width:100;
+table {
+  width: 100;
 }
 
 .toolbar-container {
@@ -38,22 +38,23 @@ mat-icon {
   margin-right: 10px;
 }
 
-.btnEdit, .btnDelete, .btnView{
+.btnEdit,
+.btnDelete,
+.btnView {
   cursor: pointer;
 }
 
-.btnEdit{
+.btnEdit {
   color: #bafc64;
 }
 
-.btnDelete{
+.btnDelete {
   color: #ee5f5f;
 }
 
-.btnView{
+.btnView {
   color: #838fff;
 }
-
 
 .filter-button-container {
   display: flex;
@@ -69,16 +70,13 @@ mat-icon {
   margin-left: 2px;
 }
 
-
 mat-form-field.mat-form-field {
   height: 100%;
 }
 
-
 mat-form-field.mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
   height: auto;
 }
-
 
 mat-form-field.mat-form-field .mat-form-field-infix {
   border-top: none;

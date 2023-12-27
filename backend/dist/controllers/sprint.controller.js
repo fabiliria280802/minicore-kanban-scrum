@@ -107,15 +107,25 @@ var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 startDate = new Date(initialDate);
                 endDate = new Date(finalDate);
                 if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-                    return [2 /*return*/, res.status(400).json({ error: 'Las fechas proporcionadas no son válidas.' })];
+                    return [2 /*return*/, res
+                            .status(400)
+                            .json({ error: "Las fechas proporcionadas no son válidas." })];
                 }
                 if (endDate <= startDate) {
-                    return [2 /*return*/, res.status(400).json({ error: 'La fecha final no puede ser anterior o igual a la fecha inicial.' })];
+                    return [2 /*return*/, res
+                            .status(400)
+                            .json({
+                            error: "La fecha final no puede ser anterior o igual a la fecha inicial.",
+                        })];
                 }
                 timeDiff = endDate.getTime() - startDate.getTime();
                 dayDiff = timeDiff / (1000 * 3600 * 24);
                 if (dayDiff > 15) {
-                    return [2 /*return*/, res.status(400).json({ error: 'La diferencia entre la fecha inicial y final no puede ser mayor a 15 días.' })];
+                    return [2 /*return*/, res
+                            .status(400)
+                            .json({
+                            error: "La diferencia entre la fecha inicial y final no puede ser mayor a 15 días.",
+                        })];
                 }
                 return [4 /*yield*/, sprint_1.default.create(req.body)];
             case 2:
@@ -128,7 +138,7 @@ var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     res.status(500).json({ error: error_3.message });
                 }
                 else {
-                    res.status(500).json({ error: 'Error al insertar sprint' });
+                    res.status(500).json({ error: "Error al insertar sprint" });
                 }
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];

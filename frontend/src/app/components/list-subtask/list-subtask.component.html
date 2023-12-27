@@ -3,67 +3,96 @@
   <mat-toolbar color="primary">
     <span class="toolbar-title">Listado de subtareas</span>
   </mat-toolbar>
-
 </div>
 <div class="filter-button-container">
   <mat-form-field class="toolbar-search">
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. ium"
+      #input
+    />
   </mat-form-field>
 
-  <button (click)="addEditSubtask()" mat-raised-button color="primary"  class="add-button">Agregar</button>
+  <button
+    (click)="addEditSubtask()"
+    mat-raised-button
+    color="primary"
+    class="add-button"
+  >
+    Agregar
+  </button>
 </div>
 
 <table mat-table [dataSource]="dataSource" color="primary" matSort>
-
   <ng-container matColumnDef="N° Subtask">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> N° Subtask </th>
-    <td mat-cell *matCellDef="let element"> {{element.idsubtask}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Subtask</th>
+    <td mat-cell *matCellDef="let element">{{ element.idsubtask }}</td>
   </ng-container>
 
   <ng-container matColumnDef="N° Task">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> N° Task </th>
-    <td mat-cell *matCellDef="let element"> {{element.idtask}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Task</th>
+    <td mat-cell *matCellDef="let element">{{ element.idtask }}</td>
   </ng-container>
 
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Título </th>
-    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
   </ng-container>
 
   <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> Descripción </th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    <th mat-header-cell *matHeaderCellDef>Descripción</th>
+    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
   </ng-container>
 
   <ng-container matColumnDef="Subtaskstatus">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
-    <td mat-cell *matCellDef="let element"> {{element.Subtaskstatus}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+    <td mat-cell *matCellDef="let element">{{ element.Subtaskstatus }}</td>
   </ng-container>
 
   <ng-container matColumnDef="assignedUser">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Persona asignada </th>
-    <td mat-cell *matCellDef="let element"> {{element.assignedUser}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Persona asignada</th>
+    <td mat-cell *matCellDef="let element">{{ element.assignedUser }}</td>
   </ng-container>
 
   <ng-container matColumnDef="tools">
-    <th mat-header-cell *matHeaderCellDef> Herramientas </th>
+    <th mat-header-cell *matHeaderCellDef>Herramientas</th>
     <td mat-cell *matCellDef="let element">
-      <mat-icon aria-hidden="false" fontIcon="visibility" matTooltip="Ver subtarea: {{element.title}}" class="btnView"></mat-icon>
-      <mat-icon aria-hidden="false" fontIcon="edit" matTooltip="Editar subtarea: {{element.title}}" class="btnEdit"></mat-icon>
-      <mat-icon aria-hidden="false" fontIcon="delete" matTooltip="Eliminar subtarea: {{element.title}}" class="btnDelete"></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        fontIcon="visibility"
+        matTooltip="Ver subtarea: {{ element.title }}"
+        class="btnView"
+      ></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        fontIcon="edit"
+        matTooltip="Editar subtarea: {{ element.title }}"
+        class="btnEdit"
+      ></mat-icon>
+      <mat-icon
+        aria-hidden="false"
+        fontIcon="delete"
+        matTooltip="Eliminar subtarea: {{ element.title }}"
+        class="btnDelete"
+      ></mat-icon>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
   <!-- Row shown when there is no matching data. -->
   <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" colspan="4">No se encontro ninguna subtarea con esa caracteristica "{{input.value}}"</td>
+    <td class="mat-cell" colspan="4">
+      No se encontro ninguna subtarea con esa caracteristica "{{ input.value }}"
+    </td>
   </tr>
 </table>
-<mat-paginator [length]="10"
-              [pageSize]="2"
-              [pageSizeOptions]="[2, 4, 6, 8, 10]"
-              aria-label="Selecciona una pagina">
+<mat-paginator
+  [length]="10"
+  [pageSize]="2"
+  [pageSizeOptions]="[2, 4, 6, 8, 10]"
+  aria-label="Selecciona una pagina"
+>
 </mat-paginator>

@@ -6,11 +6,9 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   dropdownOpen = false;
-  constructor(
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
   toggleDropdown() {
@@ -26,4 +24,3 @@ export class NavbarComponent implements OnInit{
     this.router.navigate(['/login']);
   }
 }
-
