@@ -9,6 +9,8 @@ export interface Subtask {
   idtask: number;
   title: string;
   description: string;
-  Subtaskstatus: subtaskstatus;
+  subtaskstatus: subtaskstatus;
   assignedUser?: string;
 }
+
+

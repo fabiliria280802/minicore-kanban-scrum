@@ -29,4 +29,8 @@ export class UserService {
       user,
     );
   }
+
+  getUsers():Observable<User[]>{
+    return this.http.get<User[]>(`${this.myAppUrl}${this.myApiUrl}`);
+  }
 }

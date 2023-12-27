@@ -14,7 +14,7 @@ const listSubtack: Subtask[] = [
     idtask: 1,
     title: 'Crear repo',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.todo,
+    subtaskstatus: subtaskstatus.todo,
     assignedUser: 'hello',
   },
   {
@@ -22,7 +22,7 @@ const listSubtack: Subtask[] = [
     idtask: 1,
     title: 'Configurar dependencias',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.done,
+    subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
@@ -30,7 +30,7 @@ const listSubtack: Subtask[] = [
     idtask: 1,
     title: 'Comprar licencia',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.todo,
+    subtaskstatus: subtaskstatus.todo,
     assignedUser: 'fabs',
   },
   {
@@ -38,7 +38,7 @@ const listSubtack: Subtask[] = [
     idtask: 2,
     title: 'Resolver bug',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.done,
+    subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
@@ -46,7 +46,7 @@ const listSubtack: Subtask[] = [
     idtask: 2,
     title: 'Sprint #2',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.done,
+    subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
@@ -54,7 +54,7 @@ const listSubtack: Subtask[] = [
     idtask: 3,
     title: 'Sprint #1',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.todo,
+    subtaskstatus: subtaskstatus.todo,
     assignedUser: '-',
   },
   {
@@ -62,7 +62,7 @@ const listSubtack: Subtask[] = [
     idtask: 3,
     title: 'Sprint #1',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.done,
+    subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
@@ -70,7 +70,7 @@ const listSubtack: Subtask[] = [
     idtask: 3,
     title: 'Sprint #1',
     description: '1.0079',
-    Subtaskstatus: subtaskstatus.todo,
+    subtaskstatus: subtaskstatus.todo,
     assignedUser: '-',
   },
 ];
@@ -115,7 +115,11 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
   addEditSubtask() {
     const dialogRef = this.dialog.open(CreateUpdateSubtaskComponent, {
       width: '550px',
+      disableClose: true,
       //data:{},
+    });
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log('hell no');
     });
   }
 }
