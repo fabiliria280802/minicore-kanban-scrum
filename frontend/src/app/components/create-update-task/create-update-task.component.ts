@@ -1,6 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Task, points, status } from 'src/app/interfaces/task.interface';
+import { ErrorService } from 'src/app/services/error.service';
+import { UserService } from 'src/app/services/user.service';
+import { TaskService } from 'src/app/services/task.service';
+import { User } from 'src/app/interfaces/user.interface';
+import { Router } from '@angular/router';
 //TODO: Agregar funcionalidad de esta pestaña (task)
 @Component({
   selector: 'app-create-update-task',
@@ -8,29 +15,19 @@ import { Task, points, status } from 'src/app/interfaces/task.interface';
   styleUrls: ['./create-update-task.component.css'],
 })
 export class CreateUpdateTaskComponent implements OnInit {
+  users: User[] =[];
+  constructor(
+    public dialogRef:MatDialogRef<CreateUpdateTaskComponent>,
+    private _taskService: TaskService,
+    private _errorService: ErrorService,
+    private _userService: UserService,
+    private router: Router,
+    private toastr: ToastrService,
+  ){}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
-  //pointOptions: {value: points, viewValue: string}[] = [];
-  //selectedValuePoints: points = points.one;
-
-  //statusOptions: { value: status, viewValue: string}[] = []; // Debe ser un array
-  //selectedValueStatus: status = status.todo;
-
-  //constructor(public dialogRef: MatDialogRef<CreateUpdateTaskComponent>){
-  //Object.entries(points).forEach(([key, value]) => {
-  //if (!isNaN(Number(value))) {
-  //this.pointOptions.push({ value: value as points, viewValue: key });
-  //}
-  //});
-  //Object.entries(status).forEach(([key, value]) => {
-  //if (isNaN(Number(key))) {
-  //this.statusOptions.push({ value: value as status, viewValue: key });
-  // }
-  //});
-  // }
-  //ngOnInit(): void {}
-  //cancelar(){
-
-  //}
+  cancelar(){
+    this.dialogRef.close();
+  }
 }

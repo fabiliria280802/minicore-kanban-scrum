@@ -1,47 +1,58 @@
-<h2 mat-dialog-title>Agregar Task</h2>
-<!--<mat-dialog-content class="mat-typography">
-
-  <div class="column">
-    <mat-form-field appearance="fill">
-      <mat-label>Titulo</mat-label>
-      <input matInput placeholder="Ingresa el titulo" minlength="5" autocomplete="off" required="title">
-    </mat-form-field>
-  </div>
-
-  <div class="column">
-    <mat-form-field appearance="fill">
-      <mat-label>Descripción</mat-label>
-      <input matInput placeholder="Ingresa la descripción" minlength="5" autocomplete="off" required="description">
-    </mat-form-field>
-  </div>
-
-  <div class="row">
-    <div class="column">
-      <mat-form-field appearance="fill">
-        <mat-label>Puntos</mat-label>
-        <mat-select [(ngModel)]="selectedValuePoints" name="points">
-          <mat-option *ngFor="let point of pointOptions" [value]="point.value">
-          {{ point.viewValue }}
-        </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="column">
-      <mat-form-field appearance="fill">
-        <mat-label>Estado</mat-label>
-          <mat-select [(ngModel)]="selectedValueStatus" name="status">
-            <mat-option *ngFor="let status of statusOptions" [value]="status.value">
-            {{ status.viewValue }}
-          </mat-option>
-          </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-
-  </mat-dialog-content>
+<h2 mat-dialog-title>Agregar Tarea</h2>
+<div class="title-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Titulo</mat-label>
+    <input matInput placeholder="Ingrese el titulo" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput placeholder="Ingrese la descripción" autocomplete="off"></textarea>
+  </mat-form-field>
+</div>
+<div class="select-container">
+  <mat-form-field>
+    <mat-label>Selecciona sprint</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let sprint of sprints" [value]="sprint.title">{{sprint.title}}</mat-option>
+    </mat-select>
+    <mat-hint align="end">Estos son los sprints existentes^</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Selecciona estado</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+    </mat-select>
+    <mat-hint align="end">Estados de la tarea^</mat-hint>
+  </mat-form-field>
+</div>
+<div class="select-container">
+  <mat-form-field>
+    <mat-label>Selecciona puntos</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let sprint of sprints" [value]="sprint.title">{{sprint.title}}</mat-option>
+    </mat-select>
+    <mat-hint align="end">Estos son los sprints existentes^</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+      <mat-label>Selecciona Desarrollador</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let user of users" [value]="user.fullname">{{user.fullname}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Todos los desarroladores^</mat-hint>
+  </mat-form-field>
+</div>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="cancelar()">Cancelar</button>
-  <button mat-button cdkFocusInitial>Agregar</button>
+  <button (click)="cancelar()" mat-button>Cancelar</button>
+  <button mat-button cdkFocusInitial>Aceptar</button>
 </mat-dialog-actions>
-
+<!--
+export interface Task {
+  idtask: number;
+  idsprint: number;
+  title: string;
+  description: string;
+  status: status;
+  points: points;
+  assignedUser?: string;
+}
 -->
