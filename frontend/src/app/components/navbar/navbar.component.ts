@@ -8,9 +8,13 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   dropdownOpen = false;
+  dropdownOpenTwo = false;
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
+  toggleDropdownTwo(){
+    this.dropdownOpenTwo = !this.dropdownOpenTwo;
+  }
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }

@@ -1,11 +1,17 @@
+//Angular adds
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+//interfaces
 import { Task } from 'src/app/interfaces/task.interface';
 import { User } from 'src/app/interfaces/user.interface';
 import { Subtask, subtaskstatus } from 'src/app/interfaces/subtask.interface';
+
+//services
 import { ErrorService } from 'src/app/services/error.service';
 import { SubtaskService } from 'src/app/services/subtask.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,6 +24,7 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['./create-update-subtask.component.css'],
 })
 export class CreateUpdateSubtaskComponent implements OnInit{
+
   //atributos
   idsubtask: number = 0;
   idtask: number = 0;
@@ -26,9 +33,13 @@ export class CreateUpdateSubtaskComponent implements OnInit{
   assignedUser?: string = '';
   subtaskstatus: subtaskstatus = subtaskstatus.todo;
   subtaskstatuses: subtaskstatus[] = [subtaskstatus.todo, subtaskstatus.doing, subtaskstatus.done];
+
   //selects
   tasks: Task[] = [];
   users: User[] =[];
+
+  //reactiveform
+  form: FormGroup;
 
   constructor(
     public dialogRef:MatDialogRef<CreateUpdateSubtaskComponent>,
@@ -38,12 +49,23 @@ export class CreateUpdateSubtaskComponent implements OnInit{
     private _subtaskService: SubtaskService,
     private router: Router,
     private toastr: ToastrService,
-    ){}
+    private fb: FormBuilder,
+    ){
+      this.form =this.fb.group({
+          idsubtask:[null],
+          taskTitle:[null],
+          title:[''],
+          description:[''],
+          assignedUser:[''],
+          subtaskstatus:[null],
+      });
+    }
 
   ngOnInit(): void {
     this.loadTasks();
     this.loadUsers();
   }
+
   loadTasks(): void {
     this._taskService.getTasks().subscribe({
       next: (tasks) => {
@@ -58,6 +80,7 @@ export class CreateUpdateSubtaskComponent implements OnInit{
       },
     });
   }
+
   loadUsers():void{
     this._userService.getUsers().subscribe({
       next: (users) => {
@@ -72,11 +95,12 @@ export class CreateUpdateSubtaskComponent implements OnInit{
       },
     });
   }
+
   cancelar(){
     this.dialogRef.close();
   }
 
-  addSubtask(){
+  addEditSubtask(){
     if (
       this.idsubtask == 0 ||
       this.idtask == 0 ||

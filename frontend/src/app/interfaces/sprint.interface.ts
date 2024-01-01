@@ -1,6 +1,7 @@
 export interface Sprint {
   idsprint: number;
   title: string;
+  // TODO: agregar DESCRIPCION
   initialDate: Date;
   finalDate: Date;
   committedPoints?: number;

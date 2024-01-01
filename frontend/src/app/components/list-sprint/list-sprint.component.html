@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div class="toolbar-container">
   <mat-toolbar color="primary">
-    <span class="toolbar-title">Listado de tareas</span>
+    <span class="toolbar-title">Listado de sprints</span>
   </mat-toolbar>
 </div>
 <div class="filter-button-container">
@@ -15,7 +15,7 @@
   </mat-form-field>
 
   <button
-    (click)="addEditTask()"
+    (click)="addEditSprint()"
     mat-raised-button
     color="primary"
     class="add-button"
@@ -25,34 +25,29 @@
 </div>
 
 <table mat-table [dataSource]="dataSource" color="primary" matSort>
-  <ng-container matColumnDef="N° Sprint">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Sprint</th>
-    <td mat-cell *matCellDef="let element">{{ element.idsprint }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="N° Task">
+  <ng-container matColumnDef="N° sprint">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Tarea</th>
     <td mat-cell *matCellDef="let element">{{ element.idtask }}</td>
   </ng-container>
 
   <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Subtarea</th>
+    <td mat-cell *matCellDef="let element">{{ element.idsubtask }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="initialDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
-    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.initialDate }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Descripción</th>
-    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+  <ng-container matColumnDef="finalDate">
+    <th mat-header-cell *matHeaderCellDef>Fin del sprint</th>
+    <td mat-cell *matCellDef="let element">{{ element.finalDate }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="status">
+  <ng-container matColumnDef="committedPoints">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
-    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="points">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Puntos</th>
-    <td mat-cell *matCellDef="let element">{{ element.points }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.committedPoints }}</td>
   </ng-container>
 
   <ng-container matColumnDef="assignedUser">

@@ -1,73 +1,78 @@
+//Angular adds
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Subtask, subtaskstatus } from 'src/app/interfaces/subtask.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
+
+//interfaces
+import { Subtask, subtaskstatus } from 'src/app/interfaces/subtask.interface';
+
+//calling components
 import { CreateUpdateSubtaskComponent } from '../create-update-subtask/create-update-subtask.component';
 
 //TODO: Agregar funcionalidad de esta pestaña (subtask)
 
-const listSubtack: Subtask[] = [
+const listSubtask: Subtask[] = [
   {
-    idsubtask: 1,
     idtask: 1,
+    idsubtask: 1,
     title: 'Crear repo',
     description: '1.0079',
     subtaskstatus: subtaskstatus.todo,
     assignedUser: 'hello',
   },
   {
-    idsubtask: 2,
     idtask: 1,
+    idsubtask: 2,
     title: 'Configurar dependencias',
     description: '1.0079',
     subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
-    idsubtask: 3,
     idtask: 1,
+    idsubtask: 3,
     title: 'Comprar licencia',
     description: '1.0079',
     subtaskstatus: subtaskstatus.todo,
     assignedUser: 'fabs',
   },
   {
-    idsubtask: 4,
     idtask: 2,
+    idsubtask: 4,
     title: 'Resolver bug',
     description: '1.0079',
     subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
-    idsubtask: 5,
     idtask: 2,
+    idsubtask: 5,
     title: 'Sprint #2',
     description: '1.0079',
     subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
-    idsubtask: 6,
     idtask: 3,
+    idsubtask: 6,
     title: 'Sprint #1',
     description: '1.0079',
     subtaskstatus: subtaskstatus.todo,
     assignedUser: '-',
   },
   {
-    idsubtask: 7,
     idtask: 3,
+    idsubtask: 7,
     title: 'Sprint #1',
     description: '1.0079',
     subtaskstatus: subtaskstatus.done,
     assignedUser: '-',
   },
   {
-    idsubtask: 8,
     idtask: 3,
+    idsubtask: 8,
     title: 'Sprint #1',
     description: '1.0079',
     subtaskstatus: subtaskstatus.todo,
@@ -82,8 +87,8 @@ const listSubtack: Subtask[] = [
 })
 export class ListSubtaskComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
-    'N° Subtask',
     'N° Task',
+    'N° Subtask',
     'title',
     'description',
     'Subtaskstatus',
@@ -96,7 +101,7 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource(listSubtack);
+    this.dataSource = new MatTableDataSource(listSubtask);
   }
 
   applyFilter(event: Event) {

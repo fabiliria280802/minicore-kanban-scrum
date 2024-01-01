@@ -26,10 +26,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
 import { IndexComponent } from './components/index/index.component';
 import { SprintActiveComponent } from './components/sprint-active/sprint-active.component';
+import { ListSprintComponent } from './components/list-sprint/list-sprint.component';
 
 //pipes
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
     SprintActiveComponent,
     FilterBySprintPipe,
     FilterByTaskPipe,
+    ListSprintComponent,
   ],
   imports: [
     BrowserModule,

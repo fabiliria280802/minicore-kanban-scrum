@@ -15,6 +15,8 @@ import { ListTaskComponent } from './components/list-task/list-task.component';
 import { BacklogComponent } from './components/backlog/backlog.component';
 import { ListSubtaskComponent } from './components/list-subtask/list-subtask.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
+import { ListSprintComponent } from './components/list-sprint/list-sprint.component';
+
 //definicion de rutas
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -30,6 +32,7 @@ const routes: Routes = [
   { path: 'list-task', component: ListTaskComponent },
   { path: 'list-subtask', component: ListSubtaskComponent },
   { path: 'list-users', component: ListUsersComponent },
+  { path: 'list-sprint', component: ListSprintComponent},
   //{ path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

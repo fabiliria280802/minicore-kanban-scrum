@@ -4,7 +4,7 @@ export enum type {
 }
 
 export interface User {
-  iduser?: number;
+  //iduser?: number;
   fullname: string;
   username: string;
   password: string;

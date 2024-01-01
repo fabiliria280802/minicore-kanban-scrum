@@ -4,10 +4,14 @@ import routesSprints from "../routes/sprint.routes";
 import routesTasks from "../routes/task.routes";
 import routesSubtasks from "../routes/subtask.routes";
 //models
-import Task from "./task";
-import Subtask from "./subtask";
-import Sprint from "./sprint";
-import User from "./user";
+/* ya no es necesario
+  import Task from "./task";
+  import Subtask from "./subtask";
+  import Sprint from "./sprint";
+  import User from "./user";
+*/
+//config fk
+import { Task, Subtask, Sprint, User } from './index';
 //conexion db
 import connection from "../db/connection";
 //adicionales
@@ -48,10 +52,11 @@ class Server {
             console.log("Base de datos online");
         })*/
     try {
+      await Sprint.sync();
       await User.sync();
       await Task.sync();
       await Subtask.sync();
-      await Sprint.sync();
+
       console.log("Base de datos online");
     } catch (error) {
       console.log("No se pudo conectar");

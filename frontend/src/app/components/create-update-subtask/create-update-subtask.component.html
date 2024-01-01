@@ -1,43 +1,45 @@
-<h2 mat-dialog-title>Agregar subtask</h2>
-<div class="title-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Titulo</mat-label>
-    <input matInput placeholder="Ingrese el titulo" autocomplete="off">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Descripción</mat-label>
-    <textarea matInput placeholder="Ingrese la descripción" autocomplete="off"></textarea>
-  </mat-form-field>
-</div>
-<div class="select-container">
-  <mat-form-field>
-    <mat-label>Selecciona tarea</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let task of tasks" [value]="task.title">{{task.title}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">Estas son las tareas existentes^</mat-hint>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Selecciona estado</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let subtaskstatus of subtaskstatuses" [value]="subtaskstatus">{{subtaskstatus}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">Estados de la subtarea^</mat-hint>
-  </mat-form-field>
-</div>
-<div class="selectDev-container">
-  <mat-form-field>
-    <mat-label>Selecciona Desarrollador</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let user of users" [value]="user.fullname">{{user.fullname}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">Todos los desarroladores^</mat-hint>
-  </mat-form-field>
-</div>
-<mat-dialog-actions align="end">
-  <button (click)="cancelar()" mat-button>Cancelar</button>
-  <button mat-button cdkFocusInitial>Aceptar</button>
-</mat-dialog-actions>
+<h2 mat-dialog-title>Agregar Subtarea</h2>
+<form [formGroup]="form" (ngSubmit)="addEditSubtask()">
+  <div class="title-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Titulo</mat-label>
+      <input matInput formControlName="title" placeholder="Ingrese el titulo" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" placeholder="Ingrese la descripción" autocomplete="off"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="select-container">
+    <mat-form-field>
+      <mat-label>Selecciona tarea</mat-label>
+      <mat-select formControlName="taskTitle">
+        <mat-option *ngFor="let task of tasks" [value]="task.title">{{task.title}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Estas son las tareas existentes^</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Selecciona estado</mat-label>
+      <mat-select formControlName="subtaskstatus">
+        <mat-option *ngFor="let subtaskstatus of subtaskstatuses" [value]="subtaskstatus">{{subtaskstatus}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Estados de la subtarea^</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="selectDev-container">
+    <mat-form-field>
+      <mat-label>Selecciona Desarrollador</mat-label>
+      <mat-select formControlName="assignedUser">
+        <mat-option *ngFor="let user of users" [value]="user.fullname">{{user.fullname}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Todos los desarroladores^</mat-hint>
+    </mat-form-field>
+  </div>
+  <mat-dialog-actions align="end">
+    <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+    <button mat-button cdkFocusInitial type="submit">Aceptar</button>
+  </mat-dialog-actions>
+</form>
 <!--
 export interface Subtask {
   idsubtask: number;

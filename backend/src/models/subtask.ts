@@ -7,6 +7,22 @@ const Subtask = sequelize.define("subtask", {
     primaryKey: true,
     autoIncrement: true,
   },
+  idtask: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'tasks',
+      key: 'idtask',
+    },
+  },
+  iduser: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'iduser',
+    },
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -21,10 +37,6 @@ const Subtask = sequelize.define("subtask", {
   },
   priority: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  idtask: {
-    type: DataTypes.INTEGER,
     allowNull: false,
   },
   assignedUser: {

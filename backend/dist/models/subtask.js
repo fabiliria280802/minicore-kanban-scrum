@@ -11,6 +11,22 @@ var Subtask = connection_1.default.define("subtask", {
         primaryKey: true,
         autoIncrement: true,
     },
+    idtask: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'tasks',
+            key: 'idtask',
+        },
+    },
+    iduser: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'users',
+            key: 'iduser',
+        },
+    },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
@@ -25,10 +41,6 @@ var Subtask = connection_1.default.define("subtask", {
     },
     priority: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    idtask: {
-        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
     assignedUser: {

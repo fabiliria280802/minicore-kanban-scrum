@@ -25,14 +25,14 @@
 </div>
 
 <table mat-table [dataSource]="dataSource" color="primary" matSort>
-  <ng-container matColumnDef="N° Subtask">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Subtask</th>
-    <td mat-cell *matCellDef="let element">{{ element.idsubtask }}</td>
+  <ng-container matColumnDef="N° Task">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Tarea</th>
+    <td mat-cell *matCellDef="let element">{{ element.idtask }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="N° Task">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Task</th>
-    <td mat-cell *matCellDef="let element">{{ element.idtask }}</td>
+  <ng-container matColumnDef="N° Subtask">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Subtarea</th>
+    <td mat-cell *matCellDef="let element">{{ element.idsubtask }}</td>
   </ng-container>
 
   <ng-container matColumnDef="title">

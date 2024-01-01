@@ -7,13 +7,21 @@ const Task = sequelize.define("task", {
     primaryKey: true,
     autoIncrement: true,
   },
-  iduser: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   idsprint: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: 'sprints',
+      key: 'idsprint',
+    },
+  },
+  iduser: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'iduser',
+    },
   },
   title: {
     type: DataTypes.STRING,

@@ -110,9 +110,10 @@ var loginUser = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                         })];
                 }
                 token = jsonwebtoken_1.default.sign({
-                    id: user.id,
+                    iduser: user.iduser,
                     username: user.username,
-                }, (_c = process.env.SECRET_KEY) !== null && _c !== void 0 ? _c : "^H:E{Ll");
+                    type: user.type,
+                }, (_c = process.env.SECRET_KEY) !== null && _c !== void 0 ? _c : "^H:E{Ll", { expiresIn: '3h' });
                 res.json({ token: token });
                 return [3 /*break*/, 5];
             case 4:

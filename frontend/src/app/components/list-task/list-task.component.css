@@ -1,32 +1,88 @@
 table {
-  width: 100%;
+  width: 100;
+}
+
+.toolbar-container {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-title {
+  color: white;
+  margin-left: 10px;
+}
+
+.toolbar-search {
+  flex: 1;
+  margin-right: 8px;
 }
 
 mat-form-field {
-  font-size: 14px;
-  width: 90%;
-  margin-right: 10px;
+  margin-top: 0;
+  background: primary;
+  border-radius: 4px;
 }
 
-td,
-th {
-  width: 25%;
+input::placeholder {
+  opacity: 1;
+  font-style: italic;
+}
+
+mat-icon {
+  margin-right: 10px;
 }
 
 .btnEdit,
 .btnDelete,
-.btnVisibility {
+.btnView {
   cursor: pointer;
 }
 
-.btnVisibility {
-  color: #fa95fa;
-}
-
 .btnEdit {
-  color: #7e9df5;
+  color: #bafc64;
 }
 
 .btnDelete {
-  color: #f55c47;
+  color: #ee5f5f;
 }
+
+.btnView {
+  color: #838fff;
+}
+
+.filter-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: #333;
+}
+
+.add-button {
+  flex-basis: auto;
+  white-space: nowrap;
+  margin-left: 2px;
+}
+
+mat-form-field.mat-form-field {
+  height: 100%;
+}
+
+mat-form-field.mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
+  height: auto;
+}
+
+mat-form-field.mat-form-field .mat-form-field-infix {
+  border-top: none;
+}
+
+ td.mat-cell {
+  color: white;
+}
+

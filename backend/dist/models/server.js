@@ -45,10 +45,14 @@ var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
 var task_routes_1 = __importDefault(require("../routes/task.routes"));
 var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
 //models
-var task_1 = __importDefault(require("./task"));
-var subtask_1 = __importDefault(require("./subtask"));
-var sprint_1 = __importDefault(require("./sprint"));
-var user_1 = __importDefault(require("./user"));
+/* ya no es necesario
+  import Task from "./task";
+  import Subtask from "./subtask";
+  import Sprint from "./sprint";
+  import User from "./user";
+*/
+//config fk
+var index_1 = require("./index");
 //adicionales
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
@@ -84,16 +88,16 @@ var Server = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 5, , 6]);
-                        return [4 /*yield*/, user_1.default.sync()];
+                        return [4 /*yield*/, index_1.Sprint.sync()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, task_1.default.sync()];
+                        return [4 /*yield*/, index_1.User.sync()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, subtask_1.default.sync()];
+                        return [4 /*yield*/, index_1.Task.sync()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, sprint_1.default.sync()];
+                        return [4 /*yield*/, index_1.Subtask.sync()];
                     case 4:
                         _a.sent();
                         console.log("Base de datos online");

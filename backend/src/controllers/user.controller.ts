@@ -52,10 +52,12 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       {
-        id: user.id,
+        iduser: user.iduser,
         username: user.username,
+        type: user.type,
       },
       process.env.SECRET_KEY ?? "^H:E{Ll",
+      { expiresIn: '3h' }
     );
 
     res.json({ token });

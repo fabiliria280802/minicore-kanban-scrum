@@ -14,8 +14,18 @@
       </ul>
     </div>
   </div>
+
+  <div class="navbar-menu">
+    <div class="nav-item" (click)="toggleDropdownTwo()">
+      <a class="dropdown-toggle">Ver</a>
+      <ul class="dropdown-menu" [class.show]="dropdownOpenTwo">
+        <li><a (click)="navigate('/list-subtask')">Subtasks</a></li>
+        <li><a (click)="navigate('/list-task')">Tasks</a></li>
+        <li><a (click)="navigate('/list-sprint')">Sprints</a></li>
+      </ul>
+    </div>
+  </div>
   <!--TODO: borrae subtask cuando ya este ready-->
-  <div class="nav-item" (click)="navigate('/list-subtask')">Subtask</div>
   <div class="nav-item" (click)="navigate('/list-users')">Equipo</div>
   <div class="nav-item" (click)="navigate('/x')">Incidencias</div>
   <div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>

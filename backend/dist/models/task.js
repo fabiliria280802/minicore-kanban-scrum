@@ -11,13 +11,21 @@ var Task = connection_1.default.define("task", {
         primaryKey: true,
         autoIncrement: true,
     },
-    iduser: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-    },
     idsprint: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: 'sprints',
+            key: 'idsprint',
+        },
+    },
+    iduser: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'users',
+            key: 'iduser',
+        },
     },
     title: {
         type: sequelize_1.DataTypes.STRING,

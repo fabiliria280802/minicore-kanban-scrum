@@ -1,16 +1,93 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  Input,
-} from '@angular/core';
+//Angular adds
+import { Component, OnInit, ViewChild, AfterViewInit, Input,} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+
+//interfaces
+import { Task, points, status } from '../../interfaces/task.interface';
+
+//services
 import { TaskService } from '../../services/task.service';
-import { Task, status } from '../../interfaces/task.interface';
+
+//calling components
 import { CreateUpdateTaskComponent } from '../create-update-task/create-update-task.component';
+
+const listTask: Task[]=[
+  {
+    idsprint: 1,
+    idtask: 1,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 1,
+    idtask: 2,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 1,
+    idtask: 3,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 1,
+    idtask: 4,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 1,
+    idtask: 5,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 2,
+    idtask: 1,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 2,
+    idtask: 1,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+  {
+    idsprint: 3,
+    idtask: 1,
+    title: 'Crear repo',
+    description: '1.0079',
+    status: status.todo,
+    points: points.none,
+    assignedUser: 'hello',
+  },
+];
 
 @Component({
   selector: 'app-list-task',
@@ -18,41 +95,62 @@ import { CreateUpdateTaskComponent } from '../create-update-task/create-update-t
   styleUrls: ['./list-task.component.css'],
 })
 export class ListTaskComponent implements OnInit, AfterViewInit {
-  statuses: any;
+  displayedColumns: string[] = [
+    'N° Sprint',
+    'N° Task',
+    'title',
+    'description',
+    'status',
+    'points',
+    'assignedUser',
+    'tools',
+  ];
+  /*
   @Input() set tasks(value: Task[]) {
-    // Use a setter to respond to input changes
     this.dataSource = new MatTableDataSource<Task>(value);
     if (this.matPaginator) {
-      // If paginator is already set, attach it to the new data source
       this.dataSource.paginator = this.matPaginator;
     }
-  }
-  dataSource = new MatTableDataSource<Task>(); // Initialize dataSource
-
+  }*/
+  dataSource = new MatTableDataSource<Task>();
+/*
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
-    // Use a setter for the paginator
-    this.dataSource.paginator = mp; // Assign the paginator once it's available
-  }
+    this.dataSource.paginator = mp;
+  }*/
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private dialog: MatDialog,
-    private taskService: TaskService, // Assuming this service exists
-  ) {}
+    private _taskService: TaskService,
+  ) {
+    this.dataSource = new MatTableDataSource(listTask);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   ngOnInit(): void {
     this.loadTasks();
   }
 
   ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    /*
     if (this.matPaginator) {
       this.dataSource.paginator = this.matPaginator;
-    }
+      this.dataSource.sort = this.sort;
+    }*/
   }
 
   loadTasks(): void {
-    this.taskService.getTasks().subscribe(
+    this._taskService.getTasks().subscribe(
       (tasks) => {
-        this.dataSource.data = tasks; // Assuming 'tasks' is an array of Task
+        this.dataSource.data = tasks;
       },
       (error) => {
         console.error('Error fetching tasks', error);
@@ -60,18 +158,16 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
     );
   }
 
-  openCreateUpdateDialog(task?: Task): void {
+  addEditTask() {
     const dialogRef = this.dialog.open(CreateUpdateTaskComponent, {
-      width: '250px',
-      data: task ? task : { title: '', status: status.todo, points: 0 }, // Pass existing task or empty for new
+      width: '550px',
+      disableClose: true,
+      //data:{},
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadTasks(); // Reload tasks after closing the dialog
-      }
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log('hell no');
     });
   }
 
-  // Additional methods for handling task actions (delete, update, etc.) go here...
+
 }

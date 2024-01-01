@@ -5,6 +5,7 @@ export enum status {
 }
 
 export enum points {
+  none = '-',
   one = '1',
   three = '3',
   five = '5',
@@ -15,6 +16,8 @@ export enum points {
 export interface Task {
   idtask: number;
   idsprint: number;
+  // TODO:AGREGAR IDUSER
+  //iduser: number;
   title: string;
   description: string;
   status: status;

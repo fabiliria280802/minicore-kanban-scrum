@@ -1,34 +1,49 @@
+//Angular adds
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {jwtDecode} from 'jwt-decode';
+
+//interfaces
 import { User, type } from '../../interfaces/user.interface';
-import { CreateUpdateUsersComponent } from '../create-update-users/create-update-users.component';
+
+//services
 import { UserService } from '../../services/user.service';
-//TODO: Arreglar errores de cargar (user)
-/*const listUsers: Users[] =[
-  {
-    iduser: 1,
-    fullname:"string",
-    email: "string",
-    type: type.Administrador,
-    position: "string"
-  }
-];
-*/
+
+//calling components
+import { CreateUpdateUsersComponent } from '../create-update-users/create-update-users.component';
+
+interface JwtPayload {
+  iduser?: number;
+  username?: string;
+  type?: string;
+}
+
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.css'],
 })
-export class ListUsersComponent /*implements OnInit, AfterViewInit*/ {
-  /*displayedColumns: string[] = ['fullname','email','type','position'];
-  dataSource: MatTableDataSource<Users>;
+
+export class ListUsersComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = [
+    'N° User',
+    'fullname',
+    'email',
+    'type',
+    'position',
+    'tools',
+  ];
+  dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(public dialog: MatDialog, private _userService: UserService){
-    this.dataSource = new MatTableDataSource(listUsers);
+  constructor(
+    public dialog: MatDialog,
+    private _userService: UserService
+    ){
+    this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit(): void {
@@ -37,12 +52,14 @@ export class ListUsersComponent /*implements OnInit, AfterViewInit*/ {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    (this.paginator as MatPaginator)._intl.itemsPerPageLabel = "Items por pagina";
+    //(this.paginator as MatPaginator)._intl.itemsPerPageLabel = "Items por pagina";
   }
 
   getUsers(){
     this._userService.getUsers().subscribe(data => {
       console.log(data);
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -55,23 +72,47 @@ export class ListUsersComponent /*implements OnInit, AfterViewInit*/ {
     }
   }
 
-  addEditTask(){
+  addEditUser(){
     const dialogRef = this.dialog.open(CreateUpdateUsersComponent, {
-      //data: {name: this.name, animal: this.animal},
       width:'550px',
       disableClose: true,
     });
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log('hell no');
+    });
   }
+  deleteUser(){
+    console.log('borrando');
+  }
+  lookUser(){
 
-  activeUser: Users = {
-    iduser: 1,
-    fullname: "",
-    email: "",
-    type: type.Administrador,
-    position: ""
-  };
+  }
+  IsAdmin():boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
 
-  isUserActive(element) {
-    return element.id === this.activeUser.iduser;
- }*/
+    try {
+      const decodedToken = jwtDecode<JwtPayload>(token); // Usar 'any' para evitar problemas de tipado
+      return decodedToken.type === 'Administrador';
+    } catch (error) {
+      console.error('Error decodificando el token', error);
+      return false;
+    }
+  }
+  ItsMe(iduserToCheck: number): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+
+    try {
+      const decodedToken = jwtDecode<JwtPayload>(token);
+      return decodedToken.iduser === iduserToCheck;
+    } catch (error) {
+      console.error('Error decodificando el token', error);
+      return false;
+    }
+  }
+  //no te puedes eliminar de la base bro
+  ItsYou(iduserToCheck: number) : boolean{
+    return true;
+  }
 }
