@@ -8,77 +8,11 @@ import { MatDialog } from '@angular/material/dialog';
 //interfaces
 import { Subtask, subtaskstatus } from 'src/app/interfaces/subtask.interface';
 
+//Services
+import { SubtaskService } from 'src/app/services/subtask.service';
+
 //calling components
 import { CreateUpdateSubtaskComponent } from '../create-update-subtask/create-update-subtask.component';
-
-//TODO: Agregar funcionalidad de esta pestaña (subtask)
-
-const listSubtask: Subtask[] = [
-  {
-    idtask: 1,
-    idsubtask: 1,
-    title: 'Crear repo',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.todo,
-    assignedUser: 'hello',
-  },
-  {
-    idtask: 1,
-    idsubtask: 2,
-    title: 'Configurar dependencias',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.done,
-    assignedUser: '-',
-  },
-  {
-    idtask: 1,
-    idsubtask: 3,
-    title: 'Comprar licencia',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.todo,
-    assignedUser: 'fabs',
-  },
-  {
-    idtask: 2,
-    idsubtask: 4,
-    title: 'Resolver bug',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.done,
-    assignedUser: '-',
-  },
-  {
-    idtask: 2,
-    idsubtask: 5,
-    title: 'Sprint #2',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.done,
-    assignedUser: '-',
-  },
-  {
-    idtask: 3,
-    idsubtask: 6,
-    title: 'Sprint #1',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.todo,
-    assignedUser: '-',
-  },
-  {
-    idtask: 3,
-    idsubtask: 7,
-    title: 'Sprint #1',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.done,
-    assignedUser: '-',
-  },
-  {
-    idtask: 3,
-    idsubtask: 8,
-    title: 'Sprint #1',
-    description: '1.0079',
-    subtaskstatus: subtaskstatus.todo,
-    assignedUser: '-',
-  },
-];
 
 @Component({
   selector: 'app-list-subtask',
@@ -100,15 +34,23 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource(listSubtask);
+  constructor(
+    public dialog: MatDialog,
+    private _subtaskService: SubtaskService
+    ) {
+    this.dataSource = new MatTableDataSource();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSubtasks();
+  }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -126,5 +68,13 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result=>{
       console.log('hell no');
     });
+  }
+  getSubtasks(): void {
+    this._subtaskService.getSubtasks().subscribe(
+      data => {
+        console.log(data);
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+      })
   }
 }

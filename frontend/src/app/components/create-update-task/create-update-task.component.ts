@@ -25,8 +25,8 @@ import { SprintService } from 'src/app/services/sprint.service';
 export class CreateUpdateTaskComponent implements OnInit {
 
   //atributos
-  idtask: number = 0;
   idsprint: number = 0;
+  iduser: number = 0;
   title: string = '';
   description: string = '';
   status: status = status.todo;
@@ -101,7 +101,7 @@ export interface Task {
   addTask(){
     if (
       this.idsprint == 0 ||
-      this.idtask == 0 ||
+      this.iduser == 0 ||
       this.title == '' ||
       this.title == ' '||
       this.description == '' ||
@@ -112,8 +112,8 @@ export interface Task {
       return;
     }
     const task: Task = {
+      iduser: this.iduser,
       idsprint: this.idsprint,
-      idtask: this.idtask,
       title: this.title,
       description: this.description,
       points: this.points,

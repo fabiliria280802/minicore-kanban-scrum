@@ -9,7 +9,7 @@ import {
 import validateToken from "./validate-token";
 
 const router = Router();
-
+// TODO: momentos desesperados, requieren medidas desesperadas
 router.get("/:id", validateToken, getSubtask);
 router.get("/", validateToken, getSubtasks);
 router.post("/", validateToken, postSubtask);

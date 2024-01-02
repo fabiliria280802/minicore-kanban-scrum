@@ -14,81 +14,6 @@ import { TaskService } from '../../services/task.service';
 //calling components
 import { CreateUpdateTaskComponent } from '../create-update-task/create-update-task.component';
 
-const listTask: Task[]=[
-  {
-    idsprint: 1,
-    idtask: 1,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 1,
-    idtask: 2,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 1,
-    idtask: 3,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 1,
-    idtask: 4,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 1,
-    idtask: 5,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 2,
-    idtask: 1,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 2,
-    idtask: 1,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-  {
-    idsprint: 3,
-    idtask: 1,
-    title: 'Crear repo',
-    description: '1.0079',
-    status: status.todo,
-    points: points.none,
-    assignedUser: 'hello',
-  },
-];
-
 @Component({
   selector: 'app-list-task',
   templateUrl: './list-task.component.html',
@@ -125,7 +50,7 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private _taskService: TaskService,
   ) {
-    this.dataSource = new MatTableDataSource(listTask);
+    this.dataSource = new MatTableDataSource();
   }
 
   applyFilter(event: Event) {
@@ -134,7 +59,7 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadTasks();
+    this.getTasks();
   }
 
   ngAfterViewInit(): void {
@@ -147,15 +72,13 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
     }*/
   }
 
-  loadTasks(): void {
+  getTasks(): void {
     this._taskService.getTasks().subscribe(
-      (tasks) => {
-        this.dataSource.data = tasks;
-      },
-      (error) => {
-        console.error('Error fetching tasks', error);
-      },
-    );
+      data => {
+        console.log(data);
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+      })
   }
 
   addEditTask() {

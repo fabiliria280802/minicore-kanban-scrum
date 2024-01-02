@@ -26,7 +26,7 @@ import { TaskService } from 'src/app/services/task.service';
 export class CreateUpdateSubtaskComponent implements OnInit{
 
   //atributos
-  idsubtask: number = 0;
+  iduser: number = 0;
   idtask: number = 0;
   title: string = '';
   description: string = '';
@@ -102,7 +102,7 @@ export class CreateUpdateSubtaskComponent implements OnInit{
 
   addEditSubtask(){
     if (
-      this.idsubtask == 0 ||
+      this.iduser == 0 ||
       this.idtask == 0 ||
       this.title == '' ||
       this.title == ' '||
@@ -114,7 +114,7 @@ export class CreateUpdateSubtaskComponent implements OnInit{
       return;
     }
     const subtask: Subtask = {
-      idsubtask: this.idsubtask,
+      iduser: this.iduser,
       idtask: this.idtask,
       title: this.title,
       description: this.description,

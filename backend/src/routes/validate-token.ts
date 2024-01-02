@@ -7,12 +7,20 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
   if (headerToken && headerToken.startsWith("Bearer ")) {
     const bearerToken = headerToken.slice(7);
 
-    jwt.verify(bearerToken, process.env.SECRET_KEY ?? "^H:E{Ll", next);
+    jwt.verify(bearerToken, process.env.SECRET_KEY ?? "^H:E{Ll", (err, decoded) => {
+      if (err) {
+        return res.status(401).json({
+          msg: "Acceso denegado, token inválidox",
+        });
+      }
+      next();
+    });
   } else {
     res.status(401).json({
-      msg: "Acceso denegado",
+      msg: "Acceso denegado, token no proporcionado",
     });
   }
 };
+
 
 export default validateToken;

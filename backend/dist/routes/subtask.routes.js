@@ -7,6 +7,7 @@ var express_1 = require("express");
 var subtask_controller_1 = require("../controllers/subtask.controller");
 var validate_token_1 = __importDefault(require("./validate-token"));
 var router = (0, express_1.Router)();
+// TODO: momentos desesperados, requieren medidas desesperadas
 router.get("/:id", validate_token_1.default, subtask_controller_1.getSubtask);
 router.get("/", validate_token_1.default, subtask_controller_1.getSubtasks);
 router.post("/", validate_token_1.default, subtask_controller_1.postSubtask);

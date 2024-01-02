@@ -6,18 +6,28 @@
       <input matInput formControlName="title" placeholder="Ingrese el titulo" autocomplete="off">
     </mat-form-field>
   </div>
-<!--
+
  <div class="datepicker-container">
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <mat-label>Fecha de inicio</mat-label>
-      <input matInput formControlName="initialDate" [matDatepicker]="picker>
+      <input matInput formControlName="initialDate" [matDatepicker]="initialDatePicker">
       <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker touchUi #picker></mat-datepicker>
+      <mat-datepicker-toggle matIconSuffix [for]="initialDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #initialDatePicker></mat-datepicker>
     </mat-form-field>
   </div>
 
--->
+  <div class="datepicker-container">
+    <mat-form-field>
+      <mat-label>Fecha de fin</mat-label>
+      <input matInput formControlName="finalDate" [matDatepicker]="finalDatePicker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="finalDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #finalDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+
 
   <mat-dialog-actions align="end">
     <button type="button" (click)="cancelar()" mat-button>Cancelar</button>

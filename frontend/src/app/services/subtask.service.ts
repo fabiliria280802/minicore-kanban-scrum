@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environments';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Subtask } from '../interfaces/subtask.interface';
 
@@ -17,10 +17,13 @@ export class SubtaskService {
   }
 
   getSubtasks(): Observable<Subtask[]> {
-    return this.http.get<Subtask[]>(this.myAppUrl);
+    return this.http.get<Subtask[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
 
   saveSubtasks(subtask: Subtask): Observable<any> {
-    return this.http.post<Subtask>(`${this.myAppUrl}${this.myApiUrl}`, subtask);
+    const headers = new HttpHeaders({
+      'authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.post<Subtask>(`${this.myAppUrl}${this.myApiUrl}`, subtask, { headers });
   }
 }

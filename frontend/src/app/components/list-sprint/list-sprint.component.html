@@ -26,17 +26,17 @@
 
 <table mat-table [dataSource]="dataSource" color="primary" matSort>
   <ng-container matColumnDef="N° sprint">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Tarea</th>
-    <td mat-cell *matCellDef="let element">{{ element.idtask }}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Sprint</th>
+    <td mat-cell *matCellDef="let element">{{ element.idsprint }}</td>
   </ng-container>
 
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Subtarea</th>
-    <td mat-cell *matCellDef="let element">{{ element.idsubtask }}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Titulo</th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
   </ng-container>
 
   <ng-container matColumnDef="initialDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de inicio</th>
     <td mat-cell *matCellDef="let element">{{ element.initialDate }}</td>
   </ng-container>
 
@@ -61,19 +61,19 @@
       <mat-icon
         aria-hidden="false"
         fontIcon="visibility"
-        matTooltip="Ver subtarea: {{ element.title }}"
+        matTooltip="Ver sprint: {{ element.title }}"
         class="btnView"
       ></mat-icon>
       <mat-icon
         aria-hidden="false"
         fontIcon="edit"
-        matTooltip="Editar subtarea: {{ element.title }}"
+        matTooltip="Editar sprint: {{ element.title }}"
         class="btnEdit"
       ></mat-icon>
       <mat-icon
         aria-hidden="false"
         fontIcon="delete"
-        matTooltip="Eliminar subtarea: {{ element.title }}"
+        matTooltip="Eliminar sprint: {{ element.title }}"
         class="btnDelete"
       ></mat-icon>
     </td>
@@ -91,7 +91,7 @@
 </table>
 <mat-paginator
   [length]="10"
-  [pageSize]="2"
+  [pageSize]="4"
   [pageSizeOptions]="[2, 4, 6, 8, 10]"
   aria-label="Selecciona una pagina"
 >

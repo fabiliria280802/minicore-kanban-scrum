@@ -23,12 +23,12 @@ text{
     height: 150px;
   }
 
-  .selectDev-container mat-form-field {
+  .datepicker-container mat-form-field {
     margin-left: 20px;
     margin-top: 10px;
     width: 510px;
   }
 
-  .selectDev-container mat-form-field mat-hint {
+  .datepicker-container mat-form-field mat-hint {
     color: rgb(250, 242, 242);
   }

@@ -9,11 +9,18 @@ var validateToken = function (req, res, next) {
     var headerToken = req.headers["authorization"];
     if (headerToken && headerToken.startsWith("Bearer ")) {
         var bearerToken = headerToken.slice(7);
-        jsonwebtoken_1.default.verify(bearerToken, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : "^H:E{Ll", next);
+        jsonwebtoken_1.default.verify(bearerToken, (_a = process.env.SECRET_KEY) !== null && _a !== void 0 ? _a : "^H:E{Ll", function (err, decoded) {
+            if (err) {
+                return res.status(401).json({
+                    msg: "Acceso denegado, token inválidox",
+                });
+            }
+            next();
+        });
     }
     else {
         res.status(401).json({
-            msg: "Acceso denegado",
+            msg: "Acceso denegado, token no proporcionado",
         });
     }
 };

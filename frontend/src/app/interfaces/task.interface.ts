@@ -14,10 +14,8 @@ export enum points {
 }
 
 export interface Task {
-  idtask: number;
   idsprint: number;
-  // TODO:AGREGAR IDUSER
-  //iduser: number;
+  iduser: number;
   title: string;
   description: string;
   status: status;

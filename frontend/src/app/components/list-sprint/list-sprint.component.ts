@@ -8,23 +8,12 @@ import { MatDialog } from '@angular/material/dialog';
 //interfaces
 import { Sprint } from 'src/app/interfaces/sprint.interface';
 
+//services
+import { SprintService } from 'src/app/services/sprint.service';
+
 //calling components
 import { CreateUpdateSprintComponent } from '../create-update-sprint/create-update-sprint.component';
 
-const listSprint: Sprint[] = [
-{
-  idsprint: 1,
-  title: '',
-  initialDate: new Date(),
-  finalDate: new Date(),
-  committedPoints: 0,
-  fulfilledPoints: 0,
-  noFulfilledPoints: 0,
-  toDoPorcentage: 0,
-  doingPorcentage: 0,
-  donePorcentage: 0,
-},
-];
 
 @Component({
   selector: 'app-list-sprint',
@@ -38,11 +27,6 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
     'title',
     'initialDate',
     'finalDate',
-    'committedPoints',
-    'fulfilledPoints',
-    'noFulfilledPoints',
-    'toDoPorcentage',
-    'donePorcentage',
     'tools',
   ];
   dataSource: MatTableDataSource<Sprint>;
@@ -50,19 +34,36 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource(listSprint);
+  constructor(
+    public dialog: MatDialog,
+    private _sprintService: SprintService
+    ) {
+    this.dataSource = new MatTableDataSource();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSprints();
+  }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  getSprints(){
+    this._sprintService.getSprints().subscribe(data => {
+      console.log(data);
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+    })
   }
 
   addEditSprint() {
@@ -72,7 +73,9 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
       //data:{},
     });
     dialogRef.afterClosed().subscribe(result=>{
-      console.log('hell no');
+      if (result) {
+        this.getSprints();
+      }
     });
   }
 }

@@ -20,7 +20,6 @@ import { SprintService } from 'src/app/services/sprint.service';
 })
 export class CreateUpdateSprintComponent implements OnInit {
   //atributos
-  idsprint: number = 0;
   title: string = '';
   initialDate: Date = new Date();
   finalDate: Date = new Date();
@@ -46,21 +45,18 @@ export class CreateUpdateSprintComponent implements OnInit {
 
   //metodos
   addEditSprint() {
-    if (
-      this.idsprint == 0 ||
-      this.title == '' ||
-      this.title == ' '||
-      this.initialDate == new Date('') ||
-      this.finalDate == new Date('')
-    ) {
+    if (this.form.invalid){
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
+
+    const formattedInitialDate = this.formatDate(this.form.value.initialDate);
+    const formattedFinalDate = this.formatDate(this.form.value.finalDate);
+
     const sprint: Sprint = {
-      idsprint: this.idsprint,
-      title: this.title,
-      initialDate: this.initialDate,
-      finalDate: this.finalDate,
+      title: this.form.value.title,
+      initialDate: formattedInitialDate,
+      finalDate: formattedFinalDate,
     };
     this._sprintService.saveSprints(sprint).subscribe({
       next: (data) => {
@@ -68,7 +64,7 @@ export class CreateUpdateSprintComponent implements OnInit {
           'El sprint fue registrada con exito',
           'Sprint registrado',
         );
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       error: (e: HttpErrorResponse) => {
         if (e.error.msg) {
@@ -79,7 +75,15 @@ export class CreateUpdateSprintComponent implements OnInit {
       },
     });
   }
-
+  formatDate(date: Date): string {
+    if (!date) {
+      return '';
+    }
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+  }
   cancelar(){
     this.dialogRef.close();
   }
