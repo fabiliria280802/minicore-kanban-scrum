@@ -5,12 +5,12 @@ export enum status {
 }
 
 export enum points {
-  none = '-',
-  one = '1',
-  three = '3',
-  five = '5',
-  eight = '8',
-  thirteen = '13',
+  none = 0,
+  one = 1,
+  three = 3,
+  five = 5,
+  eight = 8,
+  thirteen = 13,
 }
 
 export enum priority{

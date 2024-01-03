@@ -39,4 +39,7 @@ export class TaskService {
       `${this.myAppUrl}${this.myApiUrl}/${id}`
       );
   }
+  getTasksBySprintId(id: number): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.myAppUrl}${this.myApiUrl}/sprint/${id}`);
+  }
 }

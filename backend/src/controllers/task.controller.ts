@@ -79,3 +79,20 @@ export const deleteTask = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const getTasksBySprintId = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const tasks = await Task.findAll({
+      where: { id }
+    });
+    res.json(tasks);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An unexpected error occurred" });
+    }
+  }
+};
+

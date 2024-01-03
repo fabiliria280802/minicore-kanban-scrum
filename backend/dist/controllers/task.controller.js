@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTask = exports.putTask = exports.postTask = exports.getTasks = exports.getTask = void 0;
+exports.getTasksBySprintId = exports.deleteTask = exports.putTask = exports.postTask = exports.getTasks = exports.getTask = void 0;
 var task_1 = __importDefault(require("../models/task"));
 var getTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, task, error_1;
@@ -184,3 +184,31 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.deleteTask = deleteTask;
+var getTasksBySprintId = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, tasks, error_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = req.params.id;
+                return [4 /*yield*/, task_1.default.findAll({
+                        where: { id: id }
+                    })];
+            case 1:
+                tasks = _a.sent();
+                res.json(tasks);
+                return [3 /*break*/, 3];
+            case 2:
+                error_6 = _a.sent();
+                if (error_6 instanceof Error) {
+                    res.status(500).json({ error: error_6.message });
+                }
+                else {
+                    res.status(500).json({ error: "An unexpected error occurred" });
+                }
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getTasksBySprintId = getTasksBySprintId;

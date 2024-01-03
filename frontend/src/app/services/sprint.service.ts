@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
 import { environment } from 'environments/environments';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { Sprint } from '../interfaces/sprint.interface';
+import { TaskService } from './task.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,10 @@ export class SprintService {
   private myAppUrl: string;
   private myApiUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private _taskService: TaskService
+    ) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/sprints';
   }
@@ -46,4 +51,28 @@ export class SprintService {
       `${this.myAppUrl}${this.myApiUrl}/${id}`
       );
   }
+
+  //metodos calculadores
+  calculateCommittedPoints(idsprint: number): Observable<Sprint> {
+    return this._taskService.getTasksBySprintId(idsprint).pipe(
+      map(tasks => {
+        // Asegúrate de que la propiedad 'points' de cada 'task' sea de tipo 'number'
+        const totalPoints = tasks.reduce((sum, task) => sum + (task.points || 0), 0);
+        return totalPoints;
+      }),
+      switchMap(totalPoints => {
+        return this.getSubtask(idsprint).pipe(
+          switchMap(sprint => {
+            if (sprint) {
+              sprint.committedPoints = totalPoints;
+              return this.putSprints(idsprint, sprint);
+            } else {
+              throw new Error('Sprint not found');
+            }
+          })
+        );
+      })
+    );
+  }
+
 }

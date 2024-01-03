@@ -140,6 +140,10 @@ export class CreateUpdateTaskComponent implements OnInit {
   cancelar(){
     this.dialogRef.close();
   }
+  updateSprintCommittedPoints(sprintId: number) {
+    this.idsprint = sprintId;
+    this._sprintService.calculateCommittedPoints(sprintId);
+  }
 
   addEditTask(){
     if (this.form.invalid) {
@@ -159,6 +163,7 @@ export class CreateUpdateTaskComponent implements OnInit {
     if(this.id == undefined){
       this._taskService.saveTasks(task).subscribe({
         next: (data) => {
+          this.updateSprintCommittedPoints(task.idsprint);
           this.toastr.success(
             'La tarea fue registrada con exito',
             'Tarea registrada',
@@ -176,6 +181,7 @@ export class CreateUpdateTaskComponent implements OnInit {
     }else{
       this._taskService.putTask(this.id, task).subscribe({
         next: (data) => {
+          this.updateSprintCommittedPoints(task.idsprint);
           this.toastr.success(
             'La tarea fue actualizada con exito',
             'Tarea actualizada',

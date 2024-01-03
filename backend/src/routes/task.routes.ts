@@ -5,6 +5,7 @@ import {
   putTask,
   deleteTask,
   getTasks,
+  getTasksBySprintId,
 } from "../controllers/task.controller";
 import validateToken from "./validate-token";
 
@@ -15,6 +16,7 @@ router.get("/", getTasks);
 router.post("/", postTask);
 router.put("/:id", putTask);
 router.delete("/:id", deleteTask);
+router.get("/sprint/:idsprint", getTasksBySprintId);
 /*
 router.get("/:id", validateToken, getTask);
 router.get("/", validateToken, getTasks);
