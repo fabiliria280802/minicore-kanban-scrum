@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Agregar Sprint</h2>
+<h2 mat-dialog-title>{{ operation }} Sprint</h2>
 <form [formGroup]="form" (ngSubmit)="addEditSprint()">
   <div class="title-container">
     <mat-form-field appearance="fill">
@@ -11,7 +11,7 @@
     <mat-form-field>
       <mat-label>Fecha de inicio</mat-label>
       <input matInput formControlName="initialDate" [matDatepicker]="initialDatePicker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="initialDatePicker"></mat-datepicker-toggle>
       <mat-datepicker touchUi #initialDatePicker></mat-datepicker>
     </mat-form-field>
@@ -21,7 +21,7 @@
     <mat-form-field>
       <mat-label>Fecha de fin</mat-label>
       <input matInput formControlName="finalDate" [matDatepicker]="finalDatePicker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="finalDatePicker"></mat-datepicker-toggle>
       <mat-datepicker touchUi #finalDatePicker></mat-datepicker>
     </mat-form-field>

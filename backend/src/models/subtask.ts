@@ -27,19 +27,11 @@ const Subtask = sequelize.define("subtask", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  description: {
+  subtaskdescription: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  priority: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  assignedUser: {
+  subtaskstatus: {
     type: DataTypes.STRING,
     allowNull: false,
   },

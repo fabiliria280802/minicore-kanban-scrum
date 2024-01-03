@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Agregar Subtarea</h2>
+<h2 mat-dialog-title>{{ operation }} Subtarea</h2>
 <form [formGroup]="form" (ngSubmit)="addEditSubtask()">
   <div class="title-container">
     <mat-form-field appearance="fill">
@@ -7,14 +7,14 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Descripción</mat-label>
-      <textarea matInput formControlName="description" placeholder="Ingrese la descripción" autocomplete="off"></textarea>
+      <textarea matInput formControlName="subtaskdescription" placeholder="Ingrese la descripción" autocomplete="off"></textarea>
     </mat-form-field>
   </div>
   <div class="select-container">
     <mat-form-field>
       <mat-label>Selecciona tarea</mat-label>
-      <mat-select formControlName="taskTitle">
-        <mat-option *ngFor="let task of tasks" [value]="task.title">{{task.title}}</mat-option>
+      <mat-select formControlName="idtask">
+        <mat-option *ngFor="let task of tasks" [value]="task.idtask">{{task.title}}</mat-option>
       </mat-select>
       <mat-hint align="end">Estas son las tareas existentes^</mat-hint>
     </mat-form-field>
@@ -29,8 +29,8 @@
   <div class="selectDev-container">
     <mat-form-field>
       <mat-label>Selecciona Desarrollador</mat-label>
-      <mat-select formControlName="assignedUser">
-        <mat-option *ngFor="let user of users" [value]="user.fullname">{{user.fullname}}</mat-option>
+      <mat-select formControlName="iduser">
+        <mat-option *ngFor="let user of users" [value]="user.iduser">{{user.fullname}}</mat-option>
       </mat-select>
       <mat-hint align="end">Todos los desarroladores^</mat-hint>
     </mat-form-field>

@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 
 //calling components
 import { CreateUpdateUsersComponent } from '../create-update-users/create-update-users.component';
+import { ToastrService } from 'ngx-toastr';
 
 interface JwtPayload {
   iduser?: number;
@@ -41,7 +42,8 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dialog: MatDialog,
-    private _userService: UserService
+    private _userService: UserService,
+    private toastr: ToastrService,
     ){
     this.dataSource = new MatTableDataSource();
   }
@@ -72,20 +74,24 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addEditUser(){
+  addEditUser(id?: number){
     const dialogRef = this.dialog.open(CreateUpdateUsersComponent, {
       width:'550px',
       disableClose: true,
+      data: {id: id},
     });
     dialogRef.afterClosed().subscribe(result=>{
       console.log('hell no');
     });
   }
-  deleteUser(){
-    console.log('borrando');
-  }
-  lookUser(){
-
+  deleteUser(id: number){
+    this._userService.deleteUsers(id).subscribe(()=>{
+      this.getUsers()
+      this.toastr.success(
+        'Se borro exitosamente el usuario',
+        'Eliminación',
+      );
+    });
   }
   IsAdmin():boolean {
     const token = localStorage.getItem('token');

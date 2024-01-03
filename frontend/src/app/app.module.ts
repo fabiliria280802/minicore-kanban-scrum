@@ -31,6 +31,7 @@ import { ListSprintComponent } from './components/list-sprint/list-sprint.compon
 //pipes
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 @NgModule({
@@ -68,7 +69,11 @@ import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
       preventDuplicates: true,
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide:MAT_DATE_LOCALE, useValue: 'es'
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

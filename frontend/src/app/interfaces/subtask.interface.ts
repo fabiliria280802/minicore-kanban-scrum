@@ -5,12 +5,12 @@ export enum subtaskstatus {
 }
 
 export interface Subtask {
+  idsubtask?: number;
   idtask: number;
   iduser: number;
   title: string;
-  description: string;
+  subtaskdescription: string;
   subtaskstatus: subtaskstatus;
-  assignedUser?: string;
 }
 
 

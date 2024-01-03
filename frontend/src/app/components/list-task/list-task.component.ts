@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 
 //interfaces
 import { Task, points, status } from '../../interfaces/task.interface';
@@ -21,7 +22,6 @@ import { CreateUpdateTaskComponent } from '../create-update-task/create-update-t
 })
 export class ListTaskComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
-    'N° Sprint',
     'N° Task',
     'title',
     'description',
@@ -49,6 +49,7 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private _taskService: TaskService,
+    private toastr: ToastrService,
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -71,6 +72,15 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }*/
   }
+  deleteTask(id: number){
+    this._taskService.deleteTask(id).subscribe(()=>{
+      this.getTasks()
+      this.toastr.success(
+        'Se borro exitosamente el usuario',
+        'Eliminación',
+      );
+    });
+  }
 
   getTasks(): void {
     this._taskService.getTasks().subscribe(
@@ -81,14 +91,16 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
       })
   }
 
-  addEditTask() {
+  addEditTask(id?: number) {
     const dialogRef = this.dialog.open(CreateUpdateTaskComponent, {
       width: '550px',
       disableClose: true,
-      //data:{},
+      data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result=>{
-      console.log('hell no');
+      if (result) {
+        this.getTasks();
+      }
     });
   }
 

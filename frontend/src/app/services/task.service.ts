@@ -17,11 +17,26 @@ export class TaskService {
   }
 
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.myAppUrl);
+    return this.http.get<Task[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
 
-  //Metodos nuevos
+  getTask(id: number): Observable<any> {
+    return this.http.get<Task>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+  }
+
   saveTasks(task: Task): Observable<any> {
-    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, task);
+    return this.http.post<Task>(`${this.myAppUrl}${this.myApiUrl}`, task);
+  }
+
+  putTask(id: number, task: Task): Observable<any>{
+    return this.http.put<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`,task
+    );
+  }
+
+  deleteTask(id: number):Observable<any>{
+    return this.http.delete<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`
+      );
   }
 }

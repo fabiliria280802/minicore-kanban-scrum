@@ -27,7 +27,7 @@ const Task = sequelize.define("task", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  description: {
+  taskdescription: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -35,11 +35,11 @@ const Task = sequelize.define("task", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  priority: {
-    type: DataTypes.STRING,
+  points: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  assignedUser: {
+  priority: {
     type: DataTypes.STRING,
     allowNull: false,
   },

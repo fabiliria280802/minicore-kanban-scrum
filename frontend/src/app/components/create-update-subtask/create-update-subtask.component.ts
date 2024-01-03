@@ -1,8 +1,8 @@
 //Angular adds
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -29,10 +29,15 @@ export class CreateUpdateSubtaskComponent implements OnInit{
   iduser: number = 0;
   idtask: number = 0;
   title: string = '';
-  description: string = '';
-  assignedUser?: string = '';
+  subtaskdescription: string = '';
   subtaskstatus: subtaskstatus = subtaskstatus.todo;
   subtaskstatuses: subtaskstatus[] = [subtaskstatus.todo, subtaskstatus.doing, subtaskstatus.done];
+
+  //nombre pestaña
+  operation: string = '';
+
+  //llamada a la otra pagina
+  id: number | undefined;
 
   //selects
   tasks: Task[] = [];
@@ -48,22 +53,32 @@ export class CreateUpdateSubtaskComponent implements OnInit{
     private _userService: UserService,
     private _subtaskService: SubtaskService,
     private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private toastr: ToastrService,
     private fb: FormBuilder,
     ){
       this.form =this.fb.group({
-          idsubtask:[null],
-          taskTitle:[null],
+          idtask:[''],
+          iduser:[''],
           title:[''],
-          description:[''],
-          assignedUser:[''],
-          subtaskstatus:[null],
+          subtaskdescription:[''],
+          subtaskstatus:[''],
       });
+      this.id = data.id;
     }
 
   ngOnInit(): void {
     this.loadTasks();
     this.loadUsers();
+    this.isEdit(this.id);
+  }
+
+  isEdit(id: number | undefined){
+    if (id != undefined) {
+      this.operation = 'Editar';
+    } else {
+      this.operation = 'Agregar';
+    }
   }
 
   loadTasks(): void {
@@ -80,7 +95,18 @@ export class CreateUpdateSubtaskComponent implements OnInit{
       },
     });
   }
-
+  getSubtask(id: number){
+    this._subtaskService.getSubtask(id).subscribe(data => {
+      console.log(data);
+      this.form.setValue({
+        idsprint: data.idsprint,
+        iduser: data.iduser,
+        title: data.title,
+        subtaskdescription: data.subtaskdescription,
+        subtaskstatus: data.subtaskstatus,
+      });
+    })
+  }
   loadUsers():void{
     this._userService.getUsers().subscribe({
       next: (users) => {
@@ -101,15 +127,7 @@ export class CreateUpdateSubtaskComponent implements OnInit{
   }
 
   addEditSubtask(){
-    if (
-      this.iduser == 0 ||
-      this.idtask == 0 ||
-      this.title == '' ||
-      this.title == ' '||
-      this.description == '' ||
-      this.description == ' ' ||
-      this.assignedUser == ''
-    ) {
+    if (this.form.invalid) {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
@@ -117,9 +135,8 @@ export class CreateUpdateSubtaskComponent implements OnInit{
       iduser: this.iduser,
       idtask: this.idtask,
       title: this.title,
-      description: this.description,
+      subtaskdescription: this.subtaskdescription,
       subtaskstatus: this.subtaskstatus,
-      assignedUser: this.assignedUser,
     };
     this._subtaskService.saveSubtasks(subtask).subscribe({
       next: (data) => {
@@ -127,7 +144,7 @@ export class CreateUpdateSubtaskComponent implements OnInit{
           'La subtarea fue registrada con exito',
           'Subtarea registrada',
         );
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       error: (e: HttpErrorResponse) => {
         if (e.error.msg) {

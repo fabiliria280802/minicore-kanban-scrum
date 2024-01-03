@@ -31,19 +31,11 @@ var Subtask = connection_1.default.define("subtask", {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    description: {
+    subtaskdescription: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    status: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    priority: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    assignedUser: {
+    subtaskstatus: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },

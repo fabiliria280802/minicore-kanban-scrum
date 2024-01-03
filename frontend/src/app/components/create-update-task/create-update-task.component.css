@@ -49,3 +49,38 @@ mat-form-field textarea{
 .selectDev-container mat-form-field mat-hint {
     color: rgb(250, 242, 242);
   }
+
+.select2-container mat-form-field{
+    margin-top: 10px;
+    width: 510px;
+  }
+
+  .select2-container mat-form-field mat-hint {
+    color: rgb(250, 242, 242);
+  }
+
+  /* CSS para aplicar cuando la pantalla tenga menos de 600px de ancho, por ejemplo */
+@media screen and (max-width: 600px) {
+  h2, mat-form-field, button, mat-label {
+    font-size: 90%; /* Disminuir el tamaño de la fuente en un 10% */
+  }
+
+  .select-container mat-form-field + mat-form-field {
+    margin-left: calc(20px * 0.9);
+  }
+
+  mat-form-field {
+    margin-left: calc(20px * 0.9);
+    width: calc(245px * 0.9);
+  }
+
+  .title-container mat-form-field {
+    width: calc(510px * 0.9);
+  }
+
+  mat-form-field textarea {
+    height: calc(150px * 0.9);
+  }
+
+  /* Aplica los cambios de tamaño a los demás elementos según sea necesario */
+}

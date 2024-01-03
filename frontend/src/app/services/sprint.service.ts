@@ -15,13 +15,18 @@ export class SprintService {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/sprints';
   }
+  getSubtask(id: number): Observable<any> {
+    return this.http.get<Sprint>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+  }
 
   getSprints(): Observable<Sprint[]> {
     return this.http.get<Sprint[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
+
   saveSprints(sprint: Sprint): Observable<any> {
     return this.http.post<Sprint>(`${this.myAppUrl}${this.myApiUrl}`, sprint);
   }
+
   /*saveSprints(sprint: Sprint): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -30,4 +35,15 @@ export class SprintService {
     return this.http.post<Sprint>(`${this.myAppUrl}${this.myApiUrl}`, sprint, { headers });
   }*/
 
+  putSprints(id: number, sprint: Sprint): Observable<any>{
+    return this.http.put<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`,sprint
+    );
+  }
+
+  deleteSprint(id: number):Observable<any>{
+    return this.http.delete<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`
+      );
+  }
 }

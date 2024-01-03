@@ -1,10 +1,11 @@
 //Angular adds
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
 
 //interfaces
 import { Sprint } from 'src/app/interfaces/sprint.interface';
@@ -24,14 +25,23 @@ export class CreateUpdateSprintComponent implements OnInit {
   initialDate: Date = new Date();
   finalDate: Date = new Date();
 
+  //nombre pestaña
+  operation: string = '';
+
+  //llamada a la otra pagina
+  id: number | undefined;
+
   //reactiveform
   form: FormGroup;
+
   constructor(
     public dialogRef:MatDialogRef<CreateUpdateSprintComponent>,
     private toastr: ToastrService,
     private router: Router,
     private _errorService: ErrorService,
     private _sprintService: SprintService,
+    private dateAdapter: DateAdapter<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
   ) {
     this.form =this.fb.group({
@@ -40,10 +50,21 @@ export class CreateUpdateSprintComponent implements OnInit {
       initialDate:[''],
       finalDate:[''],
   });
+    this.id =data.id;
   }
-  ngOnInit(): void {}
 
-  //metodos
+  ngOnInit(): void {
+    this.isEdit(this.id);
+  }
+
+  isEdit(id: number | undefined){
+    if (id != undefined) {
+      this.operation = 'Editar';
+    } else {
+      this.operation = 'Agregar';
+    }
+  }
+
   addEditSprint() {
     if (this.form.invalid){
       this.toastr.error('Todos los campos son obligatorios', 'Error');

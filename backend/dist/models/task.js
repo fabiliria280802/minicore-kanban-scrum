@@ -31,7 +31,7 @@ var Task = connection_1.default.define("task", {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    description: {
+    taskdescription: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
@@ -39,11 +39,11 @@ var Task = connection_1.default.define("task", {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    priority: {
-        type: sequelize_1.DataTypes.STRING,
+    points: {
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
-    assignedUser: {
+    priority: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },

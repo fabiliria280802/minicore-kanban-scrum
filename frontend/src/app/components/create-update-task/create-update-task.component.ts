@@ -1,12 +1,13 @@
 //Angular adds
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 //interfaces
-import { Task, points, status } from 'src/app/interfaces/task.interface';
+import { Task, points, status, priority  } from 'src/app/interfaces/task.interface';
 import { Sprint } from 'src/app/interfaces/sprint.interface';
 import { User } from 'src/app/interfaces/user.interface';
 
@@ -16,7 +17,6 @@ import { UserService } from 'src/app/services/user.service';
 import { TaskService } from 'src/app/services/task.service';
 import { SprintService } from 'src/app/services/sprint.service';
 
-//TODO: Agregar funcionalidad de esta pestaña (task)
 @Component({
   selector: 'app-create-update-task',
   templateUrl: './create-update-task.component.html',
@@ -28,28 +28,26 @@ export class CreateUpdateTaskComponent implements OnInit {
   idsprint: number = 0;
   iduser: number = 0;
   title: string = '';
-  description: string = '';
+  taskdescription: string = '';
   status: status = status.todo;
   points: points = points.none;
-  assignedUser?: string = '';
+  priority: priority = priority.low;
+
+  //nombre pestaña
+  operation: string = '';
+
+  //llamada a la otra pagina
+  id: number | undefined;
 
   //selects
   users: User[] =[];
   sprints: Sprint[]=[];
   statuses: status[] = [status.todo, status.doing, status.done];
   pointss: points[] = [points.none, points.one, points.three, points.five, points.eight, points.thirteen];
+  prioritys: priority[] = [priority.low, priority.medium, priority.high];
 
-  /*
-export interface Task {
-  idtask: number;
-  idsprint: number;
-  title: string;
-  description: string;
-  status: status;
-  points: points;
-  assignedUser?: string;
-}*/
-
+  //reactiveform
+  form: FormGroup;
   constructor(
     public dialogRef:MatDialogRef<CreateUpdateTaskComponent>,
     private _taskService: TaskService,
@@ -57,11 +55,47 @@ export interface Task {
     private _errorService: ErrorService,
     private _userService: UserService,
     private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
     private toastr: ToastrService,
-  ){}
+  ){
+    this.form =this.fb.group({
+      idsprint: [''],
+      iduser: [''],
+      title: [''],
+      taskdescription: [''],
+      status: [''],
+      points: [''],
+      priority: [''],
+  });
+    this.id = data.id;
+  }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.loadSprints();
+    this.loadUsers();
+    this.isEdit(this.id);
+  }
+  isEdit(id: number | undefined){
+    if (id != undefined) {
+      this.operation = 'Editar';
+    } else {
+      this.operation = 'Agregar';
+    }
+  }
+  getTask(id: number){
+    this._taskService.getTask(id).subscribe(data => {
+      console.log(data);
+      this.form.setValue({
+        idsprint: data.idsprint,
+        iduser: data.iduser,
+        title: data.title,
+        taskdescription: data.taskdescription,
+        status: data.status,
+        points: data.points,
+        priority: data.priority,
+      });
+    })
   }
 
   loadSprints(): void {
@@ -94,47 +128,69 @@ export interface Task {
     });
   }
 
+
+  onSprintSelected(sprintId: number): void {
+    this.idsprint = sprintId;
+  }
+
+  onUserSelected(userId: number): void {
+    this.iduser = userId;
+  }
+
   cancelar(){
     this.dialogRef.close();
   }
 
-  addTask(){
-    if (
-      this.idsprint == 0 ||
-      this.iduser == 0 ||
-      this.title == '' ||
-      this.title == ' '||
-      this.description == '' ||
-      this.description == ' ' ||
-      this.assignedUser == ''
-    ) {
+  addEditTask(){
+    if (this.form.invalid) {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
+    console.log('Valores del formulario:', this.form.value);
     const task: Task = {
-      iduser: this.iduser,
-      idsprint: this.idsprint,
-      title: this.title,
-      description: this.description,
-      points: this.points,
-      status: this.status,
-      assignedUser: this.assignedUser,
+      idsprint: this.form.value.idsprint,
+      iduser: this.form.value.iduser,
+      title: this.form.value.title,
+      taskdescription: this.form.value.description,
+      status: this.form.value.status,
+      points: this.form.value.points,
+      priority: this.form.value.priority,
     };
-    this._taskService.saveTasks(task).subscribe({
-      next: (data) => {
-        this.toastr.success(
-          'La tarea fue registrada con exito',
-          'Tarea registrada',
-        );
-        this.dialogRef.close();
-      },
-      error: (e: HttpErrorResponse) => {
-        if (e.error.msg) {
-          this._errorService.msjError(e);
-        } else {
-          this.toastr.error('Ups ocurrio un error', 'Error');
-        }
-      },
-    });
+    if(this.id == undefined){
+      this._taskService.saveTasks(task).subscribe({
+        next: (data) => {
+          this.toastr.success(
+            'La tarea fue registrada con exito',
+            'Tarea registrada',
+          );
+          this.dialogRef.close(true);
+        },
+        error: (e: HttpErrorResponse) => {
+          if (e.error.msg) {
+            this._errorService.msjError(e);
+          } else {
+            this.toastr.error('Ups ocurrio un error o no', 'Error');
+          }
+        },
+      });
+    }else{
+      this._taskService.putTask(this.id, task).subscribe({
+        next: (data) => {
+          this.toastr.success(
+            'La tarea fue actualizada con exito',
+            'Tarea actualizada',
+          );
+          this.dialogRef.close(true);
+        },
+        error: (e: HttpErrorResponse) => {
+          if (e.error.msg) {
+            this._errorService.msjError(e);
+          } else {
+            this.toastr.error('Ups ocurrio un error', 'Error');
+          }
+        },
+      });
+    }
   }
 }
+

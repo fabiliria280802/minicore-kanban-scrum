@@ -13,6 +13,7 @@ import { SubtaskService } from 'src/app/services/subtask.service';
 
 //calling components
 import { CreateUpdateSubtaskComponent } from '../create-update-subtask/create-update-subtask.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-subtask',
@@ -25,8 +26,7 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
     'N° Subtask',
     'title',
     'description',
-    'Subtaskstatus',
-    'assignedUser',
+    'status',
     'tools',
   ];
   dataSource: MatTableDataSource<Subtask>;
@@ -36,7 +36,8 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dialog: MatDialog,
-    private _subtaskService: SubtaskService
+    private _subtaskService: SubtaskService,
+    private toastr: ToastrService,
     ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -54,19 +55,26 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    //this.dataSource.paginator._intl. = "Item x pagina";
-    /* this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.title.toLowerCase().includes(filter) || data.description.toLowerCase().includes(filter) || data.Subtaskstatus.toLowerCase().includes(filter) || data.assignedUser.toLowerCase().includes(filter);
-    };*/
   }
-  addEditSubtask() {
+  deleteSubtask(id: number){
+    this._subtaskService.deleteSubtask(id).subscribe(()=>{
+      this.getSubtasks()
+      this.toastr.success(
+        'Se borro exitosamente el usuario',
+        'Eliminación',
+      );
+    });
+  }
+  addEditSubtask(id?: number) {
     const dialogRef = this.dialog.open(CreateUpdateSubtaskComponent, {
       width: '550px',
       disableClose: true,
-      //data:{},
+      data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result=>{
-      console.log('hell no');
+      if (result) {
+        this.getSubtasks();
+      }
     });
   }
   getSubtasks(): void {

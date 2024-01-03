@@ -16,6 +16,10 @@ export class SubtaskService {
     this.myApiUrl = 'api/subtasks';
   }
 
+  getSubtask(id: number): Observable<any> {
+    return this.http.get<Subtask>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+  }
+
   getSubtasks(): Observable<Subtask[]> {
     return this.http.get<Subtask[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
@@ -25,5 +29,17 @@ export class SubtaskService {
       'authorization': `Bearer ${localStorage.getItem('token')}`
     });
     return this.http.post<Subtask>(`${this.myAppUrl}${this.myApiUrl}`, subtask, { headers });
+  }
+
+  putSubtask(id: number, subtask: Subtask): Observable<any>{
+    return this.http.put<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`,subtask
+    );
+  }
+
+  deleteSubtask(id: number):Observable<any>{
+    return this.http.delete<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`
+      );
   }
 }

@@ -13,6 +13,7 @@ import { SprintService } from 'src/app/services/sprint.service';
 
 //calling components
 import { CreateUpdateSprintComponent } from '../create-update-sprint/create-update-sprint.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
 
   constructor(
     public dialog: MatDialog,
-    private _sprintService: SprintService
+    private _sprintService: SprintService,
+    private toastr: ToastrService,
     ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -65,12 +67,21 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator = this.paginator;
     })
   }
+  deleteSprint(id: number){
+    this._sprintService.deleteSprint(id).subscribe(()=>{
+      this.getSprints()
+      this.toastr.success(
+        'Se borro exitosamente el usuario',
+        'Eliminación',
+      );
+    });
+  }
 
-  addEditSprint() {
+  addEditSprint(id?: number) {
     const dialogRef = this.dialog.open(CreateUpdateSprintComponent, {
       width: '550px',
       disableClose: true,
-      //data:{},
+      data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result=>{
       if (result) {

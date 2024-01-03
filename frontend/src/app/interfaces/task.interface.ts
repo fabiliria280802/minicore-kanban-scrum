@@ -13,12 +13,19 @@ export enum points {
   thirteen = '13',
 }
 
+export enum priority{
+  low = 'Baja',
+  medium = 'Media',
+  high = 'Alta',
+}
+
 export interface Task {
+  idtask?: number;
   idsprint: number;
   iduser: number;
   title: string;
-  description: string;
+  taskdescription: string;
   status: status;
   points: points;
-  assignedUser?: string;
+  priority: priority;
 }

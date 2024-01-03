@@ -25,10 +25,6 @@
 </div>
 
 <table mat-table [dataSource]="dataSource" color="primary" matSort>
-  <ng-container matColumnDef="N° Sprint">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Sprint</th>
-    <td mat-cell *matCellDef="let element">{{ element.idsprint }}</td>
-  </ng-container>
 
   <ng-container matColumnDef="N° Task">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Tarea</th>
@@ -65,20 +61,16 @@
     <td mat-cell *matCellDef="let element">
       <mat-icon
         aria-hidden="false"
-        fontIcon="visibility"
-        matTooltip="Ver Tarea: {{ element.title }}"
-        class="btnView"
-      ></mat-icon>
-      <mat-icon
-        aria-hidden="false"
         fontIcon="edit"
         matTooltip="Editar Tarea: {{ element.title }}"
+        (click)="addEditTask(element.idtask)"
         class="btnEdit"
       ></mat-icon>
       <mat-icon
         aria-hidden="false"
         fontIcon="delete"
-        matTooltip="Eliminar Trea: {{ element.title }}"
+        (click)="deleteTask(element.idtask)"
+        matTooltip="Eliminar Tarea: {{ element.title }}"
         class="btnDelete"
       ></mat-icon>
     </td>
