@@ -146,6 +146,7 @@ var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.postSprint = postSprint;
+//TODO: NUEVA VALIDACION
 var putSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, sprint, error_4;
     return __generator(this, function (_a) {
@@ -153,6 +154,8 @@ var putSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, f
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 id = req.params.id;
+                console.log("Update Sprint ID:", id);
+                console.log("Data to Update:", req.body);
                 return [4 /*yield*/, sprint_1.default.findByPk(id)];
             case 1:
                 sprint = _a.sent();
@@ -162,16 +165,13 @@ var putSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 return [4 /*yield*/, sprint.update(req.body)];
             case 2:
                 _a.sent();
+                console.log("Updated Sprint:", sprint);
                 res.json({ msg: "Sprint updated", sprint: sprint });
                 return [3 /*break*/, 4];
             case 3:
                 error_4 = _a.sent();
-                if (error_4 instanceof Error) {
-                    res.status(500).json({ error: error_4.message });
-                }
-                else {
-                    res.status(500).json({ error: "Error al actualizar sprint" });
-                }
+                console.error("Update Error:", error_4);
+                res.status(500).json({ error: "Error al actualizar sprint" });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }

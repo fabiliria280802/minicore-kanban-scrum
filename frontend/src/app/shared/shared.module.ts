@@ -26,9 +26,11 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SidebarInsightComponent } from './sidebar-insight/sidebar-insight.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
-  declarations: [SpinnerComponent],
+  declarations: [SpinnerComponent, SidebarInsightComponent],
   imports: [
     CommonModule,
     MatSlideToggleModule,
@@ -57,6 +59,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     ReactiveFormsModule,
     MatNativeDateModule,
+    NgChartsModule,
     //al importar spinnner component vale kk
     //SpinnerComponent,
   ],
@@ -87,6 +90,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     SpinnerComponent,
     ReactiveFormsModule,
+    NgChartsModule,
   ],
 })
 export class SharedModule {}

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var connection_1 = __importDefault(require("../db/connection"));
 var sequelize_1 = require("sequelize");
-var Sprint = connection_1.default.define("sprint", {
+var Prediction = connection_1.default.define("prediction", {
     idsprint: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
@@ -63,6 +63,10 @@ var Sprint = connection_1.default.define("sprint", {
         allowNull: true,
     },
     sprintstatus: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    predictionPoints: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },

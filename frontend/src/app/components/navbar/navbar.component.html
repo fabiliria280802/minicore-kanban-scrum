@@ -1,4 +1,7 @@
 <nav class="navbar">
+  <button (click)="drawer.toggle()" mat-icon-button style="color: black;">
+  <mat-icon>menu</mat-icon>
+  </button>
   <a class="navbar-brand" href="/">
     <img src="favicon.ico" width="30" height="30" alt="" />
     SKAM
@@ -31,3 +34,25 @@
   <div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>
   <button class="btn-logout" (click)="logout()">Logout</button>
 </nav>
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer opened="false" mode="side">
+    <mat-nav-list>
+      <mat-list-item (click)="navigate('/backlog')">
+        <button mat-button>Backlog</button>
+      </mat-list-item>
+      <mat-list-item (click)="navigate('/sprint-active')">
+        <button mat-button>Sprint-active</button>
+      </mat-list-item>
+      <mat-list-item (click)="navigate('/dashboard')">
+        <button mat-button>Dashboard</button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="text-align: center;min-height: 600px;">
+
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

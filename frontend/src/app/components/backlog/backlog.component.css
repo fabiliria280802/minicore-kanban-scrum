@@ -18,17 +18,19 @@
 
 .sprint-header h3 {
   margin: 0;
+  color: black;
 }
 
 .sprint-dates {
   background-color: #e9e9e9;
+  color: black;
   padding: 5px 10px;
   border-radius: 15px;
 }
 
 .sprint-points {
   display: flex;
-  gap: 10px; /* Espacio entre los elementos */
+  gap: 10px;
 }
 
 .point-badge {
@@ -45,15 +47,31 @@
 
 /* Puedes personalizar cada tipo de punto con diferentes colores de fondo */
 .sprint-committed {
-  background-color: #2196f3; /* Azul para committed */
+  background-color: #73b8f0;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 15px;
 }
 
 .sprint-fulfilled {
-  background-color: #4caf50; /* Verde para fulfilled */
+  background-color: #7ae07d; /* Verde para fulfilled */
+  color: black;
+  padding: 5px 10px;
+  border-radius: 15px;
 }
 
 .sprint-noFulfilled {
-  background-color: #f44336; /* Rojo para no fulfilled */
+  background-color: #f5c6c3; /* Rojo para no fulfilled */
+  color: black;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+.sprint-sprintstatus{
+  background-color: #e9e9e9;
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: black;
 }
 
 .table {
@@ -69,5 +87,76 @@
 }
 
 .task-done {
-  background-color: #d4edda;
+  background-color: #65ec85;
 }
+
+.new-task-button {
+  background-color: #ddd;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.new-task-button:hover {
+  background-color: #c6ccd3;
+  color: white;
+}
+
+.high-priority{
+  color: #eb2929;
+}
+
+.medium-priority{
+  color: #fdc200;
+}
+
+.low-priority{
+  color: #81b81c;
+}
+
+.points-styling{
+  background-color: #c6ccd3;
+  color: black;
+  padding: 5px 9px;
+  width: 27px;
+  border-radius: 15px;
+}
+.insight-points{
+  color: black;
+}
+.hidden {
+  display: none;
+}
+
+.task-finalizada,
+.subtask-finalizada {
+  padding: 5px 9px;
+  width: 90px;
+  background-color: #81b81c;
+  border-radius: 15px;
+}
+
+.task-avanzada,
+.subtask-avanzada {
+  padding: 5px 9px;
+  width: 90px;
+  background-color: #73b8f0;
+  border-radius: 15px;
+}
+
+.task-por-hacer,
+.subtask-por-hacer {
+  padding: 5px 9px;
+  width: 90px;
+  background-color: #f5c6c3;
+  border-radius: 15px;
+}
+

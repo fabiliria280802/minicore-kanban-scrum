@@ -1,52 +1,137 @@
-<app-navbar></app-navbar>
 <div class="container mt-2">
-  <h2>Dashboard</h2>
+  <h2>Backlog</h2>
   <!-- Iterar sobre cada sprint -->
   <div *ngFor="let sprint of sprints" class="sprint-container">
     <div class="sprint-header">
-      <h3>{{ sprint.title }}</h3>
-      <div class="sprint-dates">
+      <h3>Tablero {{ sprint.title }}</h3>
+      <div class="sprint-dates" matTooltip="Fechas del sprint">
         {{ sprint.initialDate | date }} - {{ sprint.finalDate | date }}
       </div>
       <div class="sprint-points">
-        <div class="sprint-committed">
-          {{ sprint.committedPoints | number }}
-        </div>
-        <div class="sprint-fulfilled">
-          {{ sprint.fulfilledPoints | number }}
-        </div>
-        <div class="sprint-noFulfilled">
+        <div class="sprint-noFulfilled"  matTooltip="Puntos por hacer">
           {{ sprint.noFulfilledPoints | number }}
         </div>
+        <div class="sprint-committed"  matTooltip="Puntos avanzados">
+          {{ sprint.pendingPoints | number }}
+        </div>
+        <div class="sprint-fulfilled"  matTooltip="Puntos cumplidos">
+          {{ sprint.fulfilledPoints | number }}
+        </div>
+        <div [ngClass]="getClassBySprintStatus(sprint.sprintstatus ?? '')"  matTooltip="Estado">
+          {{ sprint.sprintstatus }}
+        </div>
+      </div>
+      <div>
+          <mat-icon
+          *ngIf="callSideMove(sprint.idsprint ?? 0)"
+            aria-hidden="false"
+            fontIcon="equalizer"
+            (click)="openSidebarInsight(sprint.idsprint ?? 0)"
+            class="insight-points"
+          ></mat-icon>
       </div>
     </div>
-    <div class="sprint-tasks">
+    <div class="sprint-tasks" *ngIf="getClassBySprintStatusShow(sprint.sprintstatus ?? '')">
       <table class="table">
         <thead>
           <tr>
+            <th scope="col"> </th>
             <th scope="col">ID</th>
             <th scope="col">Título</th>
             <th scope="col">Estado</th>
             <th scope="col">Puntos</th>
+            <th scope="col">Prioridad</th>
             <th scope="col">Usuario Asignado</th>
+            <th scope="col"> </th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="
-              let task of tasks, filterBySprint: sprint.idsprint;
-              let i = index
-            "
-            [class]="{ 'task-done': task.status === 'Finalizada' }"
-          >
-            <th scope="row">{{ i + 1 }}</th>
-            <td>{{ task.title }}</td>
-            <td>{{ task.status }}</td>
-            <td>{{ task.points }}</td>
-            <td>{{ task.iduser }}</td>
+          <ng-container *ngFor="let task of tasks | filterBySprint: sprint.idsprint: sprint.sprintstatus; let i = index">
+               <tr>
+               <td>
+                 <mat-icon
+                   *ngIf="task.idtask !== undefined && hasSubtasks(task.idtask)"
+                   aria-hidden="false"
+                   (click)="toggleTaskExpansion(task.idtask)"
+                   [fontIcon]="expandedTasks[task.idtask] ? 'expand_more' : 'chevron_right'"
+                 ></mat-icon>
+               </td>
+               <th scope="row">{{ task.idtask }}</th>
+               <td class="title-style">{{ task.title }}</td>
+               <td>
+                <div [ngClass]="getClassByTaskStatus(task.status)">
+                  {{ task.status }}
+                </div>
+              </td>
+               <td>
+                <div class="points-styling">
+                  {{ task.points }}
+                </div>
+              </td>
+               <td class="icon-container">
+                   <mat-icon
+                   *ngIf="task.priority === 'Alta'"
+                   aria-hidden="false"
+                   fontIcon="expand_less"
+                   class="high-priority"
+                   matTooltip="{{ task.priority }}"
+                 ></mat-icon>
+
+                   <mat-icon
+                   *ngIf="task.priority === 'Media'"
+                   aria-hidden="false"
+                   fontIcon="density_large"
+                   class="medium-priority"
+                   matTooltip="{{ task.priority }}"
+                 ></mat-icon>
+
+                   <mat-icon
+                   *ngIf="task.priority === 'Baja'"
+                   aria-hidden="false"
+                   fontIcon="expand_more"
+                   class="low-priority"
+                   matTooltip="{{ task.priority }}"
+                   ></mat-icon>
+               </td>
+               <td>{{ task.assignedFullName || 'Fabiana Liria' }}</td>
+               <td>
+                 <mat-icon
+                   aria-hidden="false"
+                   fontIcon="more_horiz"
+                   class="three-points"
+                 ></mat-icon>
+               </td>
           </tr>
+          <tr *ngIf="task.idtask !== undefined && expandedTasks[task.idtask]" class="subtasks-row">
+            <td colspan="8">
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let subtask of subtasks | filterByTask: task.idtask; let x = index" [class.hidden]="!expandedTasks[task.idtask]">
+                    <th scope="row">{{ subtask.idsubtask }}</th>
+                    <td class="title-style">{{ subtask.title }}</td>
+                    <div [ngClass]="getClassBySubtaskStatus(subtask.subtaskstatus)">
+                      {{ subtask.subtaskstatus }}
+                    </div>
+                    <td colspan="5">{{ task.assignedFullName || 'Fabiana Liria' }}</td>
+                    <td>
+                      <mat-icon
+                        aria-hidden="false"
+                        fontIcon="more_horiz"
+                        class="three-points"
+                      ></mat-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </ng-container>
+
         </tbody>
       </table>
     </div>
+    <button *ngIf="getClassBySprintStatusShow(sprint.sprintstatus ?? '')" (click)="addEditTask()" class="new-task-button">
+      + Crear incidencia
+    </button>
   </div>
 </div>

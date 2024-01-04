@@ -9,7 +9,7 @@ router.get("/", task_controller_1.getTasks);
 router.post("/", task_controller_1.postTask);
 router.put("/:id", task_controller_1.putTask);
 router.delete("/:id", task_controller_1.deleteTask);
-router.get("/sprint/:idsprint", task_controller_1.getTasksBySprintId);
+router.get("/sprint/:id", task_controller_1.getTasksBySprintId);
 /*
 router.get("/:id", validateToken, getTask);
 router.get("/", validateToken, getTasks);

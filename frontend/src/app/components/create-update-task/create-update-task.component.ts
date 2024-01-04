@@ -40,6 +40,7 @@ export class CreateUpdateTaskComponent implements OnInit {
   id: number | undefined;
 
   //selects
+  tasks: Task[] = [];
   users: User[] =[];
   sprints: Sprint[]=[];
   statuses: status[] = [status.todo, status.doing, status.done];
@@ -128,6 +129,20 @@ export class CreateUpdateTaskComponent implements OnInit {
     });
   }
 
+  loadTasks(): void {
+    this._taskService.getTasks().subscribe({
+      next: (tasks) => {
+        this.tasks = tasks;
+      },
+      error: (e: HttpErrorResponse) => {
+        if (e.error.msg) {
+          this._errorService.msjError(e);
+        } else {
+          this.toastr.error('Ups ocurrio un error', 'Error');
+        }
+      },
+    });
+  }
 
   onSprintSelected(sprintId: number): void {
     this.idsprint = sprintId;
@@ -140,10 +155,7 @@ export class CreateUpdateTaskComponent implements OnInit {
   cancelar(){
     this.dialogRef.close();
   }
-  updateSprintCommittedPoints(sprintId: number) {
-    this.idsprint = sprintId;
-    this._sprintService.calculateCommittedPoints(sprintId);
-  }
+
 
   addEditTask(){
     if (this.form.invalid) {
@@ -155,7 +167,7 @@ export class CreateUpdateTaskComponent implements OnInit {
       idsprint: this.form.value.idsprint,
       iduser: this.form.value.iduser,
       title: this.form.value.title,
-      taskdescription: this.form.value.description,
+      taskdescription: this.form.value.taskdescription,
       status: this.form.value.status,
       points: this.form.value.points,
       priority: this.form.value.priority,
@@ -163,12 +175,12 @@ export class CreateUpdateTaskComponent implements OnInit {
     if(this.id == undefined){
       this._taskService.saveTasks(task).subscribe({
         next: (data) => {
-          this.updateSprintCommittedPoints(task.idsprint);
           this.toastr.success(
             'La tarea fue registrada con exito',
             'Tarea registrada',
           );
           this.dialogRef.close(true);
+          this.loadTasks();
         },
         error: (e: HttpErrorResponse) => {
           if (e.error.msg) {
@@ -181,7 +193,6 @@ export class CreateUpdateTaskComponent implements OnInit {
     }else{
       this._taskService.putTask(this.id, task).subscribe({
         next: (data) => {
-          this.updateSprintCommittedPoints(task.idsprint);
           this.toastr.success(
             'La tarea fue actualizada con exito',
             'Tarea actualizada',

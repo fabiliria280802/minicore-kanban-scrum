@@ -10,6 +10,7 @@ import { Subtask } from '../interfaces/subtask.interface';
 export class SubtaskService {
   private myAppUrl: string;
   private myApiUrl: string;
+  private subtasks: Subtask[] = [];
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
@@ -20,6 +21,9 @@ export class SubtaskService {
     return this.http.get<Subtask>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
+  hasSubtasks(idtask: number): boolean {
+    return this.subtasks.some(subtask => subtask.idtask === idtask);
+  }
   getSubtasks(): Observable<Subtask[]> {
     return this.http.get<Subtask[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
@@ -42,4 +46,17 @@ export class SubtaskService {
       `${this.myAppUrl}${this.myApiUrl}/${id}`
       );
   }
+
+  //adicional
+  loadSubtasks(): void {
+    this.getSubtasks().subscribe(
+      (data: Subtask[]) => {
+        this.subtasks = data;
+      },
+      (error) => {
+        console.error('Error loading subtasks:', error);
+      }
+    );
+  }
+
 }

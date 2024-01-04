@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTasksBySprintId = exports.deleteTask = exports.putTask = exports.postTask = exports.getTasks = exports.getTask = void 0;
 var task_1 = __importDefault(require("../models/task"));
+var sprint_1 = __importDefault(require("../models/sprint"));
 var getTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, task, error_1;
     return __generator(this, function (_a) {
@@ -96,17 +97,58 @@ var getTasks = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
 }); };
 exports.getTasks = getTasks;
 var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var newTask, error_3;
+    var newTask, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 6, , 7]);
                 return [4 /*yield*/, task_1.default.create(req.body)];
             case 1:
                 newTask = _a.sent();
-                res.status(201).json(newTask);
-                return [3 /*break*/, 3];
+                idsprint = newTask.get('idsprint');
+                if (!idsprint) return [3 /*break*/, 5];
+                return [4 /*yield*/, task_1.default.findAll({
+                        where: { idsprint: idsprint }
+                    })];
             case 2:
+                tasks = _a.sent();
+                committedPoints = tasks.reduce(function (total, task) { return total + task.get('points'); }, 0);
+                fulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Finalizada' ? total + task.get('points') : total;
+                }, 0);
+                pendingPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Avanzada' ? total + task.get('points') : total;
+                }, 0);
+                noFulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Por hacer' ? total + task.get('points') : total;
+                }, 0);
+                totalTasks = tasks.length;
+                completedTasks = tasks.filter(function (task) { return task.get('status') === 'Finalizada'; }).length;
+                donePorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
+                doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
+                todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
+                toDoPorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
+            case 3:
+                sprint = _a.sent();
+                if (!sprint) return [3 /*break*/, 5];
+                return [4 /*yield*/, sprint.update({
+                        committedPoints: committedPoints,
+                        fulfilledPoints: fulfilledPoints,
+                        pendingPoints: pendingPoints,
+                        noFulfilledPoints: noFulfilledPoints,
+                        toDoPorcentage: toDoPorcentage,
+                        doingPorcentage: doingPorcentage,
+                        donePorcentage: donePorcentage,
+                    })];
+            case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5:
+                res.status(201).json(newTask);
+                return [3 /*break*/, 7];
+            case 6:
                 error_3 = _a.sent();
                 if (error_3 instanceof Error) {
                     res.status(500).json({ error: error_3.message });
@@ -114,18 +156,18 @@ var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); };
 exports.postTask = postTask;
 var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, task, error_4;
+    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
+                _a.trys.push([0, 7, , 8]);
                 id = req.params.id;
                 return [4 /*yield*/, task_1.default.findByPk(id)];
             case 1:
@@ -136,9 +178,50 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, task.update(req.body)];
             case 2:
                 _a.sent();
-                res.json({ msg: "Task updated", task: task });
-                return [3 /*break*/, 4];
+                idsprint = task.get('idsprint');
+                if (!idsprint) return [3 /*break*/, 6];
+                return [4 /*yield*/, task_1.default.findAll({
+                        where: { idsprint: idsprint }
+                    })];
             case 3:
+                tasks = _a.sent();
+                committedPoints = tasks.reduce(function (total, task) { return total + task.get('points'); }, 0);
+                fulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Finalizada' ? total + task.get('points') : total;
+                }, 0);
+                pendingPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Avanzada' ? total + task.get('points') : total;
+                }, 0);
+                noFulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Por hacer' ? total + task.get('points') : total;
+                }, 0);
+                totalTasks = tasks.length;
+                completedTasks = tasks.filter(function (task) { return task.get('status') === 'Finalizada'; }).length;
+                donePorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
+                doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
+                todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
+                toDoPorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
+            case 4:
+                sprint = _a.sent();
+                if (!sprint) return [3 /*break*/, 6];
+                return [4 /*yield*/, sprint.update({
+                        committedPoints: committedPoints,
+                        fulfilledPoints: fulfilledPoints,
+                        pendingPoints: pendingPoints,
+                        noFulfilledPoints: noFulfilledPoints,
+                        toDoPorcentage: toDoPorcentage,
+                        doingPorcentage: doingPorcentage,
+                        donePorcentage: donePorcentage,
+                    })];
+            case 5:
+                _a.sent();
+                _a.label = 6;
+            case 6:
+                res.json({ msg: "Task updated", task: task });
+                return [3 /*break*/, 8];
+            case 7:
                 error_4 = _a.sent();
                 if (error_4 instanceof Error) {
                     res.status(500).json({ error: error_4.message });
@@ -146,18 +229,18 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 8];
+            case 8: return [2 /*return*/];
         }
     });
 }); };
 exports.putTask = putTask;
 var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, task, error_5;
+    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
+                _a.trys.push([0, 7, , 8]);
                 id = req.params.id;
                 return [4 /*yield*/, task_1.default.findByPk(id)];
             case 1:
@@ -165,12 +248,53 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 if (!task) {
                     return [2 /*return*/, res.status(404).json({ msg: "Task not found", id: id })];
                 }
+                idsprint = task.get('idsprint');
                 return [4 /*yield*/, task.destroy()];
             case 2:
                 _a.sent();
-                res.json({ msg: "Task deleted" });
-                return [3 /*break*/, 4];
+                if (!idsprint) return [3 /*break*/, 6];
+                return [4 /*yield*/, task_1.default.findAll({
+                        where: { idsprint: idsprint }
+                    })];
             case 3:
+                tasks = _a.sent();
+                committedPoints = tasks.reduce(function (total, task) { return total + task.get('points'); }, 0);
+                fulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Finalizada' ? total + task.get('points') : total;
+                }, 0);
+                pendingPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Avanzada' ? total + task.get('points') : total;
+                }, 0);
+                noFulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Por hacer' ? total + task.get('points') : total;
+                }, 0);
+                totalTasks = tasks.length;
+                completedTasks = tasks.filter(function (task) { return task.get('status') === 'Finalizada'; }).length;
+                donePorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
+                doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
+                todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
+                toDoPorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
+            case 4:
+                sprint = _a.sent();
+                if (!sprint) return [3 /*break*/, 6];
+                return [4 /*yield*/, sprint.update({
+                        committedPoints: committedPoints,
+                        fulfilledPoints: fulfilledPoints,
+                        pendingPoints: pendingPoints,
+                        noFulfilledPoints: noFulfilledPoints,
+                        toDoPorcentage: toDoPorcentage,
+                        doingPorcentage: doingPorcentage,
+                        donePorcentage: donePorcentage,
+                    })];
+            case 5:
+                _a.sent();
+                _a.label = 6;
+            case 6:
+                res.json({ msg: "Task deleted" });
+                return [3 /*break*/, 8];
+            case 7:
                 error_5 = _a.sent();
                 if (error_5 instanceof Error) {
                     res.status(500).json({ error: error_5.message });
@@ -178,8 +302,8 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 8];
+            case 8: return [2 /*return*/];
         }
     });
 }); };

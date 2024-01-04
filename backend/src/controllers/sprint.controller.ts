@@ -69,22 +69,22 @@ export const postSprint = async (req: Request, res: Response) => {
     }
   }
 };
-
+//TODO: NUEVA VALIDACION
 export const putSprint = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    console.log("Update Sprint ID:", id);
+    console.log("Data to Update:", req.body);
     const sprint = await Sprint.findByPk(id);
     if (!sprint) {
       return res.status(404).json({ msg: "Sprint not found", id });
     }
     await sprint.update(req.body);
+    console.log("Updated Sprint:", sprint);
     res.json({ msg: "Sprint updated", sprint });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: "Error al actualizar sprint" });
-    }
+    console.error("Update Error:", error);
+    res.status(500).json({ error: "Error al actualizar sprint" });
   }
 };
 

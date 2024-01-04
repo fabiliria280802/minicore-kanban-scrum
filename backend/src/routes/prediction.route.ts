@@ -1,21 +1,16 @@
 import { Router } from "express";
 import {
-  getSprint,
-  postSprint,
-  putSprint,
-  deleteSprint,
-  getSprints,
-} from "../controllers/sprint.controller";
+  getPrediction,
+  postPrediction,
+  getPredictions,
+} from "../controllers/prediction.controller";
 import validateToken from "./validate-token";
 
 const router = Router();
 //!      momentos desesperados, requieren medidas desesperadas
-router.get("/:id", getSprint);
-router.get("/", getSprints);
-router.post("/", postSprint);
-router.put("/:id", putSprint);
-router.delete("/:id", deleteSprint);
-
+router.get("/:id", getPrediction);
+router.get("/", getPredictions);
+router.post("/", postPrediction);
 /*
 router.get("/:id", validateToken, getSprint);
 router.get("/", validateToken, getSprints);

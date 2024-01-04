@@ -16,7 +16,7 @@ router.get("/", getTasks);
 router.post("/", postTask);
 router.put("/:id", putTask);
 router.delete("/:id", deleteTask);
-router.get("/sprint/:idsprint", getTasksBySprintId);
+router.get("/sprint/:id", getTasksBySprintId);
 /*
 router.get("/:id", validateToken, getTask);
 router.get("/", validateToken, getTasks);

@@ -44,6 +44,7 @@ var user_routes_1 = __importDefault(require("../routes/user.routes"));
 var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
 var task_routes_1 = __importDefault(require("../routes/task.routes"));
 var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
+var prediction_route_1 = __importDefault(require("../routes/prediction.route"));
 //models
 /* ya no es necesario
   import Task from "./task";
@@ -80,6 +81,7 @@ var Server = /** @class */ (function () {
         this.app.use("/api/sprints", sprint_routes_1.default);
         this.app.use("/api/tasks", task_routes_1.default);
         this.app.use("/api/subtasks", subtask_routes_1.default);
+        this.app.use('/api/predictions', prediction_route_1.default);
     };
     Server.prototype.connectDB = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -87,7 +89,7 @@ var Server = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 5, , 6]);
+                        _a.trys.push([0, 6, , 7]);
                         return [4 /*yield*/, index_1.Sprint.sync()];
                     case 1:
                         _a.sent();
@@ -100,13 +102,16 @@ var Server = /** @class */ (function () {
                         return [4 /*yield*/, index_1.Subtask.sync()];
                     case 4:
                         _a.sent();
-                        console.log("Base de datos online");
-                        return [3 /*break*/, 6];
+                        return [4 /*yield*/, index_1.Prediction.sync()];
                     case 5:
+                        _a.sent();
+                        console.log("Base de datos online");
+                        return [3 /*break*/, 7];
+                    case 6:
                         error_1 = _a.sent();
                         console.log("No se pudo conectar");
-                        return [3 /*break*/, 6];
-                    case 6: return [2 /*return*/];
+                        return [3 /*break*/, 7];
+                    case 7: return [2 /*return*/];
                 }
             });
         });

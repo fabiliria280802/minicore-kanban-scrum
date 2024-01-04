@@ -26,14 +26,22 @@ const Sprint = sequelize.define("sprint", {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  //Puntos comprometidos
   committedPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  //finalizado = puntos hechos
   fulfilledPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  //Avanzado
+  pendingPoints:{
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  //por hacer
   noFulfilledPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -48,6 +56,10 @@ const Sprint = sequelize.define("sprint", {
   },
   donePorcentage: {
     type: DataTypes.DECIMAL,
+    allowNull: true,
+  },
+  sprintstatus: {
+    type: DataTypes.STRING,
     allowNull: true,
   },
 });

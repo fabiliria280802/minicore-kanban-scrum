@@ -28,4 +28,5 @@ export interface Task {
   status: status;
   points: points;
   priority: priority;
+  assignedFullName?: string;
 }

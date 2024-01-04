@@ -20,7 +20,7 @@ export class SprintService {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/sprints';
   }
-  getSubtask(id: number): Observable<any> {
+  getSprint(id: number): Observable<any> {
     return this.http.get<Sprint>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
@@ -50,29 +50,6 @@ export class SprintService {
     return this.http.delete<void>(
       `${this.myAppUrl}${this.myApiUrl}/${id}`
       );
-  }
-
-  //metodos calculadores
-  calculateCommittedPoints(idsprint: number): Observable<Sprint> {
-    return this._taskService.getTasksBySprintId(idsprint).pipe(
-      map(tasks => {
-        // Asegúrate de que la propiedad 'points' de cada 'task' sea de tipo 'number'
-        const totalPoints = tasks.reduce((sum, task) => sum + (task.points || 0), 0);
-        return totalPoints;
-      }),
-      switchMap(totalPoints => {
-        return this.getSubtask(idsprint).pipe(
-          switchMap(sprint => {
-            if (sprint) {
-              sprint.committedPoints = totalPoints;
-              return this.putSprints(idsprint, sprint);
-            } else {
-              throw new Error('Sprint not found');
-            }
-          })
-        );
-      })
-    );
   }
 
 }
