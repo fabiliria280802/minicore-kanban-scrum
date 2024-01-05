@@ -7,14 +7,6 @@ const Prediction = sequelize.define("prediction", {
     primaryKey: true,
     autoIncrement: true,
   },
-  idsprint: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'sprints',
-      key: 'idsprint',
-    },
-  },
   predictedPointsLower: {
     type: DataTypes.INTEGER,
     allowNull: false,

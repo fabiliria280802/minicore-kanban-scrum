@@ -11,41 +11,41 @@ h3 {
   margin: 0px 5px;
 }
 
-text{
+text {
   color: white;
-  }
+}
 
-body{
+body {
   background-color: white;
-  }
+}
 
 .select-container mat-form-field + mat-form-field {
-    margin-left: 20px;
-  }
+  margin-left: 20px;
+}
 
-mat-form-field{
-    margin-left: 20px;
-    width: 245px;
-  }
+mat-form-field {
+  margin-left: 20px;
+  width: 245px;
+}
 
 .select-container mat-form-field mat-hint {
-    color: rgb(250, 242, 242);
-  }
+  color: rgb(250, 242, 242);
+}
 
-.title-container mat-form-field{
-    width: 510px;
-  }
+.title-container mat-form-field {
+  width: 510px;
+}
 
-mat-form-field textarea{
-    height: 150px;
-  }
+mat-form-field textarea {
+  height: 150px;
+}
 
 .selectDev-container mat-form-field {
-    margin-left: 20px;
-    margin-top: 10px;
-    width: 510px;
-  }
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 510px;
+}
 
 .selectDev-container mat-form-field mat-hint {
-    color: rgb(250, 242, 242);
-  }
+  color: rgb(250, 242, 242);
+}

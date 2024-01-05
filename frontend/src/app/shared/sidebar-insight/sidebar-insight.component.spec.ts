@@ -8,7 +8,7 @@ describe('SidebarInsightComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SidebarInsightComponent]
+      declarations: [SidebarInsightComponent],
     });
     fixture = TestBed.createComponent(SidebarInsightComponent);
     component = fixture.componentInstance;

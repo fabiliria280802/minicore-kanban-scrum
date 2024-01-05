@@ -1,4 +1,3 @@
-
 <div class="toolbar-container">
   <mat-toolbar color="primary">
     <span class="toolbar-title">Listado de subtareas</span>
@@ -42,7 +41,9 @@
 
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
-    <td mat-cell *matCellDef="let element">{{ element.subtasksdescription }}</td>
+    <td mat-cell *matCellDef="let element">
+      {{ element.subtasksdescription }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="status">

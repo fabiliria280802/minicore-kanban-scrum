@@ -11,6 +11,13 @@ var Sprint = connection_1.default.define("sprint", {
         primaryKey: true,
         autoIncrement: true,
     },
+    idprediction: {
+        type: sequelize_1.DataTypes.INTEGER,
+        references: {
+            model: 'sprints',
+            key: 'idsprint',
+        },
+    },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,

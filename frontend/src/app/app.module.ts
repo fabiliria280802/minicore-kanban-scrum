@@ -33,7 +33,6 @@ import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,8 +70,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   ],
   providers: [
     {
-      provide:MAT_DATE_LOCALE, useValue: 'es'
-    }
+      provide: MAT_DATE_LOCALE,
+      useValue: 'es',
+    },
   ],
   bootstrap: [AppComponent],
 })

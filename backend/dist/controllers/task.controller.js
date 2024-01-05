@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTasksBySprintId = exports.deleteTask = exports.putTask = exports.postTask = exports.getTasks = exports.getTask = void 0;
 var task_1 = __importDefault(require("../models/task"));
 var sprint_1 = __importDefault(require("../models/sprint"));
+var prediction_1 = __importDefault(require("../models/prediction"));
 var getTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, task, error_1;
     return __generator(this, function (_a) {
@@ -97,16 +98,16 @@ var getTasks = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
 }); };
 exports.getTasks = getTasks;
 var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var newTask, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, error_3;
+    var newTask, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_1, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 6, , 7]);
+                _a.trys.push([0, 8, , 9]);
                 return [4 /*yield*/, task_1.default.create(req.body)];
             case 1:
                 newTask = _a.sent();
                 idsprint = newTask.get('idsprint');
-                if (!idsprint) return [3 /*break*/, 5];
+                if (!idsprint) return [3 /*break*/, 7];
                 return [4 /*yield*/, task_1.default.findAll({
                         where: { idsprint: idsprint }
                     })];
@@ -132,7 +133,7 @@ var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
             case 3:
                 sprint = _a.sent();
-                if (!sprint) return [3 /*break*/, 5];
+                if (!sprint) return [3 /*break*/, 7];
                 return [4 /*yield*/, sprint.update({
                         committedPoints: committedPoints,
                         fulfilledPoints: fulfilledPoints,
@@ -144,11 +145,34 @@ var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                     })];
             case 4:
                 _a.sent();
-                _a.label = 5;
+                return [4 /*yield*/, sprint_1.default.findAll({
+                        where: { sprintstatus: 'completado' }
+                    })];
             case 5:
-                res.status(201).json(newTask);
-                return [3 /*break*/, 7];
+                completedSprints = _a.sent();
+                if (!(completedSprints.length >= 5)) return [3 /*break*/, 7];
+                fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
+                mean_1 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
+                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_1, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
+                predictedPointsLower = Math.max(0, mean_1 - stdDev);
+                predictedPointsUpper = Math.max(predictedPointsLower, mean_1 + stdDev);
+                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
+                idPrediction = sprint.get('idprediction');
+                if (!idPrediction) return [3 /*break*/, 7];
+                return [4 /*yield*/, prediction_1.default.update({
+                        predictedPointsLower: predictedPointsLower,
+                        predictedPointsUpper: predictedPointsUpper,
+                        confidenceInterval: confidenceInterval
+                    }, {
+                        where: { id: idPrediction }
+                    })];
             case 6:
+                _a.sent();
+                _a.label = 7;
+            case 7:
+                res.status(201).json(newTask);
+                return [3 /*break*/, 9];
+            case 8:
                 error_3 = _a.sent();
                 if (error_3 instanceof Error) {
                     res.status(500).json({ error: error_3.message });
@@ -156,18 +180,18 @@ var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 7];
-            case 7: return [2 /*return*/];
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); };
 exports.postTask = postTask;
 var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, error_4;
+    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_2, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 7, , 8]);
+                _a.trys.push([0, 9, , 10]);
                 id = req.params.id;
                 return [4 /*yield*/, task_1.default.findByPk(id)];
             case 1:
@@ -179,7 +203,7 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
             case 2:
                 _a.sent();
                 idsprint = task.get('idsprint');
-                if (!idsprint) return [3 /*break*/, 6];
+                if (!idsprint) return [3 /*break*/, 8];
                 return [4 /*yield*/, task_1.default.findAll({
                         where: { idsprint: idsprint }
                     })];
@@ -205,7 +229,7 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
             case 4:
                 sprint = _a.sent();
-                if (!sprint) return [3 /*break*/, 6];
+                if (!sprint) return [3 /*break*/, 8];
                 return [4 /*yield*/, sprint.update({
                         committedPoints: committedPoints,
                         fulfilledPoints: fulfilledPoints,
@@ -217,11 +241,34 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                     })];
             case 5:
                 _a.sent();
-                _a.label = 6;
+                return [4 /*yield*/, sprint_1.default.findAll({
+                        where: { sprintstatus: 'completado' }
+                    })];
             case 6:
-                res.json({ msg: "Task updated", task: task });
-                return [3 /*break*/, 8];
+                completedSprints = _a.sent();
+                if (!(completedSprints.length >= 5)) return [3 /*break*/, 8];
+                fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
+                mean_2 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
+                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_2, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
+                predictedPointsLower = Math.max(0, mean_2 - stdDev);
+                predictedPointsUpper = Math.max(predictedPointsLower, mean_2 + stdDev);
+                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
+                idPrediction = sprint.get('idprediction');
+                if (!idPrediction) return [3 /*break*/, 8];
+                return [4 /*yield*/, prediction_1.default.update({
+                        predictedPointsLower: predictedPointsLower,
+                        predictedPointsUpper: predictedPointsUpper,
+                        confidenceInterval: confidenceInterval
+                    }, {
+                        where: { id: idPrediction }
+                    })];
             case 7:
+                _a.sent();
+                _a.label = 8;
+            case 8:
+                res.json({ msg: "Task updated", task: task });
+                return [3 /*break*/, 10];
+            case 9:
                 error_4 = _a.sent();
                 if (error_4 instanceof Error) {
                     res.status(500).json({ error: error_4.message });
@@ -229,18 +276,18 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 8];
-            case 8: return [2 /*return*/];
+                return [3 /*break*/, 10];
+            case 10: return [2 /*return*/];
         }
     });
 }); };
 exports.putTask = putTask;
 var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, error_5;
+    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_3, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 7, , 8]);
+                _a.trys.push([0, 9, , 10]);
                 id = req.params.id;
                 return [4 /*yield*/, task_1.default.findByPk(id)];
             case 1:
@@ -252,7 +299,7 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, task.destroy()];
             case 2:
                 _a.sent();
-                if (!idsprint) return [3 /*break*/, 6];
+                if (!idsprint) return [3 /*break*/, 8];
                 return [4 /*yield*/, task_1.default.findAll({
                         where: { idsprint: idsprint }
                     })];
@@ -278,7 +325,7 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
             case 4:
                 sprint = _a.sent();
-                if (!sprint) return [3 /*break*/, 6];
+                if (!sprint) return [3 /*break*/, 8];
                 return [4 /*yield*/, sprint.update({
                         committedPoints: committedPoints,
                         fulfilledPoints: fulfilledPoints,
@@ -290,11 +337,34 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     })];
             case 5:
                 _a.sent();
-                _a.label = 6;
+                return [4 /*yield*/, sprint_1.default.findAll({
+                        where: { sprintstatus: 'completado' }
+                    })];
             case 6:
-                res.json({ msg: "Task deleted" });
-                return [3 /*break*/, 8];
+                completedSprints = _a.sent();
+                if (!(completedSprints.length >= 5)) return [3 /*break*/, 8];
+                fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
+                mean_3 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
+                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_3, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
+                predictedPointsLower = Math.max(0, mean_3 - stdDev);
+                predictedPointsUpper = Math.max(predictedPointsLower, mean_3 + stdDev);
+                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
+                idPrediction = sprint.get('idprediction');
+                if (!idPrediction) return [3 /*break*/, 8];
+                return [4 /*yield*/, prediction_1.default.update({
+                        predictedPointsLower: predictedPointsLower,
+                        predictedPointsUpper: predictedPointsUpper,
+                        confidenceInterval: confidenceInterval
+                    }, {
+                        where: { id: idPrediction }
+                    })];
             case 7:
+                _a.sent();
+                _a.label = 8;
+            case 8:
+                res.json({ msg: "Task deleted" });
+                return [3 /*break*/, 10];
+            case 9:
                 error_5 = _a.sent();
                 if (error_5 instanceof Error) {
                     res.status(500).json({ error: error_5.message });
@@ -302,8 +372,8 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 8];
-            case 8: return [2 /*return*/];
+                return [3 /*break*/, 10];
+            case 10: return [2 /*return*/];
         }
     });
 }); };

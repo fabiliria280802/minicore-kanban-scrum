@@ -3,25 +3,42 @@
   <div class="title-container">
     <mat-form-field appearance="fill">
       <mat-label>Titulo</mat-label>
-      <input matInput formControlName="title" placeholder="Ingrese el titulo" autocomplete="off">
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Ingrese el titulo"
+        autocomplete="off"
+      />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Descripción</mat-label>
-      <textarea matInput formControlName="description" placeholder="Ingrese la descripción" autocomplete="off"></textarea>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Ingrese la descripción"
+        autocomplete="off"
+      ></textarea>
     </mat-form-field>
   </div>
   <div class="select-container">
     <mat-form-field>
       <mat-label>Selecciona sprint</mat-label>
-      <mat-select (selectionChange)="onSprintSelected($event.value)" formControlName="idsprint">
-        <mat-option *ngFor="let sprint of sprints" [value]="sprint.idsprint">{{sprint.title}}</mat-option>
+      <mat-select
+        (selectionChange)="onSprintSelected($event.value)"
+        formControlName="idsprint"
+      >
+        <mat-option *ngFor="let sprint of sprints" [value]="sprint.idsprint">{{
+          sprint.title
+        }}</mat-option>
       </mat-select>
       <mat-hint align="end">Estos son los sprints existentes^</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Selecciona estado</mat-label>
       <mat-select formControlName="status">
-        <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+        <mat-option *ngFor="let status of statuses" [value]="status">{{
+          status
+        }}</mat-option>
       </mat-select>
       <mat-hint align="end">Estados de la tarea^</mat-hint>
     </mat-form-field>
@@ -30,25 +47,37 @@
     <mat-form-field>
       <mat-label>Selecciona puntos</mat-label>
       <mat-select formControlName="points">
-        <mat-option *ngFor="let points of pointss" [value]="points">{{points}}</mat-option>
+        <mat-option *ngFor="let points of pointss" [value]="points">{{
+          points
+        }}</mat-option>
       </mat-select>
       <mat-hint align="end">Puntos posibles^</mat-hint>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Selecciona Desarrollador</mat-label>
-        <mat-select (selectionChange)="onUserSelected($event.value)" formControlName="iduser">
-          <mat-option *ngFor="let user of users" [value]="user.iduser">{{user.fullname}}</mat-option>
-        </mat-select>
-        <mat-hint align="end">Todos los desarroladores^</mat-hint>
+      <mat-label>Selecciona Desarrollador</mat-label>
+      <mat-select
+        (selectionChange)="onUserSelected($event.value)"
+        formControlName="iduser"
+      >
+        <mat-option *ngFor="let user of users" [value]="user.iduser">{{
+          user.fullname
+        }}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Todos los desarroladores^</mat-hint>
     </mat-form-field>
   </div>
   <div class="select2-container">
     <mat-form-field>
-        <mat-label>Selecciona Prioridad</mat-label>
-        <mat-select (selectionChange)="onUserSelected($event.value)" formControlName="priority">
-          <mat-option *ngFor="let priority of prioritys" [value]="priority">{{priority}}</mat-option>
-        </mat-select>
-        <mat-hint align="end">Prioridades disponibles^</mat-hint>
+      <mat-label>Selecciona Prioridad</mat-label>
+      <mat-select
+        (selectionChange)="onUserSelected($event.value)"
+        formControlName="priority"
+      >
+        <mat-option *ngFor="let priority of prioritys" [value]="priority">{{
+          priority
+        }}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Prioridades disponibles^</mat-hint>
     </mat-form-field>
   </div>
   <mat-dialog-actions align="end">
@@ -56,4 +85,3 @@
     <button mat-button cdkFocusInitial type="submit">Aceptar</button>
   </mat-dialog-actions>
 </form>
-

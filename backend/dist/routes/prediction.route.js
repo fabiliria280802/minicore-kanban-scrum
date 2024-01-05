@@ -6,7 +6,6 @@ var router = (0, express_1.Router)();
 //!      momentos desesperados, requieren medidas desesperadas
 router.get("/:id", prediction_controller_1.getPrediction);
 router.get("/", prediction_controller_1.getPredictions);
-router.post("/", prediction_controller_1.postPrediction);
 /*
 router.get("/:id", validateToken, getSprint);
 router.get("/", validateToken, getSprints);

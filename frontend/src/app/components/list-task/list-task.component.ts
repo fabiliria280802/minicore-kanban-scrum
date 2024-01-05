@@ -1,5 +1,11 @@
 //Angular adds
-import { Component, OnInit, ViewChild, AfterViewInit, Input,} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  Input,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -38,7 +44,7 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
     }
   }*/
   dataSource = new MatTableDataSource<Task>();
-/*
+  /*
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.dataSource.paginator = mp;
   }*/
@@ -72,23 +78,19 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }*/
   }
-  deleteTask(id: number){
-    this._taskService.deleteTask(id).subscribe(()=>{
-      this.getTasks()
-      this.toastr.success(
-        'Se borro exitosamente el usuario',
-        'Eliminación',
-      );
+  deleteTask(id: number) {
+    this._taskService.deleteTask(id).subscribe(() => {
+      this.getTasks();
+      this.toastr.success('Se borro exitosamente el usuario', 'Eliminación');
     });
   }
 
   getTasks(): void {
-    this._taskService.getTasks().subscribe(
-      data => {
-        console.log(data);
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-      })
+    this._taskService.getTasks().subscribe((data) => {
+      console.log(data);
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   addEditTask(id?: number) {
@@ -97,12 +99,10 @@ export class ListTaskComponent implements OnInit, AfterViewInit {
       disableClose: true,
       data: { id: id },
     });
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getTasks();
       }
     });
   }
-
-
 }

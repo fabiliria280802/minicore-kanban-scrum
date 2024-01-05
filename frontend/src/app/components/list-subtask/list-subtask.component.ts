@@ -38,7 +38,7 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _subtaskService: SubtaskService,
     private toastr: ToastrService,
-    ) {
+  ) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -56,13 +56,10 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  deleteSubtask(id: number){
-    this._subtaskService.deleteSubtask(id).subscribe(()=>{
-      this.getSubtasks()
-      this.toastr.success(
-        'Se borro exitosamente el usuario',
-        'Eliminación',
-      );
+  deleteSubtask(id: number) {
+    this._subtaskService.deleteSubtask(id).subscribe(() => {
+      this.getSubtasks();
+      this.toastr.success('Se borro exitosamente el usuario', 'Eliminación');
     });
   }
   addEditSubtask(id?: number) {
@@ -71,18 +68,17 @@ export class ListSubtaskComponent implements OnInit, AfterViewInit {
       disableClose: true,
       data: { id: id },
     });
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getSubtasks();
       }
     });
   }
   getSubtasks(): void {
-    this._subtaskService.getSubtasks().subscribe(
-      data => {
-        console.log(data);
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-      })
+    this._subtaskService.getSubtasks().subscribe((data) => {
+      console.log(data);
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 }

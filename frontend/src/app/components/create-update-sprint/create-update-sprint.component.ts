@@ -35,7 +35,7 @@ export class CreateUpdateSprintComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    public dialogRef:MatDialogRef<CreateUpdateSprintComponent>,
+    public dialogRef: MatDialogRef<CreateUpdateSprintComponent>,
     private toastr: ToastrService,
     private router: Router,
     private _errorService: ErrorService,
@@ -44,20 +44,20 @@ export class CreateUpdateSprintComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
   ) {
-    this.form =this.fb.group({
-      idsprint:[null],
-      title:[''],
-      initialDate:[''],
-      finalDate:[''],
-  });
-    this.id =data.id;
+    this.form = this.fb.group({
+      idsprint: [null],
+      title: [''],
+      initialDate: [''],
+      finalDate: [''],
+    });
+    this.id = data.id;
   }
 
   ngOnInit(): void {
     this.isEdit(this.id);
   }
 
-  isEdit(id: number | undefined){
+  isEdit(id: number | undefined) {
     if (id != undefined) {
       this.operation = 'Editar';
     } else {
@@ -66,7 +66,7 @@ export class CreateUpdateSprintComponent implements OnInit {
   }
 
   addEditSprint() {
-    if (this.form.invalid){
+    if (this.form.invalid) {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
@@ -103,9 +103,11 @@ export class CreateUpdateSprintComponent implements OnInit {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+    return `${year}-${month < 10 ? `0${month}` : month}-${
+      day < 10 ? `0${day}` : day
+    }`;
   }
-  cancelar(){
+  cancelar() {
     this.dialogRef.close();
   }
 }

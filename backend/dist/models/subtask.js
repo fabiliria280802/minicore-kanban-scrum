@@ -13,7 +13,7 @@ var Subtask = connection_1.default.define("subtask", {
     },
     idtask: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'tasks',
             key: 'idtask',

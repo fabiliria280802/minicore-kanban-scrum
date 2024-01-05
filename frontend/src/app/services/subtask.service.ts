@@ -22,7 +22,7 @@ export class SubtaskService {
   }
 
   hasSubtasks(idtask: number): boolean {
-    return this.subtasks.some(subtask => subtask.idtask === idtask);
+    return this.subtasks.some((subtask) => subtask.idtask === idtask);
   }
   getSubtasks(): Observable<Subtask[]> {
     return this.http.get<Subtask[]>(`${this.myAppUrl}${this.myApiUrl}`);
@@ -30,21 +30,24 @@ export class SubtaskService {
 
   saveSubtasks(subtask: Subtask): Observable<any> {
     const headers = new HttpHeaders({
-      'authorization': `Bearer ${localStorage.getItem('token')}`
+      authorization: `Bearer ${localStorage.getItem('token')}`,
     });
-    return this.http.post<Subtask>(`${this.myAppUrl}${this.myApiUrl}`, subtask, { headers });
-  }
-
-  putSubtask(id: number, subtask: Subtask): Observable<any>{
-    return this.http.put<void>(
-      `${this.myAppUrl}${this.myApiUrl}/${id}`,subtask
+    return this.http.post<Subtask>(
+      `${this.myAppUrl}${this.myApiUrl}`,
+      subtask,
+      { headers },
     );
   }
 
-  deleteSubtask(id: number):Observable<any>{
-    return this.http.delete<void>(
-      `${this.myAppUrl}${this.myApiUrl}/${id}`
-      );
+  putSubtask(id: number, subtask: Subtask): Observable<any> {
+    return this.http.put<void>(
+      `${this.myAppUrl}${this.myApiUrl}/${id}`,
+      subtask,
+    );
+  }
+
+  deleteSubtask(id: number): Observable<any> {
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
   //adicional
@@ -55,8 +58,7 @@ export class SubtaskService {
       },
       (error) => {
         console.error('Error loading subtasks:', error);
-      }
+      },
     );
   }
-
 }

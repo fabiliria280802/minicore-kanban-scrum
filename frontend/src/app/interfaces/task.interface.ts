@@ -13,7 +13,7 @@ export enum points {
   thirteen = 13,
 }
 
-export enum priority{
+export enum priority {
   low = 'Baja',
   medium = 'Media',
   high = 'Alta',

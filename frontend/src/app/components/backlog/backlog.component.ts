@@ -27,7 +27,7 @@ import { SidebarInsightComponent } from '../../shared/sidebar-insight/sidebar-in
 export class BacklogComponent implements OnInit {
   sprints: Sprint[] = [];
   tasks: Task[] = [];
-  users: User[] =[];
+  users: User[] = [];
   subtasks: Subtask[] = [];
   expandedTasks: { [taskId: number]: boolean } = {};
   completedSprintsCount: { [sprintId: number]: number } = {};
@@ -37,7 +37,7 @@ export class BacklogComponent implements OnInit {
     private _subtaskService: SubtaskService,
     private _taskService: TaskService,
     private _sprintService: SprintService,
-    private _userService:UserService,
+    private _userService: UserService,
     private toastr: ToastrService,
   ) {}
 
@@ -50,7 +50,7 @@ export class BacklogComponent implements OnInit {
     this._subtaskService.loadSubtasks();
   }
   getAssignedFullName(id: number): string {
-    const user = this.users.find(user => user.iduser === id);
+    const user = this.users.find((user) => user.iduser === id);
     return user ? user.fullname : 'No asignado';
   }
 
@@ -66,43 +66,38 @@ export class BacklogComponent implements OnInit {
   }
 
   loadSprints(): void {
-    this._sprintService.getSprints().subscribe(
-      (data: Sprint[]) => {
-        console.log('Sprints loaded:', data); // Agregar para depuración
-        this.sprints = data;
-        this.sprints.forEach((sprint, index, sprintArray) => {
-          // Cuenta cuántos sprints anteriores tienen estado "Completado".
-          const completedBeforeThis = sprintArray.slice(0, index).filter(s => s.sprintstatus === 'Completado').length;
-          this.completedSprintsCount[sprint.idsprint ?? 0] = completedBeforeThis;
-        });
-      }
-    );
+    this._sprintService.getSprints().subscribe((data: Sprint[]) => {
+      console.log('Sprints loaded:', data); // Agregar para depuración
+      this.sprints = data;
+      this.sprints.forEach((sprint, index, sprintArray) => {
+        // Cuenta cuántos sprints anteriores tienen estado "Completado".
+        const completedBeforeThis = sprintArray
+          .slice(0, index)
+          .filter((s) => s.sprintstatus === 'Completado').length;
+        this.completedSprintsCount[sprint.idsprint ?? 0] = completedBeforeThis;
+      });
+    });
   }
 
   loadSubtask(): void {
-    this._subtaskService.getSubtasks().subscribe(
-      (data: Subtask[]) => {
-        console.log('Subtask loaded:', data); // Agregar para depuración
-        this.subtasks = data;
-      }
-    );
+    this._subtaskService.getSubtasks().subscribe((data: Subtask[]) => {
+      console.log('Subtask loaded:', data); // Agregar para depuración
+      this.subtasks = data;
+    });
   }
 
   loadTask(): void {
-    this._taskService.getTasks().subscribe(
-      (data: Task[]) => {
-        console.log('Task loaded:', data); // Agregar para depuración
-        this.tasks = data;
-      }
-    );
-
+    this._taskService.getTasks().subscribe((data: Task[]) => {
+      console.log('Task loaded:', data); // Agregar para depuración
+      this.tasks = data;
+    });
   }
   loadTasks(): void {
     this._taskService.getTasks().subscribe(
       (data: Task[]) => {
-        this.tasks = data.map(task => ({
+        this.tasks = data.map((task) => ({
           ...task,
-          assignedFullName: this.getAssignedFullName(task.iduser)
+          assignedFullName: this.getAssignedFullName(task.iduser),
         }));
       },
       (error) => {
@@ -111,9 +106,9 @@ export class BacklogComponent implements OnInit {
     );
   }
   hasSubtasks(idtask: number): boolean {
-    if(typeof idtask ==='number'){
+    if (typeof idtask === 'number') {
       return this._taskService.hasSubtasks(idtask);
-    }else{
+    } else {
       return false;
     }
   }
@@ -123,7 +118,7 @@ export class BacklogComponent implements OnInit {
       disableClose: true,
       data: { id: id },
     });
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadTasks();
         this.loadSprints();
@@ -132,13 +127,10 @@ export class BacklogComponent implements OnInit {
       }
     });
   }
-  deleteTask(id: number){
-    this._taskService.deleteTask(id).subscribe(()=>{
-      this.loadTasks()
-      this.toastr.success(
-        'Se borro exitosamente el usuario',
-        'Eliminación',
-      );
+  deleteTask(id: number) {
+    this._taskService.deleteTask(id).subscribe(() => {
+      this.loadTasks();
+      this.toastr.success('Se borro exitosamente el usuario', 'Eliminación');
     });
   }
   toggleTaskExpansion(taskId: number): void {
@@ -151,7 +143,7 @@ export class BacklogComponent implements OnInit {
       return 'task-avanzada';
     } else if (status === 'Por hacer') {
       return 'task-por-hacer';
-    }else{
+    } else {
       return '';
     }
   }
@@ -162,7 +154,7 @@ export class BacklogComponent implements OnInit {
       return 'subtask-avanzada';
     } else if (status === 'Por hacer') {
       return 'subtask-por-hacer';
-    }else{
+    } else {
       return '';
     }
   }
@@ -175,7 +167,7 @@ export class BacklogComponent implements OnInit {
       return 'subtask-avanzada';
     } else if (status === null || status === '') {
       return '';
-    }else{
+    } else {
       return '';
     }
   }
@@ -192,7 +184,7 @@ export class BacklogComponent implements OnInit {
         disableClose: true,
         data: { sprintId: sprintId },
       });
-      dialogRef.afterClosed().subscribe(result=>{
+      dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.loadTasks();
         }
@@ -200,4 +192,3 @@ export class BacklogComponent implements OnInit {
     }
   }
 }
-

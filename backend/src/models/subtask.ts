@@ -9,7 +9,7 @@ const Subtask = sequelize.define("subtask", {
   },
   idtask: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'tasks',
       key: 'idtask',

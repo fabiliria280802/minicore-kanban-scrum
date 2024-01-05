@@ -5,12 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './create-update-users.component.html',
   styleUrls: ['./create-update-users.component.css'],
 })
-export class CreateUpdateUsersComponent implements OnInit{
-  constructor(){
-
-  }
-  ngOnInit(): void {
-
-  }
-
+export class CreateUpdateUsersComponent implements OnInit {
+  constructor() {}
+  ngOnInit(): void {}
 }

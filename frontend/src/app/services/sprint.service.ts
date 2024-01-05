@@ -15,8 +15,8 @@ export class SprintService {
 
   constructor(
     private http: HttpClient,
-    private _taskService: TaskService
-    ) {
+    private _taskService: TaskService,
+  ) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/sprints';
   }
@@ -40,16 +40,17 @@ export class SprintService {
     return this.http.post<Sprint>(`${this.myAppUrl}${this.myApiUrl}`, sprint, { headers });
   }*/
 
-  putSprints(id: number, sprint: Sprint): Observable<any>{
+  putSprints(id: number, sprint: Sprint): Observable<any> {
     return this.http.put<void>(
-      `${this.myAppUrl}${this.myApiUrl}/${id}`,sprint
+      `${this.myAppUrl}${this.myApiUrl}/${id}`,
+      sprint,
     );
   }
 
-  deleteSprint(id: number):Observable<any>{
-    return this.http.delete<void>(
-      `${this.myAppUrl}${this.myApiUrl}/${id}`
-      );
+  deleteSprint(id: number): Observable<any> {
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
-
+  predict() {
+    return this.http.post(`${this.myAppUrl}predictions`, {});
+  }
 }

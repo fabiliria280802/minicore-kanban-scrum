@@ -1,4 +1,3 @@
-
 <div class="toolbar-container">
   <mat-toolbar color="primary">
     <span class="toolbar-title">Listado de tareas</span>
@@ -25,7 +24,6 @@
 </div>
 
 <table mat-table [dataSource]="dataSource" color="primary" matSort>
-
   <ng-container matColumnDef="N° Task">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>N° Tarea</th>
     <td mat-cell *matCellDef="let element">{{ element.idtask }}</td>

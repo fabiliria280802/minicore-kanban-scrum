@@ -19,4 +19,4 @@ task_1.default.belongsTo(user_1.default, { foreignKey: 'iduser' });
 task_1.default.belongsTo(sprint_1.default, { foreignKey: 'idsprint' });
 subtask_1.default.belongsTo(task_1.default, { foreignKey: 'idtask' });
 subtask_1.default.belongsTo(user_1.default, { foreignKey: 'iduser' });
-prediction_1.default.belongsTo(sprint_1.default, { foreignKey: 'idsprint' });
+sprint_1.default.belongsTo(prediction_1.default, { foreignKey: 'idprediction' });

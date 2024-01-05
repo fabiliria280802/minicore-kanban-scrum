@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-  toggleDropdownTwo(){
+  toggleDropdownTwo() {
     this.dropdownOpenTwo = !this.dropdownOpenTwo;
   }
   toggleDropdown() {

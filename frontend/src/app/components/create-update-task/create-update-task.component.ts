@@ -7,7 +7,12 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 //interfaces
-import { Task, points, status, priority  } from 'src/app/interfaces/task.interface';
+import {
+  Task,
+  points,
+  status,
+  priority,
+} from 'src/app/interfaces/task.interface';
 import { Sprint } from 'src/app/interfaces/sprint.interface';
 import { User } from 'src/app/interfaces/user.interface';
 
@@ -23,7 +28,6 @@ import { SprintService } from 'src/app/services/sprint.service';
   styleUrls: ['./create-update-task.component.css'],
 })
 export class CreateUpdateTaskComponent implements OnInit {
-
   //atributos
   idsprint: number = 0;
   iduser: number = 0;
@@ -41,16 +45,23 @@ export class CreateUpdateTaskComponent implements OnInit {
 
   //selects
   tasks: Task[] = [];
-  users: User[] =[];
-  sprints: Sprint[]=[];
+  users: User[] = [];
+  sprints: Sprint[] = [];
   statuses: status[] = [status.todo, status.doing, status.done];
-  pointss: points[] = [points.none, points.one, points.three, points.five, points.eight, points.thirteen];
+  pointss: points[] = [
+    points.none,
+    points.one,
+    points.three,
+    points.five,
+    points.eight,
+    points.thirteen,
+  ];
   prioritys: priority[] = [priority.low, priority.medium, priority.high];
 
   //reactiveform
   form: FormGroup;
   constructor(
-    public dialogRef:MatDialogRef<CreateUpdateTaskComponent>,
+    public dialogRef: MatDialogRef<CreateUpdateTaskComponent>,
     private _taskService: TaskService,
     private _sprintService: SprintService,
     private _errorService: ErrorService,
@@ -59,8 +70,8 @@ export class CreateUpdateTaskComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private toastr: ToastrService,
-  ){
-    this.form =this.fb.group({
+  ) {
+    this.form = this.fb.group({
       idsprint: [''],
       iduser: [''],
       title: [''],
@@ -68,7 +79,7 @@ export class CreateUpdateTaskComponent implements OnInit {
       status: [''],
       points: [''],
       priority: [''],
-  });
+    });
     this.id = data.id;
   }
 
@@ -77,15 +88,15 @@ export class CreateUpdateTaskComponent implements OnInit {
     this.loadUsers();
     this.isEdit(this.id);
   }
-  isEdit(id: number | undefined){
+  isEdit(id: number | undefined) {
     if (id != undefined) {
       this.operation = 'Editar';
     } else {
       this.operation = 'Agregar';
     }
   }
-  getTask(id: number){
-    this._taskService.getTask(id).subscribe(data => {
+  getTask(id: number) {
+    this._taskService.getTask(id).subscribe((data) => {
       console.log(data);
       this.form.setValue({
         idsprint: data.idsprint,
@@ -96,7 +107,7 @@ export class CreateUpdateTaskComponent implements OnInit {
         points: data.points,
         priority: data.priority,
       });
-    })
+    });
   }
 
   loadSprints(): void {
@@ -114,7 +125,7 @@ export class CreateUpdateTaskComponent implements OnInit {
     });
   }
 
-  loadUsers():void{
+  loadUsers(): void {
     this._userService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
@@ -152,12 +163,11 @@ export class CreateUpdateTaskComponent implements OnInit {
     this.iduser = userId;
   }
 
-  cancelar(){
+  cancelar() {
     this.dialogRef.close();
   }
 
-
-  addEditTask(){
+  addEditTask() {
     if (this.form.invalid) {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
@@ -172,7 +182,7 @@ export class CreateUpdateTaskComponent implements OnInit {
       points: this.form.value.points,
       priority: this.form.value.priority,
     };
-    if(this.id == undefined){
+    if (this.id == undefined) {
       this._taskService.saveTasks(task).subscribe({
         next: (data) => {
           this.toastr.success(
@@ -190,7 +200,7 @@ export class CreateUpdateTaskComponent implements OnInit {
           }
         },
       });
-    }else{
+    } else {
       this._taskService.putTask(this.id, task).subscribe({
         next: (data) => {
           this.toastr.success(
@@ -210,4 +220,3 @@ export class CreateUpdateTaskComponent implements OnInit {
     }
   }
 }
-

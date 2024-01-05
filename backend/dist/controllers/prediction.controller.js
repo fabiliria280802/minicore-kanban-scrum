@@ -39,37 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postPrediction = exports.getPredictions = exports.getPrediction = void 0;
+exports.getPredictions = exports.getPrediction = void 0;
 var prediction_1 = __importDefault(require("../models/prediction"));
-var sprint_1 = __importDefault(require("../models/sprint"));
-function calculatePredictionForSprint() {
-    return __awaiter(this, void 0, void 0, function () {
-        var completedSprints, fulfilledPointsArray, mean, stdDev, predictedPointsLower, predictedPointsUpper;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, sprint_1.default.findAll({
-                        where: { sprintstatus: 'Completado' },
-                        order: [['finalDate', 'DESC']],
-                        limit: 5
-                    })];
-                case 1:
-                    completedSprints = _a.sent();
-                    if (completedSprints.length < 5) {
-                        throw new Error('No hay suficientes sprints completados para hacer una predicción.');
-                    }
-                    fulfilledPointsArray = completedSprints.map(function (sprint) { return sprint.get('fulfilledPoints'); });
-                    mean = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
-                    stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
-                    predictedPointsLower = mean - stdDev;
-                    predictedPointsUpper = mean + stdDev;
-                    // Validacon de valores posibles
-                    predictedPointsLower = Math.max(0, predictedPointsLower);
-                    predictedPointsUpper = Math.max(predictedPointsLower, predictedPointsUpper);
-                    return [2 /*return*/, { lower: Math.round(predictedPointsLower), upper: Math.round(predictedPointsUpper) }];
-            }
-        });
-    });
-}
 var getPrediction = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, prediction, error_1;
     return __generator(this, function (_a) {
@@ -124,36 +95,3 @@ var getPredictions = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.getPredictions = getPredictions;
-var postPrediction = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, lower, upper, newPrediction, error_3;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, calculatePredictionForSprint()];
-            case 1:
-                _a = _b.sent(), lower = _a.lower, upper = _a.upper;
-                return [4 /*yield*/, prediction_1.default.create({
-                        idsprint: req.body.idsprint,
-                        predictedPointsLower: lower,
-                        predictedPointsUpper: upper,
-                        confidenceInterval: "".concat(lower, " - ").concat(upper),
-                    })];
-            case 2:
-                newPrediction = _b.sent();
-                res.status(201).json(newPrediction);
-                return [3 /*break*/, 4];
-            case 3:
-                error_3 = _b.sent();
-                if (error_3 instanceof Error) {
-                    res.status(500).json({ error: error_3.message });
-                }
-                else {
-                    res.status(500).json({ error: "Error al insertar prediction" });
-                }
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.postPrediction = postPrediction;

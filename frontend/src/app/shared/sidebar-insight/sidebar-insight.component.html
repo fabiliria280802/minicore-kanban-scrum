@@ -1,4 +1,5 @@
 <h2 mat-dialog-title>Predicciones:</h2>
+<!--
 
 <div *ngIf="prediction;">
   <div *ngIf="barChartData.length > 0; else noData">
@@ -14,9 +15,10 @@
   </ng-template>
 </div>
 
+-->
 
+<div>Predicción: {{ prediction }}</div>
 
 <mat-dialog-actions align="end">
   <button type="button" (click)="cancelar()" mat-button>Cerrar</button>
 </mat-dialog-actions>
-

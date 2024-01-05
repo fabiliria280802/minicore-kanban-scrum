@@ -15,14 +15,12 @@ import { SprintService } from 'src/app/services/sprint.service';
 import { CreateUpdateSprintComponent } from '../create-update-sprint/create-update-sprint.component';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-list-sprint',
   templateUrl: './list-sprint.component.html',
-  styleUrls: ['./list-sprint.component.css']
+  styleUrls: ['./list-sprint.component.css'],
 })
-
-export class ListSprintComponent implements OnInit, AfterViewInit{
+export class ListSprintComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'N° sprint',
     'title',
@@ -39,7 +37,7 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
     public dialog: MatDialog,
     private _sprintService: SprintService,
     private toastr: ToastrService,
-    ) {
+  ) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -60,20 +58,17 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
     this.dataSource.sort = this.sort;
   }
 
-  getSprints(){
-    this._sprintService.getSprints().subscribe(data => {
+  getSprints() {
+    this._sprintService.getSprints().subscribe((data) => {
       console.log(data);
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
-    })
+    });
   }
-  deleteSprint(id: number){
-    this._sprintService.deleteSprint(id).subscribe(()=>{
-      this.getSprints()
-      this.toastr.success(
-        'Se borro exitosamente el usuario',
-        'Eliminación',
-      );
+  deleteSprint(id: number) {
+    this._sprintService.deleteSprint(id).subscribe(() => {
+      this.getSprints();
+      this.toastr.success('Se borro exitosamente el usuario', 'Eliminación');
     });
   }
 
@@ -83,7 +78,7 @@ export class ListSprintComponent implements OnInit, AfterViewInit{
       disableClose: true,
       data: { id: id },
     });
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getSprints();
       }

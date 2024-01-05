@@ -7,6 +7,13 @@ const Sprint = sequelize.define("sprint", {
     primaryKey: true,
     autoIncrement: true,
   },
+  idprediction: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'sprints',
+      key: 'idsprint',
+    },
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,

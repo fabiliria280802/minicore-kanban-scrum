@@ -12,5 +12,3 @@ export interface Subtask {
   subtaskdescription: string;
   subtaskstatus: subtaskstatus;
 }
-
-

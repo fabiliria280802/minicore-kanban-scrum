@@ -9,6 +9,6 @@ Task.belongsTo(User, { foreignKey: 'iduser' });
 Task.belongsTo(Sprint, { foreignKey: 'idsprint' });
 Subtask.belongsTo(Task, { foreignKey: 'idtask' });
 Subtask.belongsTo(User, { foreignKey: 'iduser' });
-Prediction.belongsTo(Sprint, {foreignKey: 'idsprint'});
+Sprint.belongsTo(Prediction, {foreignKey: 'idprediction'});
 
 export { Task, Subtask, Sprint, User, Prediction };

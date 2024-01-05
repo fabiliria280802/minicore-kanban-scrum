@@ -30,25 +30,19 @@ export class UserService {
     );
   }
 
-  getUsers():Observable<User[]>{
-    return this.http.get<User[]>(
-      `${this.myAppUrl}${this.myApiUrl}`
-      );
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.myAppUrl}${this.myApiUrl}`);
   }
 
   getUser(id: number): Observable<any> {
     return this.http.get<User>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
-  deleteUsers(id: number):Observable<any>{
-    return this.http.delete<void>(
-      `${this.myAppUrl}${this.myApiUrl}/${id}`
-      );
+  deleteUsers(id: number): Observable<any> {
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
-  putUsers(id: number, user: User): Observable<any>{
-    return this.http.put<void>(
-      `${this.myAppUrl}${this.myApiUrl}/${id}`,user
-    );
+  putUsers(id: number, user: User): Observable<any> {
+    return this.http.put<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`, user);
   }
 }

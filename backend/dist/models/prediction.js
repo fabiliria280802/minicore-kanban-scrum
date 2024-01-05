@@ -11,14 +11,6 @@ var Prediction = connection_1.default.define("prediction", {
         primaryKey: true,
         autoIncrement: true,
     },
-    idsprint: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'sprints',
-            key: 'idsprint',
-        },
-    },
     predictedPointsLower: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,

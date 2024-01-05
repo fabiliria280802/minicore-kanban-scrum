@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'list-task', component: ListTaskComponent },
   { path: 'list-subtask', component: ListSubtaskComponent },
   { path: 'list-users', component: ListUsersComponent },
-  { path: 'list-sprint', component: ListSprintComponent},
+  { path: 'list-sprint', component: ListSprintComponent },
   //{ path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

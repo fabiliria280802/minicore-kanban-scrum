@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 //interfaces
 import { User, type } from '../../interfaces/user.interface';
@@ -26,7 +26,6 @@ interface JwtPayload {
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.css'],
 })
-
 export class ListUsersComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'N° User',
@@ -44,7 +43,7 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _userService: UserService,
     private toastr: ToastrService,
-    ){
+  ) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -57,12 +56,12 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     //(this.paginator as MatPaginator)._intl.itemsPerPageLabel = "Items por pagina";
   }
 
-  getUsers(){
-    this._userService.getUsers().subscribe(data => {
+  getUsers() {
+    this._userService.getUsers().subscribe((data) => {
       console.log(data);
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
-    })
+    });
   }
 
   applyFilter(event: Event) {
@@ -74,26 +73,23 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addEditUser(id?: number){
+  addEditUser(id?: number) {
     const dialogRef = this.dialog.open(CreateUpdateUsersComponent, {
-      width:'550px',
+      width: '550px',
       disableClose: true,
-      data: {id: id},
+      data: { id: id },
     });
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('hell no');
     });
   }
-  deleteUser(id: number){
-    this._userService.deleteUsers(id).subscribe(()=>{
-      this.getUsers()
-      this.toastr.success(
-        'Se borro exitosamente el usuario',
-        'Eliminación',
-      );
+  deleteUser(id: number) {
+    this._userService.deleteUsers(id).subscribe(() => {
+      this.getUsers();
+      this.toastr.success('Se borro exitosamente el usuario', 'Eliminación');
     });
   }
-  IsAdmin():boolean {
+  IsAdmin(): boolean {
     const token = localStorage.getItem('token');
     if (!token) return false;
 
@@ -118,7 +114,7 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     }
   }
   //no te puedes eliminar de la base bro
-  ItsYou(iduserToCheck: number) : boolean{
+  ItsYou(iduserToCheck: number): boolean {
     return true;
   }
 }
