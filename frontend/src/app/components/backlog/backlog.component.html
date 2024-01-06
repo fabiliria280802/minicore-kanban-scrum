@@ -5,7 +5,7 @@
     <div class="sprint-header">
       <h3>Tablero {{ sprint.title }}</h3>
       <div class="sprint-dates" matTooltip="Fechas del sprint">
-        {{ sprint.initialDate | date }} - {{ sprint.finalDate | date }}
+        {{ sprint.initialDate }} - {{ sprint.finalDate }}
       </div>
       <div class="sprint-points">
         <div class="sprint-noFulfilled" matTooltip="Puntos por hacer">
@@ -30,6 +30,12 @@
           aria-hidden="false"
           fontIcon="equalizer"
           (click)="openSidebarInsight(sprint.idsprint ?? 0)"
+          class="insight-points"
+        ></mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          fontIcon="trending_up"
+          (click)="openUserInsight(sprint.idsprint ?? 0)"
           class="insight-points"
         ></mat-icon>
       </div>
@@ -140,7 +146,7 @@
                         {{ subtask.subtaskstatus }}
                       </div>
                       <td colspan="5">
-                        {{ task.assignedFullName || "Fabiana Liria" }}
+                        {{ task.assignedFullName || "No asignado" }}
                       </td>
                       <td>
                         <mat-icon

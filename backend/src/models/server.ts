@@ -3,7 +3,7 @@ import routesUsers from "../routes/user.routes";
 import routesSprints from "../routes/sprint.routes";
 import routesTasks from "../routes/task.routes";
 import routesSubtasks from "../routes/subtask.routes";
-import routesPrediction from "../routes/prediction.route";
+
 //models
 /* ya no es necesario
   import Task from "./task";
@@ -12,7 +12,7 @@ import routesPrediction from "../routes/prediction.route";
   import User from "./user";
 */
 //config fk
-import { Task, Subtask, Sprint, User, Prediction } from './index';
+import { Task, Subtask, Sprint, User } from './index';
 //conexion db
 import connection from "../db/connection";
 //adicionales
@@ -43,22 +43,13 @@ class Server {
     this.app.use("/api/sprints", routesSprints);
     this.app.use("/api/tasks", routesTasks);
     this.app.use("/api/subtasks", routesSubtasks);
-    this.app.use('/api/predictions',routesPrediction);
   }
   async connectDB() {
-    /*connection.connect((err)=>{
-            if(err){
-                console.log(err);
-                return;
-            }
-            console.log("Base de datos online");
-        })*/
     try {
       await Sprint.sync();
       await User.sync();
       await Task.sync();
       await Subtask.sync();
-      await Prediction.sync();
       console.log("Base de datos online");
     } catch (error) {
       console.log("No se pudo conectar");

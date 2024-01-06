@@ -17,4 +17,7 @@ export interface Sprint {
   doingPorcentage?: number;
   donePorcentage?: number;
   sprintstatus?: sprintstatus;
+  predictedPointsLower?: number;
+  predictedPointsUpper?: number;
+  confidenceInterval?: string;
 }

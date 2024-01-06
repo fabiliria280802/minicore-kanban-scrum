@@ -14,7 +14,7 @@
       <mat-label>Descripción</mat-label>
       <textarea
         matInput
-        formControlName="description"
+        formControlName="taskdescription"
         placeholder="Ingrese la descripción"
         autocomplete="off"
       ></textarea>
@@ -78,6 +78,26 @@
         }}</mat-option>
       </mat-select>
       <mat-hint align="end">Prioridades disponibles^</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="select-container">
+    <mat-form-field>
+      <mat-label>Tiempo esperado en horas</mat-label>
+      <input
+        matInput
+        formControlName="expectedTime"
+        placeholder="Ingresa el tiempo esperado"
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Tiempo hecho en horas</mat-label>
+      <input
+        matInput
+        formControlName="doneTime"
+        placeholder="Ingresa el tiempo hecho"
+        autocomplete="off"
+      />
     </mat-form-field>
   </div>
   <mat-dialog-actions align="end">

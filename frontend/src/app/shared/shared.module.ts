@@ -28,9 +28,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SidebarInsightComponent } from './sidebar-insight/sidebar-insight.component';
 import { NgChartsModule } from 'ng2-charts';
+import { UserInsightComponent } from './user-insight/user-insight.component';
 
 @NgModule({
-  declarations: [SpinnerComponent, SidebarInsightComponent],
+  declarations: [SpinnerComponent, SidebarInsightComponent, UserInsightComponent],
   imports: [
     CommonModule,
     MatSlideToggleModule,

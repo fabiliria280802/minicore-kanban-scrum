@@ -5,8 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
-import { PredictionService } from 'src/app/services/prediction.service';
-import { Prediction } from 'src/app/interfaces/prediction.interface';
 import { SprintService } from 'src/app/services/sprint.service';
 import { Sprint } from 'src/app/interfaces/sprint.interface';
 import { Subscription } from 'rxjs';
@@ -17,6 +15,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sidebar-insight.component.css'],
 })
 export class SidebarInsightComponent implements OnInit, OnDestroy {
+  sprints: Sprint[] = [];
+  displayedColumns: string[] = ['title', 'committedPoints', 'fulfilledPoints', 'predictedPointsLower', 'predictedPointsUpper'];
+  private apiSubscription: Subscription = new Subscription();
   barChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -33,21 +34,59 @@ export class SidebarInsightComponent implements OnInit, OnDestroy {
     private router: Router,
     private _errorService: ErrorService,
     private _sprintService: SprintService,
-    private _predictionService: PredictionService,
-    private apiSubscription: Subscription,
 
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 
   ngOnInit() {
-    this.apiSubscription = this._sprintService.predict().subscribe((data) => {
-      this.prediction = data;
-    });
+    this.fetchLastFiveSprintsData();
   }
 
   ngOnDestroy(): void {
-    if (this.apiSubscription) {
-      this.apiSubscription.unsubscribe();
+    this.apiSubscription.unsubscribe();
+  }
+
+  fetchLastFiveSprintsData() {
+    this.apiSubscription.add(
+      this._sprintService.getSprints()
+        .subscribe({
+          next: (sprints: Sprint[]) => {
+            this.sprints = sprints;
+          },
+          error: (error: HttpErrorResponse) => {
+            this.toastr.error('Error fetching sprint data');
+          }
+        })
+    );
+  }
+
+  processSprintData(sprints: Sprint[]) {
+    this.barChartLabels = sprints.map(sprint => sprint.title);
+
+    // Assuming your sprints array contains the last 5 completed sprints and the upcoming sprint with predictions
+    const completedSprintsData = sprints.slice(0, 5).map(sprint => sprint.fulfilledPoints ?? 0); // Last 5 sprints
+
+    const upcomingSprint = sprints[5]; // Upcoming sprint with predictions
+
+    // Assuming you want to include the range in the last bar as a different color or pattern
+    this.barChartData = [
+      {
+        data: completedSprintsData,
+        label: 'Completed Points'
+      }
+    ];
+
+    if (upcomingSprint) {
+      // Add the lower predicted point as a separate bar
+      this.barChartData.push({
+        data: [...completedSprintsData, upcomingSprint.predictedPointsLower ?? 0],
+        label: 'Predicted Lower Bound'
+      });
+      // Add the upper predicted point as a separate bar
+      this.barChartData.push({
+        data: [...completedSprintsData, upcomingSprint.predictedPointsUpper ?? 0],
+        label: 'Predicted Upper Bound'
+      });
     }
   }
   cancelar() {

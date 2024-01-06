@@ -28,5 +28,8 @@ export interface Task {
   status: status;
   points: points;
   priority: priority;
+  expectedTime:number;
+  doneTime: number;
+  conclutiontime?: string;
   assignedFullName?: string;
 }

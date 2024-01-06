@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Cumplimiento de los usuarios:</h2>
+<div>
+  <mat-table [dataSource]="tasks">
+
+    <ng-container matColumnDef="Nombre">
+      <mat-header-cell *matHeaderCellDef> Nombre de la persona </mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.assignedFullName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Tiempo esperado">
+      <mat-header-cell *matHeaderCellDef> Tiempo hecho </mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.expectedTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Tiempo hecho">
+      <mat-header-cell *matHeaderCellDef> Tiempo tiempo esperado </mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.doneTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Conclusión">
+      <mat-header-cell *matHeaderCellDef> Conclusion </mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.conclutiontime}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <p style="color: white; padding: 10px 10px;"></p>
+</div>
+
+<mat-dialog-actions align="end">
+  <button type="button" (click)="cancelar()" mat-button>Cerrar</button>
+</mat-dialog-actions>

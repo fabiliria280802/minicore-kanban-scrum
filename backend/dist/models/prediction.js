@@ -11,17 +11,5 @@ var Prediction = connection_1.default.define("prediction", {
         primaryKey: true,
         autoIncrement: true,
     },
-    predictedPointsLower: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-    },
-    predictedPointsUpper: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-    },
-    confidenceInterval: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
 });
 exports.default = Prediction;

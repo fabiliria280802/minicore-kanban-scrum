@@ -7,13 +7,6 @@ const Sprint = sequelize.define("sprint", {
     primaryKey: true,
     autoIncrement: true,
   },
-  idprediction: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'sprints',
-      key: 'idsprint',
-    },
-  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -66,6 +59,18 @@ const Sprint = sequelize.define("sprint", {
     allowNull: true,
   },
   sprintstatus: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  predictedPointsLower: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  predictedPointsUpper: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  confidenceInterval: {
     type: DataTypes.STRING,
     allowNull: true,
   },

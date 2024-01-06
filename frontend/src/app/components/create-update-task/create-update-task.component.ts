@@ -36,8 +36,9 @@ export class CreateUpdateTaskComponent implements OnInit {
   status: status = status.todo;
   points: points = points.none;
   priority: priority = priority.low;
-
-  //nombre pestaña
+  expectedTime: number = 0;
+  doneTime: number =0;
+    //nombre pestaña
   operation: string = '';
 
   //llamada a la otra pagina
@@ -79,6 +80,8 @@ export class CreateUpdateTaskComponent implements OnInit {
       status: [''],
       points: [''],
       priority: [''],
+      expectedTime: [''],
+      doneTime: [''],
     });
     this.id = data.id;
   }
@@ -106,6 +109,8 @@ export class CreateUpdateTaskComponent implements OnInit {
         status: data.status,
         points: data.points,
         priority: data.priority,
+        expectedTime: data.expectedTime,
+        doneTime: data.doneTime,
       });
     });
   }
@@ -181,6 +186,8 @@ export class CreateUpdateTaskComponent implements OnInit {
       status: this.form.value.status,
       points: this.form.value.points,
       priority: this.form.value.priority,
+      expectedTime: this.form.value.expectedTime,
+      doneTime: this.form.value.doneTime,
     };
     if (this.id == undefined) {
       this._taskService.saveTasks(task).subscribe({

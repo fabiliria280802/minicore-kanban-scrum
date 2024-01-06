@@ -47,5 +47,21 @@ var Task = connection_1.default.define("task", {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
+    expectedTime: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
+    doneTime: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
+    conclutiontime: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    assignedFullName: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
 });
 exports.default = Task;

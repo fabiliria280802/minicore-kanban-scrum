@@ -43,6 +43,22 @@ const Task = sequelize.define("task", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  expectedTime: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  doneTime: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  conclutiontime: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  assignedFullName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 export default Task;

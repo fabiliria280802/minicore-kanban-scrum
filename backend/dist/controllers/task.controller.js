@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -42,7 +53,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTasksBySprintId = exports.deleteTask = exports.putTask = exports.postTask = exports.getTasks = exports.getTask = void 0;
 var task_1 = __importDefault(require("../models/task"));
 var sprint_1 = __importDefault(require("../models/sprint"));
-var prediction_1 = __importDefault(require("../models/prediction"));
+var models_1 = require("../models");
 var getTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, task, error_1;
     return __generator(this, function (_a) {
@@ -98,111 +109,30 @@ var getTasks = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
 }); };
 exports.getTasks = getTasks;
 var postTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var newTask, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_1, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_3;
+    var newTask, idsprint, expectedTime, doneTime, conclusion, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_1, variance, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, userId, user, userName, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 8, , 9]);
+                _a.trys.push([0, 11, , 12]);
                 return [4 /*yield*/, task_1.default.create(req.body)];
             case 1:
                 newTask = _a.sent();
                 idsprint = newTask.get('idsprint');
-                if (!idsprint) return [3 /*break*/, 7];
-                return [4 /*yield*/, task_1.default.findAll({
-                        where: { idsprint: idsprint }
-                    })];
-            case 2:
-                tasks = _a.sent();
-                committedPoints = tasks.reduce(function (total, task) { return total + task.get('points'); }, 0);
-                fulfilledPoints = tasks.reduce(function (total, task) {
-                    return task.get('status') === 'Finalizada' ? total + task.get('points') : total;
-                }, 0);
-                pendingPoints = tasks.reduce(function (total, task) {
-                    return task.get('status') === 'Avanzada' ? total + task.get('points') : total;
-                }, 0);
-                noFulfilledPoints = tasks.reduce(function (total, task) {
-                    return task.get('status') === 'Por hacer' ? total + task.get('points') : total;
-                }, 0);
-                totalTasks = tasks.length;
-                completedTasks = tasks.filter(function (task) { return task.get('status') === 'Finalizada'; }).length;
-                donePorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
-                pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
-                doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
-                todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
-                toDoPorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
-                return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
-            case 3:
-                sprint = _a.sent();
-                if (!sprint) return [3 /*break*/, 7];
-                return [4 /*yield*/, sprint.update({
-                        committedPoints: committedPoints,
-                        fulfilledPoints: fulfilledPoints,
-                        pendingPoints: pendingPoints,
-                        noFulfilledPoints: noFulfilledPoints,
-                        toDoPorcentage: toDoPorcentage,
-                        doingPorcentage: doingPorcentage,
-                        donePorcentage: donePorcentage,
-                    })];
-            case 4:
-                _a.sent();
-                return [4 /*yield*/, sprint_1.default.findAll({
-                        where: { sprintstatus: 'completado' }
-                    })];
-            case 5:
-                completedSprints = _a.sent();
-                if (!(completedSprints.length >= 5)) return [3 /*break*/, 7];
-                fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
-                mean_1 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
-                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_1, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
-                predictedPointsLower = Math.max(0, mean_1 - stdDev);
-                predictedPointsUpper = Math.max(predictedPointsLower, mean_1 + stdDev);
-                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
-                idPrediction = sprint.get('idprediction');
-                if (!idPrediction) return [3 /*break*/, 7];
-                return [4 /*yield*/, prediction_1.default.update({
-                        predictedPointsLower: predictedPointsLower,
-                        predictedPointsUpper: predictedPointsUpper,
-                        confidenceInterval: confidenceInterval
-                    }, {
-                        where: { id: idPrediction }
-                    })];
-            case 6:
-                _a.sent();
-                _a.label = 7;
-            case 7:
-                res.status(201).json(newTask);
-                return [3 /*break*/, 9];
-            case 8:
-                error_3 = _a.sent();
-                if (error_3 instanceof Error) {
-                    res.status(500).json({ error: error_3.message });
+                expectedTime = newTask.get('expectedTime');
+                doneTime = newTask.get('doneTime');
+                conclusion = '';
+                if (expectedTime > doneTime) {
+                    conclusion = 'Se requirio mas esfuerzo del esperado';
+                }
+                else if (expectedTime < doneTime) {
+                    conclusion = 'Se requirio menos esfuerzo del esperado';
                 }
                 else {
-                    res.status(500).json({ error: "An unexpected error occurred" });
+                    conclusion = 'Se cumplio con el tiempo';
                 }
-                return [3 /*break*/, 9];
-            case 9: return [2 /*return*/];
-        }
-    });
-}); };
-exports.postTask = postTask;
-var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_2, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 9, , 10]);
-                id = req.params.id;
-                return [4 /*yield*/, task_1.default.findByPk(id)];
-            case 1:
-                task = _a.sent();
-                if (!task) {
-                    return [2 /*return*/, res.status(404).json({ msg: "Task not found", id: id })];
-                }
-                return [4 /*yield*/, task.update(req.body)];
+                return [4 /*yield*/, newTask.update({ conclutiontime: conclusion })];
             case 2:
                 _a.sent();
-                idsprint = task.get('idsprint');
                 if (!idsprint) return [3 /*break*/, 8];
                 return [4 /*yield*/, task_1.default.findAll({
                         where: { idsprint: idsprint }
@@ -225,7 +155,7 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
                 doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
                 todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
-                toDoPorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                toDoPorcentage = totalTasks > 0 ? (todoTasks / totalTasks) * 100 : 0;
                 return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
             case 4:
                 sprint = _a.sent();
@@ -242,33 +172,168 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
             case 5:
                 _a.sent();
                 return [4 /*yield*/, sprint_1.default.findAll({
-                        where: { sprintstatus: 'completado' }
+                        where: { sprintstatus: 'Completado' }
                     })];
             case 6:
                 completedSprints = _a.sent();
-                if (!(completedSprints.length >= 5)) return [3 /*break*/, 8];
+                if (!(completedSprints.length >= 5 && idsprint >= 6)) return [3 /*break*/, 8];
                 fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
-                mean_2 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
-                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_2, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
-                predictedPointsLower = Math.max(0, mean_2 - stdDev);
-                predictedPointsUpper = Math.max(predictedPointsLower, mean_2 + stdDev);
-                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
-                idPrediction = sprint.get('idprediction');
-                if (!idPrediction) return [3 /*break*/, 8];
-                return [4 /*yield*/, prediction_1.default.update({
+                mean_1 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
+                variance = fulfilledPointsArray.reduce(function (acc, val) { return acc + Math.pow(val - mean_1, 2); }, 0) / fulfilledPointsArray.length;
+                stdDev = Math.sqrt(variance);
+                predictedPointsLower = Math.max(0, mean_1 - stdDev);
+                predictedPointsUpper = Math.max(predictedPointsLower, mean_1 + stdDev);
+                confidenceInterval = "".concat(predictedPointsLower, " - ").concat(predictedPointsUpper);
+                // Update sprint with prediction values
+                return [4 /*yield*/, sprint.update({
                         predictedPointsLower: predictedPointsLower,
                         predictedPointsUpper: predictedPointsUpper,
                         confidenceInterval: confidenceInterval
-                    }, {
-                        where: { id: idPrediction }
                     })];
             case 7:
+                // Update sprint with prediction values
                 _a.sent();
                 _a.label = 8;
             case 8:
-                res.json({ msg: "Task updated", task: task });
-                return [3 /*break*/, 10];
+                res.status(201).json(newTask);
+                userId = newTask.get('iduser');
+                return [4 /*yield*/, models_1.User.findByPk(userId)];
             case 9:
+                user = _a.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(404).json({ error: "User not found" })];
+                }
+                userName = user.get('fullname');
+                // Actualiza la tarea con el nuevo nombre y los datos del body
+                return [4 /*yield*/, newTask.update(__assign(__assign({}, req.body), { assignedFullName: userName }))];
+            case 10:
+                // Actualiza la tarea con el nuevo nombre y los datos del body
+                _a.sent();
+                return [3 /*break*/, 12];
+            case 11:
+                error_3 = _a.sent();
+                if (error_3 instanceof Error) {
+                    res.status(500).json({ error: error_3.message });
+                }
+                else {
+                    res.status(500).json({ error: "An unexpected error occurred" });
+                }
+                return [3 /*break*/, 12];
+            case 12: return [2 /*return*/];
+        }
+    });
+}); };
+exports.postTask = postTask;
+var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, task, userId, user, userName, expectedTime, doneTime, conclusion, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_2, variance, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 12, , 13]);
+                id = req.params.id;
+                return [4 /*yield*/, task_1.default.findByPk(id)];
+            case 1:
+                task = _a.sent();
+                if (!task) {
+                    return [2 /*return*/, res.status(404).json({ msg: "Task not found", id: id })];
+                }
+                return [4 /*yield*/, task.update(req.body)];
+            case 2:
+                _a.sent();
+                userId = task.get('iduser');
+                return [4 /*yield*/, models_1.User.findByPk(userId)];
+            case 3:
+                user = _a.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(404).json({ error: "User not found" })];
+                }
+                userName = user.get('fullname');
+                // Actualiza la tarea con el nuevo nombre y los datos del body
+                return [4 /*yield*/, task.update(__assign(__assign({}, req.body), { assignedFullName: userName }))];
+            case 4:
+                // Actualiza la tarea con el nuevo nombre y los datos del body
+                _a.sent();
+                expectedTime = task.get('expectedTime');
+                doneTime = task.get('doneTime');
+                conclusion = '';
+                if (expectedTime > doneTime) {
+                    conclusion = 'Se requirio mas esfuerzo del esperado';
+                }
+                else if (expectedTime < doneTime) {
+                    conclusion = 'Se requirio menos esfuerzo del esperado';
+                }
+                else {
+                    conclusion = 'Se cumplio con el tiempo';
+                }
+                return [4 /*yield*/, task.update({ conclutiontime: conclusion })];
+            case 5:
+                _a.sent();
+                idsprint = task.get('idsprint');
+                if (!idsprint) return [3 /*break*/, 11];
+                return [4 /*yield*/, task_1.default.findAll({
+                        where: { idsprint: idsprint }
+                    })];
+            case 6:
+                tasks = _a.sent();
+                committedPoints = tasks.reduce(function (total, task) { return total + task.get('points'); }, 0);
+                fulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Finalizada' ? total + task.get('points') : total;
+                }, 0);
+                pendingPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Avanzada' ? total + task.get('points') : total;
+                }, 0);
+                noFulfilledPoints = tasks.reduce(function (total, task) {
+                    return task.get('status') === 'Por hacer' ? total + task.get('points') : total;
+                }, 0);
+                totalTasks = tasks.length;
+                completedTasks = tasks.filter(function (task) { return task.get('status') === 'Finalizada'; }).length;
+                donePorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
+                doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
+                todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
+                toDoPorcentage = totalTasks > 0 ? (todoTasks / totalTasks) * 100 : 0;
+                return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
+            case 7:
+                sprint = _a.sent();
+                if (!sprint) return [3 /*break*/, 11];
+                return [4 /*yield*/, sprint.update({
+                        committedPoints: committedPoints,
+                        fulfilledPoints: fulfilledPoints,
+                        pendingPoints: pendingPoints,
+                        noFulfilledPoints: noFulfilledPoints,
+                        toDoPorcentage: toDoPorcentage,
+                        doingPorcentage: doingPorcentage,
+                        donePorcentage: donePorcentage,
+                    })];
+            case 8:
+                _a.sent();
+                return [4 /*yield*/, sprint_1.default.findAll({
+                        where: { sprintstatus: 'Completado' }
+                    })];
+            case 9:
+                completedSprints = _a.sent();
+                if (!(completedSprints.length >= 5 && idsprint >= 6)) return [3 /*break*/, 11];
+                fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
+                mean_2 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
+                variance = fulfilledPointsArray.reduce(function (acc, val) { return acc + Math.pow(val - mean_2, 2); }, 0) / fulfilledPointsArray.length;
+                stdDev = Math.sqrt(variance);
+                predictedPointsLower = Math.max(0, mean_2 - stdDev);
+                predictedPointsUpper = Math.max(predictedPointsLower, mean_2 + stdDev);
+                confidenceInterval = "".concat(predictedPointsLower, " - ").concat(predictedPointsUpper);
+                // Update sprint with prediction values
+                return [4 /*yield*/, sprint.update({
+                        predictedPointsLower: predictedPointsLower,
+                        predictedPointsUpper: predictedPointsUpper,
+                        confidenceInterval: confidenceInterval
+                    })];
+            case 10:
+                // Update sprint with prediction values
+                _a.sent();
+                _a.label = 11;
+            case 11:
+                res.json({ msg: "Task updated", task: task });
+                return [3 /*break*/, 13];
+            case 12:
                 error_4 = _a.sent();
                 if (error_4 instanceof Error) {
                     res.status(500).json({ error: error_4.message });
@@ -276,14 +341,14 @@ var putTask = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 else {
                     res.status(500).json({ error: "An unexpected error occurred" });
                 }
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+                return [3 /*break*/, 13];
+            case 13: return [2 /*return*/];
         }
     });
 }); };
 exports.putTask = putTask;
 var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_3, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_5;
+    var id, task, idsprint, tasks, committedPoints, fulfilledPoints, pendingPoints, noFulfilledPoints, totalTasks, completedTasks, donePorcentage, pendingTasks, doingPorcentage, todoTasks, toDoPorcentage, sprint, completedSprints, fulfilledPointsArray, mean_3, variance, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -321,7 +386,7 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 pendingTasks = tasks.filter(function (task) { return task.get('status') === 'Avanzada'; }).length;
                 doingPorcentage = totalTasks > 0 ? (pendingTasks / totalTasks) * 100 : 0;
                 todoTasks = tasks.filter(function (task) { return task.get('status') === 'Por hacer'; }).length;
-                toDoPorcentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+                toDoPorcentage = totalTasks > 0 ? (todoTasks / totalTasks) * 100 : 0;
                 return [4 /*yield*/, sprint_1.default.findByPk(idsprint)];
             case 4:
                 sprint = _a.sent();
@@ -338,27 +403,26 @@ var deleteTask = function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 5:
                 _a.sent();
                 return [4 /*yield*/, sprint_1.default.findAll({
-                        where: { sprintstatus: 'completado' }
+                        where: { sprintstatus: 'Completado' }
                     })];
             case 6:
                 completedSprints = _a.sent();
-                if (!(completedSprints.length >= 5)) return [3 /*break*/, 8];
+                if (!(completedSprints.length >= 5 && idsprint >= 6)) return [3 /*break*/, 8];
                 fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
                 mean_3 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
-                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_3, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
+                variance = fulfilledPointsArray.reduce(function (acc, val) { return acc + Math.pow(val - mean_3, 2); }, 0) / fulfilledPointsArray.length;
+                stdDev = Math.sqrt(variance);
                 predictedPointsLower = Math.max(0, mean_3 - stdDev);
                 predictedPointsUpper = Math.max(predictedPointsLower, mean_3 + stdDev);
-                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
-                idPrediction = sprint.get('idprediction');
-                if (!idPrediction) return [3 /*break*/, 8];
-                return [4 /*yield*/, prediction_1.default.update({
+                confidenceInterval = "".concat(predictedPointsLower, " - ").concat(predictedPointsUpper);
+                // Update sprint with prediction values
+                return [4 /*yield*/, sprint.update({
                         predictedPointsLower: predictedPointsLower,
                         predictedPointsUpper: predictedPointsUpper,
                         confidenceInterval: confidenceInterval
-                    }, {
-                        where: { id: idPrediction }
                     })];
             case 7:
+                // Update sprint with prediction values
                 _a.sent();
                 _a.label = 8;
             case 8:

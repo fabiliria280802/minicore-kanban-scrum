@@ -1,24 +1,60 @@
 <h2 mat-dialog-title>Predicciones:</h2>
 <!--
 
-<div *ngIf="prediction;">
-  <div *ngIf="barChartData.length > 0; else noData">
-    <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions">
-    </canvas>
-  </div>
-
-  <ng-template #noData>
-    <p>No hay datos de predicción disponibles.</p>
-  </ng-template>
+  <div *ngIf="barChartData && barChartData.length; else noData">
+  <canvas baseChart
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [legend]="true">
+  </canvas>
 </div>
+
+<ng-template #noData>
+  <p>No hay datos de predicción disponibles.</p>
+</ng-template>
 
 -->
 
-<div>Predicción: {{ prediction }}</div>
+<div *ngIf="sprints && sprints.length; else noData">
+  <mat-table [dataSource]="sprints">
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Sprint </mat-header-cell>
+      <mat-cell *matCellDef="let sprint"> {{sprint.title}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="committedPoints">
+      <mat-header-cell *matHeaderCellDef> Puntos Comprometidos </mat-header-cell>
+      <mat-cell *matCellDef="let sprint"> {{sprint.committedPoints}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fulfilledPoints">
+      <mat-header-cell *matHeaderCellDef> Puntos Completados </mat-header-cell>
+      <mat-cell *matCellDef="let sprint"> {{sprint.fulfilledPoints}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="predictedPointsLower">
+      <mat-header-cell *matHeaderCellDef> Predicción Inferior </mat-header-cell>
+      <mat-cell *matCellDef="let sprint"> {{sprint.predictedPointsLower}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="predictedPointsUpper">
+      <mat-header-cell *matHeaderCellDef> Predicción Superior </mat-header-cell>
+      <mat-cell *matCellDef="let sprint"> {{sprint.predictedPointsUpper}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <p style="color: white; padding: 10px 10px;">Nota: Deberia tener en cuenta que los valores de la predicción toman en cuenta los puntos comprometidos y los puntos completosen cada sprint.</p>
+</div>
+
+<ng-template #noData>
+  <p>No hay datos de predicción disponibles.</p>
+</ng-template>
 
 <mat-dialog-actions align="end">
   <button type="button" (click)="cancelar()" mat-button>Cerrar</button>
 </mat-dialog-actions>
+

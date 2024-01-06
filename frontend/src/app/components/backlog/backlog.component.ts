@@ -18,6 +18,7 @@ import { SprintService } from 'src/app/services/sprint.service';
 //calling components
 import { CreateUpdateTaskComponent } from '../create-update-task/create-update-task.component';
 import { SidebarInsightComponent } from '../../shared/sidebar-insight/sidebar-insight.component';
+import { UserInsightComponent } from '../../shared/user-insight/user-insight.component';
 
 @Component({
   selector: 'app-backlog',
@@ -41,11 +42,11 @@ export class BacklogComponent implements OnInit {
     private toastr: ToastrService,
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.loadUsers();
     this.loadSprints();
     this.loadTasks();
     this.loadTask();
-    this.loadUsers();
     this.loadSubtask();
     this._subtaskService.loadSubtasks();
   }
@@ -54,16 +55,15 @@ export class BacklogComponent implements OnInit {
     return user ? user.fullname : 'No asignado';
   }
 
-  loadUsers(): void {
-    this._userService.getUsers().subscribe(
-      (data: User[]) => {
-        this.users = data;
-      },
-      (error) => {
-        console.error('Error loading users:', error);
-      },
-    );
+  async loadUsers(): Promise<void> {
+    try {
+      const data: User[] | undefined = await this._userService.getUsers().toPromise();
+      this.users = data || []; // Asignar un arreglo vacío si data es undefined
+    } catch (error) {
+      console.error('Error loading users:', error);
+    }
   }
+
 
   loadSprints(): void {
     this._sprintService.getSprints().subscribe((data: Sprint[]) => {
@@ -180,7 +180,7 @@ export class BacklogComponent implements OnInit {
   openSidebarInsight(sprintId: number): void {
     if (this.callSideMove(sprintId)) {
       const dialogRef = this.dialog.open(SidebarInsightComponent, {
-        width: '550px',
+        width: '610px',
         disableClose: true,
         data: { sprintId: sprintId },
       });
@@ -190,5 +190,17 @@ export class BacklogComponent implements OnInit {
         }
       });
     }
+  }
+  openUserInsight(sprintId: number): void {
+    const dialogRef = this.dialog.open(UserInsightComponent, {
+        width: '610px',
+        disableClose: true,
+        data: { sprintId: sprintId },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.loadTasks();
+        }
+    });
   }
 }

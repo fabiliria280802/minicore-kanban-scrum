@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Sprint from "../models/sprint";
-import Prediction from "../models/prediction";
+
 
 export const getSprint = async (req: Request, res: Response) => {
   try {
@@ -61,28 +61,6 @@ export const postSprint = async (req: Request, res: Response) => {
         });
     }
     const newSprint = await Sprint.create(req.body);
-
-    //enviar a prediction el sprint
-    const completedSprints = await Sprint.findAll({
-      where: { sprintstatus: 'completado' }
-    });
-
-    // Verificar si hay al menos 5 sprints completados
-    if (completedSprints.length >= 5) {
-      const fulfilledPointsArray = completedSprints.map(sprint => sprint.get('fulfilledPoints') as number);
-      const mean = fulfilledPointsArray.reduce((acc, val) => acc + val, 0) / fulfilledPointsArray.length;
-      const stdDev = Math.sqrt(fulfilledPointsArray.map(val => Math.pow(val - mean, 2)).reduce((acc, val) => acc + val, 0) / fulfilledPointsArray.length);
-
-      let predictedPointsLower = Math.max(0, mean - stdDev);
-      let predictedPointsUpper = Math.max(predictedPointsLower, mean + stdDev);
-      let confidenceInterval = `${{predictedPointsLower}} - ${{predictedPointsUpper}}`;
-      // Crear un registro en la tabla 'prediction'
-      const prediction = await Prediction.create({
-        predictedPointsLower,
-        predictedPointsUpper,
-        confidenceInterval
-      });
-    }
     res.status(201).json(newSprint);
   } catch (error) {
     if (error instanceof Error) {
@@ -106,36 +84,6 @@ export const putSprint = async (req: Request, res: Response) => {
     }
     await sprint.update(req.body);
     console.log("Updated Sprint:", sprint);
-
-    // Verificar y calcular los puntos de predicción
-    const completedSprints = await Sprint.findAll({
-      where: { sprintstatus: 'completado' }
-    });
-
-    if (completedSprints.length >= 5) {
-      // Calcular media y desviación estándar
-      const fulfilledPointsArray = completedSprints.map(s => s.get('fulfilledPoints') as number);
-      const mean = fulfilledPointsArray.reduce((acc, val) => acc + val, 0) / fulfilledPointsArray.length;
-      const stdDev = Math.sqrt(fulfilledPointsArray.map(val => Math.pow(val - mean, 2)).reduce((acc, val) => acc + val, 0) / fulfilledPointsArray.length);
-
-      let predictedPointsLower = Math.max(0, mean - stdDev);
-      let predictedPointsUpper = Math.max(predictedPointsLower, mean + stdDev);
-      let confidenceInterval = `${{predictedPointsLower}} - ${{predictedPointsUpper}}`;
-      // Actualizar la tabla 'prediction'
-      const idPrediction = sprint.get('idprediction') as number;
-      if (idPrediction) {
-        await Prediction.update(
-          {
-            predictedPointsLower,
-            predictedPointsUpper,
-            confidenceInterval
-          },
-          {
-            where: { id: idPrediction }
-          }
-        );
-      }
-    }
 
     res.json({ msg: "Sprint updated", sprint });
   } catch (error) {

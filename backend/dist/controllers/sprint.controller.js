@@ -41,7 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSprint = exports.putSprint = exports.postSprint = exports.getSprints = exports.getSprint = void 0;
 var sprint_1 = __importDefault(require("../models/sprint"));
-var prediction_1 = __importDefault(require("../models/prediction"));
 var getSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, sprint, error_1;
     return __generator(this, function (_a) {
@@ -97,14 +96,14 @@ var getSprints = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.getSprints = getSprints;
 var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, id, title, initialDate, finalDate, startDate, endDate, timeDiff, dayDiff, newSprint, completedSprints, fulfilledPointsArray, mean_1, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, prediction, error_3;
+    var _a, id, title, initialDate, finalDate, startDate, endDate, timeDiff, dayDiff, newSprint, error_3;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = req.body, id = _a.id, title = _a.title, initialDate = _a.initialDate, finalDate = _a.finalDate;
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 6, , 7]);
+                _b.trys.push([1, 3, , 4]);
                 startDate = new Date(initialDate);
                 endDate = new Date(finalDate);
                 if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
@@ -131,30 +130,9 @@ var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, sprint_1.default.create(req.body)];
             case 2:
                 newSprint = _b.sent();
-                return [4 /*yield*/, sprint_1.default.findAll({
-                        where: { sprintstatus: 'completado' }
-                    })];
-            case 3:
-                completedSprints = _b.sent();
-                if (!(completedSprints.length >= 5)) return [3 /*break*/, 5];
-                fulfilledPointsArray = completedSprints.map(function (sprint) { return sprint.get('fulfilledPoints'); });
-                mean_1 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
-                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_1, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
-                predictedPointsLower = Math.max(0, mean_1 - stdDev);
-                predictedPointsUpper = Math.max(predictedPointsLower, mean_1 + stdDev);
-                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
-                return [4 /*yield*/, prediction_1.default.create({
-                        predictedPointsLower: predictedPointsLower,
-                        predictedPointsUpper: predictedPointsUpper,
-                        confidenceInterval: confidenceInterval
-                    })];
-            case 4:
-                prediction = _b.sent();
-                _b.label = 5;
-            case 5:
                 res.status(201).json(newSprint);
-                return [3 /*break*/, 7];
-            case 6:
+                return [3 /*break*/, 4];
+            case 3:
                 error_3 = _b.sent();
                 if (error_3 instanceof Error) {
                     res.status(500).json({ error: error_3.message });
@@ -162,19 +140,19 @@ var postSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 else {
                     res.status(500).json({ error: "Error al insertar sprint" });
                 }
-                return [3 /*break*/, 7];
-            case 7: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
 exports.postSprint = postSprint;
 //TODO: NUEVA VALIDACION
 var putSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, sprint, completedSprints, fulfilledPointsArray, mean_2, stdDev, predictedPointsLower, predictedPointsUpper, confidenceInterval, idPrediction, error_4;
+    var id, sprint, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 6, , 7]);
+                _a.trys.push([0, 3, , 4]);
                 id = req.params.id;
                 console.log("Update Sprint ID:", id);
                 console.log("Data to Update:", req.body);
@@ -188,39 +166,14 @@ var putSprint = function (req, res) { return __awaiter(void 0, void 0, void 0, f
             case 2:
                 _a.sent();
                 console.log("Updated Sprint:", sprint);
-                return [4 /*yield*/, sprint_1.default.findAll({
-                        where: { sprintstatus: 'completado' }
-                    })];
-            case 3:
-                completedSprints = _a.sent();
-                if (!(completedSprints.length >= 5)) return [3 /*break*/, 5];
-                fulfilledPointsArray = completedSprints.map(function (s) { return s.get('fulfilledPoints'); });
-                mean_2 = fulfilledPointsArray.reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length;
-                stdDev = Math.sqrt(fulfilledPointsArray.map(function (val) { return Math.pow(val - mean_2, 2); }).reduce(function (acc, val) { return acc + val; }, 0) / fulfilledPointsArray.length);
-                predictedPointsLower = Math.max(0, mean_2 - stdDev);
-                predictedPointsUpper = Math.max(predictedPointsLower, mean_2 + stdDev);
-                confidenceInterval = "".concat({ predictedPointsLower: predictedPointsLower }, " - ").concat({ predictedPointsUpper: predictedPointsUpper });
-                idPrediction = sprint.get('idprediction');
-                if (!idPrediction) return [3 /*break*/, 5];
-                return [4 /*yield*/, prediction_1.default.update({
-                        predictedPointsLower: predictedPointsLower,
-                        predictedPointsUpper: predictedPointsUpper,
-                        confidenceInterval: confidenceInterval
-                    }, {
-                        where: { id: idPrediction }
-                    })];
-            case 4:
-                _a.sent();
-                _a.label = 5;
-            case 5:
                 res.json({ msg: "Sprint updated", sprint: sprint });
-                return [3 /*break*/, 7];
-            case 6:
+                return [3 /*break*/, 4];
+            case 3:
                 error_4 = _a.sent();
                 console.error("Update Error:", error_4);
                 res.status(500).json({ error: "Error al actualizar sprint" });
-                return [3 /*break*/, 7];
-            case 7: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

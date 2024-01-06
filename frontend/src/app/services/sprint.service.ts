@@ -50,7 +50,5 @@ export class SprintService {
   deleteSprint(id: number): Observable<any> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
-  predict() {
-    return this.http.post(`${this.myAppUrl}predictions`, {});
-  }
+
 }
