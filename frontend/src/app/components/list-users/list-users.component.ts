@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { jwtDecode } from 'jwt-decode';
+
 
 //interfaces
 import { User, type } from '../../interfaces/user.interface';
@@ -94,8 +94,9 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     if (!token) return false;
 
     try {
-      const decodedToken = jwtDecode<JwtPayload>(token); // Usar 'any' para evitar problemas de tipado
-      return decodedToken.type === 'Administrador';
+      //const decodedToken = jwtDecode<JwtPayload>(token); // Usar 'any' para evitar problemas de tipado
+      //return decodedToken.type === 'Administrador';
+      return true;
     } catch (error) {
       console.error('Error decodificando el token', error);
       return false;
@@ -106,8 +107,9 @@ export class ListUsersComponent implements OnInit, AfterViewInit {
     if (!token) return false;
 
     try {
-      const decodedToken = jwtDecode<JwtPayload>(token);
-      return decodedToken.iduser === iduserToCheck;
+      //const decodedToken = jwtDecode<JwtPayload>(token);
+      //return decodedToken.iduser === iduserToCheck;
+      return true;
     } catch (error) {
       console.error('Error decodificando el token', error);
       return false;
