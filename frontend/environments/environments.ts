@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endpoint: 'http://localhost:4000/',
+  endpoint: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/',
 };
