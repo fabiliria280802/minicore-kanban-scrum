@@ -73,7 +73,9 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.middlewares = function () {
         this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)());
+        this.app.use((0, cors_1.default)({
+            origin: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/'
+        }));
     };
     Server.prototype.routes = function () {
         this.app.use("/api/users", user_routes_1.default);

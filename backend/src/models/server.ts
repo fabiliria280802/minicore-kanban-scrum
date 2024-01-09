@@ -36,7 +36,9 @@ class Server {
   }
   middlewares() {
     this.app.use(express.json());
-    this.app.use(cors());
+    this.app.use(cors({
+      origin: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/'
+  }));
   }
   routes() {
     this.app.use("/api/users", routesUsers);
