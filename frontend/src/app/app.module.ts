@@ -110,3 +110,5 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   ],
   bootstrap: [AppComponent, MsalRedirectComponent],
 })
+
+export class AppModule {}

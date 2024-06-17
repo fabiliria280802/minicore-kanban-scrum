@@ -1,3 +1,4 @@
+//local
 const database = {
   host: "localhost",
   user: "root",

@@ -1,4 +1,5 @@
 //rutas
+import dotenv from "dotenv";
 import routesUsers from "../routes/user.routes";
 import routesSprints from "../routes/sprint.routes";
 import routesTasks from "../routes/task.routes";
@@ -30,21 +31,8 @@ class Server {
   }
   middlewares() {
     this.app.use(express.json());
-
-    // Configuración de CORS con múltiples orígenes permitidos
-    const allowedOrigins = [
-      'https://minicore-kanban-scrum-frontend.vercel.app',
-      'https://minicore-kanban-scrum-fron-git-92a510-fabiliria280802s-projects.vercel.app'
-    ];
-
     this.app.use(cors({
-      origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      }
+      origin: 'https://minicore-kanban-scrum-frontend.vercel.app'
     }));
   }
   routes() {
@@ -55,13 +43,16 @@ class Server {
   }
   async connectDB() {
     try {
+      await connection.authenticate();
+      console.log("Conexión a la base de datos exitosa");
+
       await Sprint.sync();
       await User.sync();
       await Task.sync();
       await Subtask.sync();
       console.log("Base de datos online");
     } catch (error) {
-      console.log("No se pudo conectar");
+      console.error("No se pudo conectar a la base de datos:", error);
     }
   }
 }

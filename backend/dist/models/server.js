@@ -39,20 +39,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//rutas
 var user_routes_1 = __importDefault(require("../routes/user.routes"));
 var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
 var task_routes_1 = __importDefault(require("../routes/task.routes"));
 var subtask_routes_1 = __importDefault(require("../routes/subtask.routes"));
 //models
-/* ya no es necesario
-  import Task from "./task";
-  import Subtask from "./subtask";
-  import Sprint from "./sprint";
-  import User from "./user";
-*/
 //config fk
 var index_1 = require("./index");
+//conexion db
+var connection_1 = __importDefault(require("../db/connection"));
 //adicionales
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
@@ -60,7 +55,7 @@ var Server = /** @class */ (function () {
     function Server() {
         var _a;
         this.app = (0, express_1.default)();
-        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4000";
+        this.port = (_a = process.env.DB_PORT) !== null && _a !== void 0 ? _a : "4000";
         this.middlewares();
         this.routes();
         this.connectDB();
@@ -74,7 +69,7 @@ var Server = /** @class */ (function () {
     Server.prototype.middlewares = function () {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
-            origin: 'https://minicore-kanban-scrum-frontend.vercel.app/'
+            origin: 'https://minicore-kanban-scrum-frontend.vercel.app'
         }));
     };
     Server.prototype.routes = function () {
@@ -89,26 +84,30 @@ var Server = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 5, , 6]);
-                        return [4 /*yield*/, index_1.Sprint.sync()];
+                        _a.trys.push([0, 6, , 7]);
+                        return [4 /*yield*/, connection_1.default.authenticate()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, index_1.User.sync()];
+                        console.log("Conexión a la base de datos exitosa");
+                        return [4 /*yield*/, index_1.Sprint.sync()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, index_1.Task.sync()];
+                        return [4 /*yield*/, index_1.User.sync()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, index_1.Subtask.sync()];
+                        return [4 /*yield*/, index_1.Task.sync()];
                     case 4:
                         _a.sent();
-                        console.log("Base de datos online");
-                        return [3 /*break*/, 6];
+                        return [4 /*yield*/, index_1.Subtask.sync()];
                     case 5:
+                        _a.sent();
+                        console.log("Base de datos online");
+                        return [3 /*break*/, 7];
+                    case 6:
                         error_1 = _a.sent();
-                        console.log("No se pudo conectar");
-                        return [3 /*break*/, 6];
-                    case 6: return [2 /*return*/];
+                        console.error("No se pudo conectar a la base de datos:", error_1);
+                        return [3 /*break*/, 7];
+                    case 7: return [2 /*return*/];
                 }
             });
         });
