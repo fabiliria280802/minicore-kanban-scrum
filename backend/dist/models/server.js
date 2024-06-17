@@ -39,6 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+//rutas
+require('dotenv').config();
 var user_routes_1 = __importDefault(require("../routes/user.routes"));
 var sprint_routes_1 = __importDefault(require("../routes/sprint.routes"));
 var task_routes_1 = __importDefault(require("../routes/task.routes"));
@@ -55,7 +57,7 @@ var Server = /** @class */ (function () {
     function Server() {
         var _a;
         this.app = (0, express_1.default)();
-        this.port = (_a = process.env.DB_PORT) !== null && _a !== void 0 ? _a : "4000";
+        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4000";
         this.middlewares();
         this.routes();
         this.connectDB();

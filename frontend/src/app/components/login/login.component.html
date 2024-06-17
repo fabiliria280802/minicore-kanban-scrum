@@ -18,8 +18,9 @@
         placeholder="Contraseña"
         required
       />
-      <button class="btn-login" (click)="LoginMicrosoft()" *ngIf="!isLoggedIn()">Login</button>
+
       <input type="submit" value="Aceptar" class="submit" />
+      <input value="Login" (click)="LoginMicrosoft()" *ngIf="!isLoggedIn()" class="submit"/>
       <p>¿No tienes cuenta? <a routerLink="/signIn">Registrar</a></p>
     </form>
   </div>

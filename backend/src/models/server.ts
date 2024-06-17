@@ -1,5 +1,5 @@
 //rutas
-import dotenv from "dotenv";
+require('dotenv').config();
 import routesUsers from "../routes/user.routes";
 import routesSprints from "../routes/sprint.routes";
 import routesTasks from "../routes/task.routes";
@@ -19,7 +19,7 @@ class Server {
   private port: string;
   constructor() {
     this.app = express();
-    this.port = process.env.DB_PORT ?? "4000";
+    this.port = process.env.PORT ?? "4000";
     this.middlewares();
     this.routes();
     this.connectDB();
