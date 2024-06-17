@@ -5,8 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { MSAL_INSTANCE, MsalModule, MsalService } from '@azure/msal-angular';
-import { IPublicClientApplication } from '@azure/msal-browser';
+import { MSAL_INSTANCE, MsalModule, MsalService, MsalGuard, MsalInterceptor, MsalRedirectComponent } from '@azure/msal-angular';
+import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
+
+
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,15 +35,19 @@ import { ListSprintComponent } from './components/list-sprint/list-sprint.compon
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { PublicClientApplication } from '@azure/msal-browser';
 
-export function MSALInstanceFactory(): IPublicClientApplication{
+export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
-      auth:{
-        clientId: '9de198f0-7281-4e26-a826-a7ea34900e82',
-        redirectUri: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/backlog'
-      }
-  })
+    auth: {
+      clientId: '9de198f0-7281-4e26-a826-a7ea34900e82',
+      authority: 'https://login.microsoftonline.com/common', // Asegúrate de que la autoridad esté configurada correctamente
+      redirectUri: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/backlog',
+    },
+    cache: {
+      cacheLocation: 'localStorage', // Puedes cambiar esto a sessionStorage si prefieres
+      storeAuthStateInCookie: false, // Cambia esto a true si tienes problemas con la política de cookies
+    }
+  });
 }
 
 @NgModule({
@@ -72,8 +78,17 @@ export function MSALInstanceFactory(): IPublicClientApplication{
     SharedModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule,
-    MsalModule,
+    MsalModule.forRoot(MSALInstanceFactory(), {
+      interactionType: InteractionType.Redirect,
+      authRequest: {
+        scopes: ['user.read']
+      }
+    }, {
+      interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+      protectedResourceMap: new Map([
+        ['https://graph.microsoft.com/v1.0/me', ['user.read']]
+      ])
+    }),
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-bottom-right',
@@ -87,10 +102,11 @@ export function MSALInstanceFactory(): IPublicClientApplication{
     },
     {
       provide: MSAL_INSTANCE,
-      useValue: MSALInstanceFactory,
+      useFactory: MSALInstanceFactory,
     },
-    MsalService
+    MsalService,
+    MsalGuard,
+    MsalInterceptor
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, MsalRedirectComponent],
 })
-export class AppModule {}
