@@ -6,6 +6,7 @@ import { LoginPayload } from 'src/app/interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from 'src/app/services/error.service';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-login',
@@ -22,9 +23,25 @@ export class LoginComponent implements OnInit {
     private _userService: UserService,
     private router: Router,
     private _errorService: ErrorService,
-  ) {}
+    //nuevo
+    private msalService: MsalService
+  ) {
+    //nuevo
+    this.msalService.instance.handleRedirectPromise().then(res=>{
+      if(res !=null && res.account !=null){
+        this.msalService.instance.setActiveAccount(res.account);
+      }
+    })
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void{
+    this.msalService.instance.handleRedirectPromise().then(res=>{
+      if(res){
+        console.log(res);
+      }
+    })
+
+  }
   logIn() {
     if (
       this.login == '' ||
@@ -57,5 +74,17 @@ export class LoginComponent implements OnInit {
         this.loading = true;
       },
     });
+  }
+
+  //nuevo
+  isLoggedIn(): boolean{
+    return this.msalService.instance.getActiveAccount() != null
+  }
+
+  Login(){
+    this.msalService.loginRedirect();
+  }
+  logout(){
+    this.msalService.logout();
   }
 }

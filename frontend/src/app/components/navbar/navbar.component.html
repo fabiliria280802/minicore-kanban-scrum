@@ -32,8 +32,7 @@
   <div class="nav-item" (click)="navigate('/list-users')">Equipo</div>
   <div class="nav-item" (click)="navigate('/x')">Incidencias</div>
   <div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>
-  <button class="btn-login" (click)="login()" *ngIf="!isLoggedIn()">Login</button>
-  <button class="btn-logout" (click)="login()" *ngIf="isLoggedIn()">Logout</button>
+  <button class="btn-logout" (click)="logout()">Logout</button>
 </nav>
 
 <mat-drawer-container autosize>
