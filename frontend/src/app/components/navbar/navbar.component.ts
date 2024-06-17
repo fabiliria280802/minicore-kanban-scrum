@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +10,9 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   dropdownOpen = false;
   dropdownOpenTwo = false;
-  constructor(private router: Router) {}
+  /*constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {}*/
   toggleDropdownTwo() {
     this.dropdownOpenTwo = !this.dropdownOpenTwo;
   }
@@ -20,11 +21,34 @@ export class NavbarComponent implements OnInit {
   }
 
   navigate(path: string) {
-    this.router.navigate([path]);
+    //this.router.navigate([path]);
     this.dropdownOpen = false;
   }
 
-  logout() {
-    this.router.navigate(['/login']);
+
+  constructor(private msalService: MsalService){
+    this.msalService.instance.handleRedirectPromise().then(res=>{
+      if(res !=null && res.account !=null){
+        this.msalService.instance.setActiveAccount(res.account);
+      }
+    })
+  }
+  ngOnInit(): void{
+    this.msalService.instance.handleRedirectPromise().then(res=>{
+      if(res){
+        console.log(res);
+      }
+    })
+
+  }
+  isLoggedIn(): boolean{
+    return this.msalService.instance.getActiveAccount() != null
+  }
+
+  login(){
+    this.msalService.loginRedirect();
+  }
+  logout(){
+    this.msalService.logout();
   }
 }

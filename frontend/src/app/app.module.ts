@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-
+import { MSAL_INSTANCE, MsalModule, MsalService } from '@azure/msal-angular';
+import { IPublicClientApplication } from '@azure/msal-browser';
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,16 @@ import { ListSprintComponent } from './components/list-sprint/list-sprint.compon
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { PublicClientApplication } from '@azure/msal-browser';
+
+export function MSALInstanceFactory(): IPublicClientApplication{
+  return new PublicClientApplication({
+      auth:{
+        clientId: '9de198f0-7281-4e26-a826-a7ea34900e82',
+        redirectUri: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/backlog'
+      }
+  })
+}
 
 @NgModule({
   declarations: [
@@ -62,6 +73,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    MsalModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-bottom-right',
@@ -73,6 +85,11 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
       provide: MAT_DATE_LOCALE,
       useValue: 'es',
     },
+    {
+      provide: MSAL_INSTANCE,
+      useValue: MSALInstanceFactory,
+    },
+    MsalService
   ],
   bootstrap: [AppComponent],
 })
