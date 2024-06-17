@@ -5,12 +5,6 @@ import routesTasks from "../routes/task.routes";
 import routesSubtasks from "../routes/subtask.routes";
 
 //models
-/* ya no es necesario
-  import Task from "./task";
-  import Subtask from "./subtask";
-  import Sprint from "./sprint";
-  import User from "./user";
-*/
 //config fk
 import { Task, Subtask, Sprint, User } from './index';
 //conexion db
@@ -36,9 +30,22 @@ class Server {
   }
   middlewares() {
     this.app.use(express.json());
+
+    // Configuración de CORS con múltiples orígenes permitidos
+    const allowedOrigins = [
+      'https://minicore-kanban-scrum-frontend.vercel.app',
+      'https://minicore-kanban-scrum-fron-git-92a510-fabiliria280802s-projects.vercel.app'
+    ];
+
     this.app.use(cors({
-      origin: 'https://minicore-kanban-scrum-frontend.vercel.app/'
-  }));
+      origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      }
+    }));
   }
   routes() {
     this.app.use("/api/users", routesUsers);
