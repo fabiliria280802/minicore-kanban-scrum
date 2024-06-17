@@ -8,7 +8,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { MSAL_INSTANCE, MsalModule, MsalService, MsalGuard, MsalInterceptor, MsalRedirectComponent } from '@azure/msal-angular';
 import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
 
-
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
