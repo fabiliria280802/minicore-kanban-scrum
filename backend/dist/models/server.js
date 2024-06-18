@@ -57,7 +57,7 @@ var Server = /** @class */ (function () {
     function Server() {
         var _a;
         this.app = (0, express_1.default)();
-        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4002";
+        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4005";
         this.middlewares();
         this.routes();
         this.connectDB();
@@ -71,7 +71,7 @@ var Server = /** @class */ (function () {
     Server.prototype.middlewares = function () {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
-            origin: 'https://minicore-kanban-scrum-frontend.vercel.app'
+            origin: 'https://minicoreagil-git-main-fabiliria280802s-projects.vercel.app:4040'
         }));
     };
     Server.prototype.routes = function () {

@@ -19,7 +19,7 @@ class Server {
   private port: string;
   constructor() {
     this.app = express();
-    this.port = process.env.PORT ?? "4002";
+    this.port = process.env.PORT ?? "4005";
     this.middlewares();
     this.routes();
     this.connectDB();
@@ -32,7 +32,7 @@ class Server {
   middlewares() {
     this.app.use(express.json());
     this.app.use(cors({
-      origin: 'https://minicore-kanban-scrum-frontend.vercel.app'
+      origin: 'https://minicoreagil-git-main-fabiliria280802s-projects.vercel.app:4040'
     }));
   }
   routes() {
