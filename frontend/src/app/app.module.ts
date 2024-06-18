@@ -34,6 +34,7 @@ import { ListSprintComponent } from './components/list-sprint/list-sprint.compon
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { FilterByUserPipe } from './pipes/filter-by-user.pipe';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -68,6 +69,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     SprintActiveComponent,
     FilterBySprintPipe,
     FilterByTaskPipe,
+    FilterByUserPipe,
     ListSprintComponent,
   ],
   imports: [
