@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
+      await this.msalService.instance.initialize();
       const result = await this.msalService.instance.handleRedirectPromise();
       if (result && result.account) {
         this.msalService.instance.setActiveAccount(result.account);
@@ -71,9 +72,12 @@ export class LoginComponent implements OnInit {
   }
 
   loginRedirect() {
+    if (!this.msalService.instance) {
+      console.error('MSAL instance not initialized');
+      return;
+    }
     this.msalService.loginRedirect();
   }
-
   logout() {
     this.msalService.logout();
   }
