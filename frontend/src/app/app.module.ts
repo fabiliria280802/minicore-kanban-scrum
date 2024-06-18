@@ -1,7 +1,7 @@
 // Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { IPublicClientApplication, PublicClientApplication, InteractionType } fr
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-//adiccionals
+// Otros componentes
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { ListTaskComponent } from './components/list-task/list-task.component';
 import { ListSubtaskComponent } from './components/list-subtask/list-subtask.component';
@@ -30,22 +30,22 @@ import { IndexComponent } from './components/index/index.component';
 import { SprintActiveComponent } from './components/sprint-active/sprint-active.component';
 import { ListSprintComponent } from './components/list-sprint/list-sprint.component';
 
-//pipes
+// Pipes
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
 import { FilterByTaskPipe } from './pipes/filter-by-task.pipe';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FilterByUserPipe } from './pipes/filter-by-user.pipe';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
       clientId: '9de198f0-7281-4e26-a826-a7ea34900e82',
-      authority: 'https://login.microsoftonline.com/common', // Asegúrate de que la autoridad esté configurada correctamente
-      redirectUri: 'https://minicore-kanban-scrum-4v57pnk1w-fabiliria280802s-projects.vercel.app/backlog',
+      authority: 'https://login.microsoftonline.com/common',
+      redirectUri: '/backlog',
     },
     cache: {
-      cacheLocation: 'localStorage', // Puedes cambiar esto a sessionStorage si prefieres
-      storeAuthStateInCookie: false, // Cambia esto a true si tienes problemas con la política de cookies
+      cacheLocation: 'localStorage',
+      storeAuthStateInCookie: false,
     }
   });
 }
@@ -70,7 +70,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     FilterBySprintPipe,
     FilterByTaskPipe,
     FilterByUserPipe,
-    ListSprintComponent,
+    ListSprintComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +85,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
         scopes: ['user.read']
       }
     }, {
-      interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+      interactionType: InteractionType.Redirect,
       protectedResourceMap: new Map([
         ['https://graph.microsoft.com/v1.0/me', ['user.read']]
       ])
@@ -107,7 +107,11 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     },
     MsalService,
     MsalGuard,
-    MsalInterceptor
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent, MsalRedirectComponent],
 })

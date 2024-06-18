@@ -20,8 +20,9 @@
       />
 
       <input type="submit" value="Aceptar" class="submit" />
-      <input value="Login" (click)="LoginMicrosoft()" *ngIf="!isLoggedIn()" class="submit"/>
+      <button (click)="loginRedirect()" *ngIf="!isLoggedIn()" class="submit">Login with Microsoft</button>
       <p>¿No tienes cuenta? <a routerLink="/signIn">Registrar</a></p>
     </form>
   </div>
 </div>
+

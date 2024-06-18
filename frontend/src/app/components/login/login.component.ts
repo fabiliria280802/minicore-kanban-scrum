@@ -23,25 +23,17 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private _errorService: ErrorService,
     private msalService: MsalService
-  ) {
-    // Manejar redirección de promesas en el constructor
-    this.msalService.instance.handleRedirectPromise().then((res) => {
-      if (res && res.account) {
-        this.msalService.instance.setActiveAccount(res.account);
-      }
-    }).catch((error) => {
-      console.error('Error handling redirect promise', error);
-    });
-  }
+  ) {}
 
-  ngOnInit(): void {
-    this.msalService.instance.handleRedirectPromise().then((res) => {
-      if (res) {
-        console.log(res);
+  async ngOnInit(): Promise<void> {
+    try {
+      const result = await this.msalService.instance.handleRedirectPromise();
+      if (result && result.account) {
+        this.msalService.instance.setActiveAccount(result.account);
       }
-    }).catch((error) => {
+    } catch (error) {
       console.error('Error handling redirect promise', error);
-    });
+    }
   }
 
   logIn() {
@@ -78,7 +70,7 @@ export class LoginComponent implements OnInit {
     return this.msalService.instance.getActiveAccount() != null;
   }
 
-  LoginMicrosoft() {
+  loginRedirect() {
     this.msalService.loginRedirect();
   }
 
@@ -86,4 +78,5 @@ export class LoginComponent implements OnInit {
     this.msalService.logout();
   }
 }
+
 
