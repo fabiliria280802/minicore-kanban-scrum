@@ -1,18 +1,21 @@
 {
   "scripts": {
-    "test-backend": "node ./bin/www",
-    "dev-backend": "nodemon dist/index.js",
-    "twatch-backend": "tsc --watch",
-    "start-frontend": "ng serve --prefix frontend",
-    "build-frontend": "ng build --prefix frontend",
-    "watch-frontend": "ng build --watch --configuration development --prefix frontend",
-    "test-frontend": "ng test --prefix frontend",
-    "built-proyect": "concurrently \"npm run dev-backend --prefix backend\" \"npm run start-frontend --prefix frontend\""
+    "test-backend": "cd backend && npm test",
+    "dev-backend": "cd backend && nodemon dist/index.js",
+    "twatch-backend": "cd backend && tsc --watch",
+    "start-frontend": "cd frontend && ng serve",
+    "build-frontend": "cd frontend && ng build",
+    "watch-frontend": "cd frontend && ng build --watch --configuration development",
+    "test-frontend": "cd frontend && ng test",
+    "build-backend": "cd backend && tsc",
+    "build": "npm run build-backend && npm run build-frontend",
+    "start": "concurrently \"npm run dev-backend\" \"npm run build-frontend\""
   },
   "dependencies": {
+    "concurrently": "^7.0.0",
     "gsap": "^3.12.4",
-    "jwt-decode": "^4.0.0",
-    "concurrently": "^7.0.0"
+    "jwt-decode": "^4.0.0"
   }
 }
+
 
