@@ -3,13 +3,13 @@
     "test-backend": "cd backend && npm test",
     "dev-backend": "cd backend && nodemon dist/index.js",
     "twatch-backend": "cd backend && tsc --watch",
-    "start-frontend": "cd frontend && ng serve",
+    "start-frontend": "cd frontend && ng serve --o",
     "build-frontend": "cd frontend && ng build",
     "watch-frontend": "cd frontend && ng build --watch --configuration development",
     "test-frontend": "cd frontend && ng test",
     "build-backend": "cd backend && tsc",
     "build": "npm run build-backend && npm run build-frontend",
-    "start": "concurrently \"npm run dev-backend\" \"npm run build-frontend\""
+    "start": "concurrently \"npm run dev-backend\" \"npm run start-frontend\""
   },
   "dependencies": {
     "gsap": "^3.12.4",
