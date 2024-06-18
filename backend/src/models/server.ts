@@ -19,7 +19,7 @@ class Server {
   private port: string;
   constructor() {
     this.app = express();
-    this.port = process.env.PORT ?? "4000";
+    this.port = process.env.PORT ?? "4002";
     this.middlewares();
     this.routes();
     this.connectDB();

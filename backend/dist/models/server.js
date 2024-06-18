@@ -57,7 +57,7 @@ var Server = /** @class */ (function () {
     function Server() {
         var _a;
         this.app = (0, express_1.default)();
-        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4000";
+        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4002";
         this.middlewares();
         this.routes();
         this.connectDB();
