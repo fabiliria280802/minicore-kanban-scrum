@@ -22,7 +22,7 @@ export class SubtaskService {
   }
 
   hasSubtasks(idtask: number): boolean {
-    return this.subtasks.some((subtask) => subtask.idtask === idtask);
+    return this.subtasks.some((subtask) => subtask.id === idtask);
   }
   getSubtasks(): Observable<Subtask[]> {
     return this.http.get<Subtask[]>(`${this.myAppUrl}${this.myApiUrl}`);

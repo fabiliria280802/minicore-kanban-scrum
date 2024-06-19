@@ -15,6 +15,6 @@ export class FilterByUserPipe implements PipeTransform {
       // Esto depende de cómo deseas manejar este caso en tu aplicación.
       return users;
     }
-    return users.filter((user) => user.iduser === taskId);
+    return users.filter((user) => user.id === taskId);
   }
 }

@@ -1,10 +1,11 @@
 export enum sprintstatus {
+  toStart = 'Por iniciar',
   initialize = 'Iniciado',
   completed = 'Completado',
 }
 
 export interface Sprint {
-  idsprint?: number;
+  id?: number;
   idprediction?: number;
   title: string;
   initialDate: string;

@@ -3,10 +3,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var connection_1 = __importDefault(require("../db/connection"));
-var sequelize_1 = require("sequelize");
-var Sprint = connection_1.default.define("sprint", {
-    idsprint: {
+exports.SprintStatus = void 0;
+const connection_1 = __importDefault(require("../db/connection"));
+const sequelize_1 = require("sequelize");
+var SprintStatus;
+(function (SprintStatus) {
+    SprintStatus["toStart"] = "Por iniciar";
+    SprintStatus["initialize"] = "Iniciado";
+    SprintStatus["completed"] = "Completado";
+})(SprintStatus || (exports.SprintStatus = SprintStatus = {}));
+class Sprint extends sequelize_1.Model {
+}
+Sprint.init({
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -15,7 +24,7 @@ var Sprint = connection_1.default.define("sprint", {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         validate: {
-            isCorrectFormat: function (value) {
+            isCorrectFormat(value) {
                 if (!value.startsWith("Sprint #")) {
                     throw new Error('El título debe empezar con "Sprint #"');
                 }
@@ -30,22 +39,18 @@ var Sprint = connection_1.default.define("sprint", {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
     },
-    //Puntos comprometidos
     committedPoints: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
     },
-    //finalizado = puntos hechos
     fulfilledPoints: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
     },
-    //Avanzado
     pendingPoints: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
     },
-    //por hacer
     noFulfilledPoints: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
@@ -63,7 +68,7 @@ var Sprint = connection_1.default.define("sprint", {
         allowNull: true,
     },
     sprintstatus: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.ENUM(...Object.values(SprintStatus)),
         allowNull: true,
     },
     predictedPointsLower: {
@@ -78,5 +83,8 @@ var Sprint = connection_1.default.define("sprint", {
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
+}, {
+    sequelize: connection_1.default,
+    modelName: 'sprints',
 });
 exports.default = Sprint;

@@ -10,3 +10,4 @@ Subtask.belongsTo(Task, { foreignKey: 'idtask' });
 Subtask.belongsTo(User, { foreignKey: 'iduser' });
 
 export { Task, Subtask, Sprint, User };
+

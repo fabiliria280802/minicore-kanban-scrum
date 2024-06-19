@@ -1,8 +1,44 @@
 import sequelize from "../db/connection";
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
-const Task = sequelize.define("task", {
-  idtask: {
+export enum TaskStatus {
+  todo = 'Por hacer',
+  doing = 'Avanzada',
+  done = 'Finalizada',
+}
+
+export enum TaskPoints {
+  none = 0,
+  one = 1,
+  three = 3,
+  five = 5,
+  eight = 8,
+  thirteen = 13,
+}
+
+export enum TaskPriority {
+  low = 'Baja',
+  medium = 'Media',
+  high = 'Alta',
+}
+
+class Task extends Model {
+  public id!: number;
+  public idsprint!: number;
+  public iduser!: number;
+  public title!: string;
+  public taskdescription!: string;
+  public status!: TaskStatus;
+  public points!: TaskPoints;
+  public priority!: TaskPriority;
+  public expectedTime!: number | null;
+  public doneTime!: number | null;
+  public conclutiontime!: string | null;
+  public assignedFullName!: string | null;
+}
+
+Task.init({
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -12,7 +48,7 @@ const Task = sequelize.define("task", {
     allowNull: false,
     references: {
       model: 'sprints',
-      key: 'idsprint',
+      key: 'id',
     },
   },
   iduser: {
@@ -20,7 +56,7 @@ const Task = sequelize.define("task", {
     allowNull: false,
     references: {
       model: 'users',
-      key: 'iduser',
+      key: 'id',
     },
   },
   title: {
@@ -32,15 +68,18 @@ const Task = sequelize.define("task", {
     allowNull: false,
   },
   status: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM(...Object.values(TaskStatus)),
     allowNull: false,
   },
   points: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    validate: {
+      isIn: [[TaskPoints.none, TaskPoints.one, TaskPoints.three, TaskPoints.five, TaskPoints.eight, TaskPoints.thirteen]],
+    },
   },
   priority: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM(...Object.values(TaskPriority)),
     allowNull: false,
   },
   expectedTime: {
@@ -59,6 +98,9 @@ const Task = sequelize.define("task", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+}, {
+  sequelize,
+  modelName: 'tasks',
 });
 
 export default Task;

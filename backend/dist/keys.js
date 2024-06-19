@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //local
-var database = {
+const database = {
     host: "localhost",
     user: "root",
     password: "28081409",

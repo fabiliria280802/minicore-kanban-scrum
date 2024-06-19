@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User, type } from 'src/app/interfaces/user.interface';
+import { User, position, type } from 'src/app/interfaces/user.interface';
 import { ErrorService } from 'src/app/services/error.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,8 +17,8 @@ export class SignInComponent implements OnInit {
   confirmPassword: string = '';
   fullname: string = '';
   email: string = '';
-  type: type = type.Desarrollador;
-  position: string = '';
+  type: type = type.Viewer;
+  position: position = position.Intern;
   loading: boolean = true;
 
   constructor(

@@ -28,7 +28,8 @@
   margin-top: 40px;
   margin-bottom: 40px;
 }
-.login .form input {
+.login .form input,
+.login .form button {
   width: 100%;
   height: 40px;
   margin-top: 20px;
@@ -38,15 +39,19 @@
   color: #fff;
   border-radius: 5px;
   font-size: 14px;
+  align-self: center;
 }
-.login .form input:focus {
+.login .form input:focus,
+.login .form button:focus {
   border: 1px solid rgba(255, 255, 255, 0.8);
   outline: none;
 }
-::-webkit-input-placeholder {
+::-webkit-input-placeholder,
+::-webkit-button-placeholder {
   color: #ddd;
 }
-.login .form input.submit {
+.login .form input.submit,
+.login .form button.submit {
   background: rgba(255, 255, 255, 0.9);
   color: #444;
   font-size: 15px;
@@ -62,3 +67,9 @@
 .login .form a {
   color: #ff7ea8;
 }
+
+.icon-small {
+  width: 24px;
+  height: 24px;
+}
+

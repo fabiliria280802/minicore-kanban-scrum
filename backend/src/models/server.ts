@@ -1,16 +1,16 @@
-//rutas
+// rutas
 require('dotenv').config();
 import routesUsers from "../routes/user.routes";
 import routesSprints from "../routes/sprint.routes";
 import routesTasks from "../routes/task.routes";
 import routesSubtasks from "../routes/subtask.routes";
 
-//models
-//config fk
+// models
+// config fk
 import { Task, Subtask, Sprint, User } from './index';
-//conexion db
+// conexión db
 import connection from "../db/connection";
-//adicionales
+// adicionales
 import express, { Application } from "express";
 import cors from "cors";
 
@@ -32,7 +32,7 @@ class Server {
   middlewares() {
     this.app.use(express.json());
     this.app.use(cors({
-      origin: 'https://minicoreagil-git-main-fabiliria280802s-projects.vercel.app:4040'
+      origin: 'http://localhost:4200/'
     }));
   }
   routes() {
@@ -45,9 +45,8 @@ class Server {
     try {
       await connection.authenticate();
       console.log("Conexión a la base de datos exitosa");
-
-      await Sprint.sync();
       await User.sync();
+      await Sprint.sync();
       await Task.sync();
       await Subtask.sync();
       console.log("Base de datos online");
@@ -58,3 +57,4 @@ class Server {
 }
 
 export default Server;
+

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var sprint_controller_1 = require("../controllers/sprint.controller");
-var router = (0, express_1.Router)();
+const express_1 = require("express");
+const sprint_controller_1 = require("../controllers/sprint.controller");
+const router = (0, express_1.Router)();
 //!      momentos desesperados, requieren medidas desesperadas
 router.get("/:id", sprint_controller_1.getSprint);
 router.get("/", sprint_controller_1.getSprints);

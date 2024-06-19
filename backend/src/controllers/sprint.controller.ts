@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Sprint from "../models/sprint";
 
-
 export const getSprint = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

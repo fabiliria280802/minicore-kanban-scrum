@@ -1,8 +1,23 @@
 import sequelize from "../db/connection";
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
-const Subtask = sequelize.define("subtask", {
-  idsubtask: {
+export enum SubtaskStatus {
+  todo = 'Por hacer',
+  doing = 'Avanzada',
+  done = 'Finalizada',
+}
+
+class Subtask extends Model {
+  public id!: number;
+  public idtask!: number;
+  public iduser!: number;
+  public title!: string;
+  public subtaskdescription!: string;
+  public subtaskstatus!: SubtaskStatus;
+}
+
+Subtask.init({
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -12,7 +27,7 @@ const Subtask = sequelize.define("subtask", {
     allowNull: true,
     references: {
       model: 'tasks',
-      key: 'idtask',
+      key: 'id',
     },
   },
   iduser: {
@@ -20,7 +35,7 @@ const Subtask = sequelize.define("subtask", {
     allowNull: false,
     references: {
       model: 'users',
-      key: 'iduser',
+      key: 'id',
     },
   },
   title: {
@@ -32,9 +47,12 @@ const Subtask = sequelize.define("subtask", {
     allowNull: false,
   },
   subtaskstatus: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM(...Object.values(SubtaskStatus)),
     allowNull: false,
   },
+}, {
+  sequelize,
+  modelName: 'subtasks',
 });
 
 export default Subtask;

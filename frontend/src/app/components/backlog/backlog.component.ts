@@ -51,7 +51,7 @@ export class BacklogComponent implements OnInit {
     this._subtaskService.loadSubtasks();
   }
   getAssignedFullName(id: number): string {
-    const user = this.users.find((user) => user.iduser === id);
+    const user = this.users.find((user) => user.id === id);
     return user ? user.fullname : 'No asignado';
   }
 
@@ -74,7 +74,7 @@ export class BacklogComponent implements OnInit {
         const completedBeforeThis = sprintArray
           .slice(0, index)
           .filter((s) => s.sprintstatus === 'Completado').length;
-        this.completedSprintsCount[sprint.idsprint ?? 0] = completedBeforeThis;
+        this.completedSprintsCount[sprint.id ?? 0] = completedBeforeThis;
       });
     });
   }
@@ -105,9 +105,9 @@ export class BacklogComponent implements OnInit {
       },
     );
   }
-  hasSubtasks(idtask: number): boolean {
-    if (typeof idtask === 'number') {
-      return this._taskService.hasSubtasks(idtask);
+  hasSubtasks(id: number): boolean {
+    if (typeof id === 'number') {
+      return this._taskService.hasSubtasks(id);
     } else {
       return false;
     }

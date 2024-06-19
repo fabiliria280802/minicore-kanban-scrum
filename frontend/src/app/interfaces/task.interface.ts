@@ -20,7 +20,7 @@ export enum priority {
 }
 
 export interface Task {
-  idtask?: number;
+  id?: number;
   idsprint: number;
   iduser: number;
   title: string;

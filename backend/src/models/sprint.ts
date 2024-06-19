@@ -1,8 +1,32 @@
 import sequelize from "../db/connection";
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
-const Sprint = sequelize.define("sprint", {
-  idsprint: {
+export enum SprintStatus {
+  toStart = 'Por iniciar',
+  initialize = 'Iniciado',
+  completed = 'Completado',
+}
+
+class Sprint extends Model {
+  public id!: number;
+  public title!: string;
+  public initialDate!: Date;
+  public finalDate!: Date;
+  public committedPoints!: number | null;
+  public fulfilledPoints!: number | null;
+  public pendingPoints!: number | null;
+  public noFulfilledPoints!: number | null;
+  public toDoPorcentage!: number | null;
+  public doingPorcentage!: number | null;
+  public donePorcentage!: number | null;
+  public sprintstatus!: SprintStatus | null;
+  public predictedPointsLower!: number | null;
+  public predictedPointsUpper!: number | null;
+  public confidenceInterval!: string | null;
+}
+
+Sprint.init({
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -26,22 +50,18 @@ const Sprint = sequelize.define("sprint", {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  //Puntos comprometidos
   committedPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  //finalizado = puntos hechos
   fulfilledPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  //Avanzado
-  pendingPoints:{
+  pendingPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  //por hacer
   noFulfilledPoints: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -59,7 +79,7 @@ const Sprint = sequelize.define("sprint", {
     allowNull: true,
   },
   sprintstatus: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM(...Object.values(SprintStatus)),
     allowNull: true,
   },
   predictedPointsLower: {
@@ -74,6 +94,9 @@ const Sprint = sequelize.define("sprint", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+}, {
+  sequelize,
+  modelName: 'sprints',
 });
 
 export default Sprint;

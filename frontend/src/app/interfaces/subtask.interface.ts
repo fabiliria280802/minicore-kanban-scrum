@@ -5,7 +5,7 @@ export enum subtaskstatus {
 }
 
 export interface Subtask {
-  idsubtask?: number;
+  id?: number;
   idtask: number;
   iduser: number;
   title: string;

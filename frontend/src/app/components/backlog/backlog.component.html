@@ -26,16 +26,16 @@
       </div>
       <div>
         <mat-icon
-          *ngIf="callSideMove(sprint.idsprint ?? 0)"
+          *ngIf="callSideMove(sprint.id ?? 0)"
           aria-hidden="false"
           fontIcon="equalizer"
-          (click)="openSidebarInsight(sprint.idsprint ?? 0)"
+          (click)="openSidebarInsight(sprint.id ?? 0)"
           class="insight-points"
         ></mat-icon>
         <mat-icon
           aria-hidden="false"
           fontIcon="trending_up"
-          (click)="openUserInsight(sprint.idsprint ?? 0)"
+          (click)="openUserInsight(sprint.id ?? 0)"
           class="insight-points"
         ></mat-icon>
       </div>
@@ -61,22 +61,22 @@
           <ng-container
             *ngFor="
               let task of tasks
-                | filterBySprint: sprint.idsprint : sprint.sprintstatus;
+                | filterBySprint: sprint.id : sprint.sprintstatus;
               let i = index
             "
           >
             <tr>
               <td>
                 <mat-icon
-                  *ngIf="task.idtask !== undefined && hasSubtasks(task.idtask)"
+                  *ngIf="task.id !== undefined && hasSubtasks(task.id)"
                   aria-hidden="false"
-                  (click)="toggleTaskExpansion(task.idtask)"
+                  (click)="toggleTaskExpansion(task.id)"
                   [fontIcon]="
-                    expandedTasks[task.idtask] ? 'expand_more' : 'chevron_right'
+                    expandedTasks[task.id] ? 'expand_more' : 'chevron_right'
                   "
                 ></mat-icon>
               </td>
-              <th scope="row">{{ task.idtask }}</th>
+              <th scope="row">{{ task.id }}</th>
               <td class="title-style">{{ task.title }}</td>
               <td>
                 <div [ngClass]="getClassByTaskStatus(task.status)">
@@ -123,7 +123,7 @@
               </td>
             </tr>
             <tr
-              *ngIf="task.idtask !== undefined && expandedTasks[task.idtask]"
+              *ngIf="task.id !== undefined && expandedTasks[task.id]"
               class="subtasks-row"
             >
               <td colspan="8">
@@ -131,12 +131,12 @@
                   <tbody>
                     <tr
                       *ngFor="
-                        let subtask of subtasks | filterByTask: task.idtask;
+                        let subtask of subtasks | filterByTask: task.id;
                         let x = index
                       "
-                      [class.hidden]="!expandedTasks[task.idtask]"
+                      [class.hidden]="!expandedTasks[task.id]"
                     >
-                      <th scope="row">{{ subtask.idsubtask }}</th>
+                      <th scope="row">{{ subtask.id }}</th>
                       <td class="title-style">{{ subtask.title }}</td>
                       <div
                         [ngClass]="
@@ -165,7 +165,7 @@
       </table>
     </div>
     <button
-      *ngIf="getClassBySprintStatusShow(sprint.sprintstatus ?? '')"
+      *ngIf="getClassBySprintStatusShow(sprint.sprintstatus ?? 'unknown')"
       (click)="addEditTask()"
       class="new-task-button"
     >

@@ -27,7 +27,7 @@
         (selectionChange)="onSprintSelected($event.value)"
         formControlName="idsprint"
       >
-        <mat-option *ngFor="let sprint of sprints" [value]="sprint.idsprint">{{
+        <mat-option *ngFor="let sprint of sprints" [value]="sprint.id">{{
           sprint.title
         }}</mat-option>
       </mat-select>
@@ -59,7 +59,7 @@
         (selectionChange)="onUserSelected($event.value)"
         formControlName="iduser"
       >
-        <mat-option *ngFor="let user of users" [value]="user.iduser">{{
+        <mat-option *ngFor="let user of users" [value]="user.id">{{
           user.fullname
         }}</mat-option>
       </mat-select>

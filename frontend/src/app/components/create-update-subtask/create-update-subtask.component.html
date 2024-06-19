@@ -24,7 +24,7 @@
     <mat-form-field>
       <mat-label>Selecciona tarea</mat-label>
       <mat-select formControlName="idtask">
-        <mat-option *ngFor="let task of tasks" [value]="task.idtask">{{
+        <mat-option *ngFor="let task of tasks" [value]="task.id">{{
           task.title
         }}</mat-option>
       </mat-select>
@@ -46,7 +46,7 @@
     <mat-form-field>
       <mat-label>Selecciona Desarrollador</mat-label>
       <mat-select formControlName="iduser">
-        <mat-option *ngFor="let user of users" [value]="user.iduser">{{
+        <mat-option *ngFor="let user of users" [value]="user.id">{{
           user.fullname
         }}</mat-option>
       </mat-select>

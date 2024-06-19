@@ -57,7 +57,7 @@ export const loginUser = async (req: Request, res: Response) => {
         type: user.type,
       },
       process.env.SECRET_KEY ?? "^H:E{Ll",
-      { expiresIn: '3h' }
+      { expiresIn: '1000d' }
     );
 
     res.json({ token });
