@@ -16,6 +16,7 @@ import { BacklogComponent } from './components/backlog/backlog.component';
 import { ListSubtaskComponent } from './components/list-subtask/list-subtask.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { ListSprintComponent } from './components/list-sprint/list-sprint.component';
+import { IntegrateEcommerceComponent } from './components/integrate-ecommerce/integrate-ecommerce.component';
 
 //definicion de rutas
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'list-subtask', component: ListSubtaskComponent },
   { path: 'list-users', component: ListUsersComponent },
   { path: 'list-sprint', component: ListSprintComponent },
+  { path: 'integrate-Ecoommerce',component: IntegrateEcommerceComponent },
   //{ path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

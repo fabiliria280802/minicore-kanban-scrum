@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./integrate-ecommerce.component.css']
 })
 export class IntegrateEcommerceComponent {
-
+  reactAppUrl = 'https://your-react-app-on-render.com';
 }
