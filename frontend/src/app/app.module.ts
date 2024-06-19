@@ -29,6 +29,7 @@ import { BacklogComponent } from './components/backlog/backlog.component';
 import { IndexComponent } from './components/index/index.component';
 import { SprintActiveComponent } from './components/sprint-active/sprint-active.component';
 import { ListSprintComponent } from './components/list-sprint/list-sprint.component';
+import { IntegrateEcommerceComponent } from './components/integrate-ecommerce/integrate-ecommerce.component';
 
 // Pipes
 import { FilterBySprintPipe } from './pipes/filter-by-sprint.pipe';
@@ -70,7 +71,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     FilterBySprintPipe,
     FilterByTaskPipe,
     FilterByUserPipe,
-    ListSprintComponent
+    ListSprintComponent,
+    IntegrateEcommerceComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endpoint: 'https://minicoreagil-git-main-fabiliria280802s-projects.vercel.app:4040',
+  endpoint: 'http://localhost:4002/',
 };

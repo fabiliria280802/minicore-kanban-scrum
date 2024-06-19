@@ -19,7 +19,7 @@ class Server {
   private port: string;
   constructor() {
     this.app = express();
-    this.port = process.env.PORT ?? "4005";
+    this.port = process.env.PORT ?? "4002";
     this.middlewares();
     this.routes();
     this.connectDB();
@@ -32,7 +32,8 @@ class Server {
   middlewares() {
     this.app.use(express.json());
     this.app.use(cors({
-      origin: 'http://localhost:4200/'
+      origin: 'http://localhost:4200',
+      credentials: true
     }));
   }
   routes() {

@@ -30,7 +30,7 @@ class Server {
     constructor() {
         var _a;
         this.app = (0, express_1.default)();
-        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4005";
+        this.port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : "4002";
         this.middlewares();
         this.routes();
         this.connectDB();
@@ -43,7 +43,8 @@ class Server {
     middlewares() {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
-            origin: 'http://localhost:4200/'
+            origin: 'http://localhost:4200',
+            credentials: true
         }));
     }
     routes() {
