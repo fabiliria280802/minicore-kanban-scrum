@@ -17,24 +17,25 @@ import { ListSubtaskComponent } from './components/list-subtask/list-subtask.com
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { ListSprintComponent } from './components/list-sprint/list-sprint.component';
 import { IntegrateEcommerceComponent } from './components/integrate-ecommerce/integrate-ecommerce.component';
+import { AuthGuard } from './services/guard/auth.guard';
 
 //definicion de rutas
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signIn', component: SignInComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'backlog', component: BacklogComponent },
-  { path: 'create-update-sprint', component: CreateUpdateSprintComponent },
-  { path: 'create-update-task', component: CreateUpdateTaskComponent },
-  { path: 'create-update-subtask', component: CreateUpdateSubtaskComponent },
-  { path: 'create-update-users', component: CreateUpdateUsersComponent },
-  { path: 'index', component: IndexComponent },
-  { path: 'list-task', component: ListTaskComponent },
-  { path: 'list-subtask', component: ListSubtaskComponent },
-  { path: 'list-users', component: ListUsersComponent },
-  { path: 'list-sprint', component: ListSprintComponent },
-  { path: 'integrate-Ecoommerce',component: IntegrateEcommerceComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'backlog', component: BacklogComponent, canActivate: [AuthGuard] },
+  { path: 'create-update-sprint', component: CreateUpdateSprintComponent, canActivate: [AuthGuard] },
+  { path: 'create-update-task', component: CreateUpdateTaskComponent, canActivate: [AuthGuard] },
+  { path: 'create-update-subtask', component: CreateUpdateSubtaskComponent, canActivate: [AuthGuard] },
+  { path: 'create-update-users', component: CreateUpdateUsersComponent, canActivate: [AuthGuard] },
+  { path: 'list-task', component: ListTaskComponent, canActivate: [AuthGuard] },
+  { path: 'list-subtask', component: ListSubtaskComponent, canActivate: [AuthGuard] },
+  { path: 'list-users', component: ListUsersComponent, canActivate: [AuthGuard] },
+  { path: 'list-sprint', component: ListSprintComponent, canActivate: [AuthGuard] },
+  { path: 'integrate-Ecoommerce', component: IntegrateEcommerceComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'login' },
   //{ path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

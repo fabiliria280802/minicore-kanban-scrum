@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from 'src/app/services/error.service';
 import { MsalService } from '@azure/msal-angular';
+import { AuthService } from '../../services/guard/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private _userService: UserService,
     private router: Router,
     private _errorService: ErrorService,
-    private msalService: MsalService
+    private msalService: MsalService,
+    private authService: AuthService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -53,8 +55,10 @@ export class LoginComponent implements OnInit {
       next: (token) => {
         this.loading = false;
         this.toastr.success('Bienvenido', 'Login');
-        this.router.navigate(['/backlog']);
-        localStorage.setItem('token', token);
+        this.authService.setToken(token);  // Guardar el token en el AuthService
+        this.router.navigate(['/backlog']).then(() => {
+          window.location.reload();  // Recargar la página para actualizar el navbar
+        });
       },
       error: (e: HttpErrorResponse) => {
         this.loading = false;
@@ -78,6 +82,7 @@ export class LoginComponent implements OnInit {
     }
     this.msalService.loginRedirect();
   }
+
   logout() {
     this.msalService.logout();
   }

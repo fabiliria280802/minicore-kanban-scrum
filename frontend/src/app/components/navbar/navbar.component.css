@@ -13,6 +13,7 @@
   color: #333;
   margin-right: 20px;
   font-size: 1.25rem;
+  font-family: cursive;
 }
 
 .navbar-menu {
@@ -30,16 +31,15 @@
   cursor: pointer;
   display: inline-block;
   margin-right: 15px;
-  color: #333; /* Color del texto */
-  text-decoration: none; /* Elimina el subrayado */
-  font-size: 1.25rem; /* Tamaño de la fuente igual al del logo */
+  color: #333;
+  text-decoration: none;
+  font-size: 1.25rem;
 }
 
-/* Asegúrate de que el enlace no cambie de color o se subraye al pasar el mouse */
 .dropdown-toggle:hover,
 .dropdown-toggle:focus {
-  color: #333; /* Color del texto al pasar el mouse */
-  text-decoration: none; /* Elimina el subrayado al pasar el mouse */
+  color: #333;
+  text-decoration: none;
 }
 
 .dropdown-menu.show {
@@ -63,19 +63,55 @@
   background-color: #f1f1f1;
 }
 
-.btn-logout {
-  border: 1px solid #28a745;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+.auth-buttons {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.btn-logout {
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-left: 10px;
   line-height: 1.5;
-  border-radius: 0.25rem;
+  border-radius: 30px;
   cursor: pointer;
-  color: #28a745;
-  background-color: transparent;
+  border: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-logout:hover {
-  color: #fff;
-  background-color: #28a745;
+  color: #000;
+  background-color: #CCEC5F;
 }
+
+.btn-login {
+  border: 1px solid #CCEC5F;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-left: 10px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-color: #CCEC5F;
+  color: #000;
+}
+
+.btn-signin {
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+
+

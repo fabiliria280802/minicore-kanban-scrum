@@ -1,9 +1,10 @@
 <nav class="navbar">
+<!--
   <button (click)="drawer.toggle()" mat-icon-button style="color: black">
     <mat-icon>menu</mat-icon>
   </button>
+-->
   <a class="navbar-brand" href="/">
-    <img src="favicon.ico" width="30" height="30" alt="" />
     SKAM
   </a>
 
@@ -28,12 +29,18 @@
       </ul>
     </div>
   </div>
-  <!--TODO: borrae subtask cuando ya este ready-->
-  <div class="nav-item" (click)="navigate('/list-users')">Equipo</div>
-  <div class="nav-item" (click)="navigate('/x')">Incidencias</div>
-  <div class="nav-item" (click)="navigate('/index')">Sobre nosotros</div>
+  <div class="nav-item" (click)="navigate('/list-users')">Team</div>
+  <!--<div class="nav-item" (click)="navigate('/x')">Incidencias</div>
+  <div class="nav-item" (click)="navigate('/index')">Organización</div>-->
   <div class="nav-item" (click)="navigate('/integrate-Ecoommerce')">ReactAPP</div>
-  <button class="btn-logout" (click)="logout()">Logout</button>
+
+  <div class="auth-buttons">
+    <button *ngIf="isAuthenticated; else notAuthenticated" class="btn-logout" (click)="logout()">Logout</button>
+    <ng-template #notAuthenticated>
+      <button class="btn-login" (click)="navigate('/login')">Login</button>
+      <button class="btn-signin" (click)="navigate('/signIn')">Sign In</button>
+    </ng-template>
+  </div>
 </nav>
 
 <mat-drawer-container autosize>

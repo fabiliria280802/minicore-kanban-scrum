@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/guard/auth.service'; // Asegúrate de que la ruta es correcta
 
 @Component({
   selector: 'app-navbar',
@@ -9,12 +10,18 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   dropdownOpen = false;
   dropdownOpenTwo = false;
-  constructor(private router: Router) {}
+  isAuthenticated = false;
 
-  ngOnInit(): void {}
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
+  }
+
   toggleDropdownTwo() {
     this.dropdownOpenTwo = !this.dropdownOpenTwo;
   }
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
@@ -25,8 +32,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    this.authService.logout();
     this.router.navigate(['/login']);
+    this.isAuthenticated = false;
   }
-
-
 }
