@@ -118,6 +118,14 @@ const users = [
         type: user_1.UserType.Viewer,
         position: user_1.UserPosition.Intern,
     },
+    {
+        fullname: 'Fabs',
+        username: 'fabiliria',
+        email: 'fabs@example.com',
+        password: 'SecurePass123!',
+        type: user_1.UserType.Viewer,
+        position: user_1.UserPosition.Intern,
+    },
 ];
 const seedUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

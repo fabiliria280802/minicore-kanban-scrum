@@ -82,6 +82,14 @@ const users = [
     type: UserType.Viewer,
     position: UserPosition.Intern,
   },
+  {
+    fullname: 'Fabs',
+    username: 'fabiliria',
+    email: 'fabs@example.com',
+    password: 'SecurePass123!',
+    type: UserType.Viewer,
+    position: UserPosition.Intern,
+  },
 ];
 
 const seedUsers = async () => {
