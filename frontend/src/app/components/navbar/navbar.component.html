@@ -32,7 +32,7 @@
   <div class="nav-item" (click)="navigate('/list-users')">Team</div>
   <!--<div class="nav-item" (click)="navigate('/x')">Incidencias</div>
   <div class="nav-item" (click)="navigate('/index')">Organización</div>-->
-  <div class="nav-item" (click)="navigate('/integrate-Ecoommerce')">ReactAPP</div>
+  <div class="nav-item" (click)="navigate('/integrate-Ecoommerce')" (keydown)="handleKeyDown($event)" tabindex="0">ReactAPP</div>
 
   <div class="auth-buttons">
     <button *ngIf="isAuthenticated; else notAuthenticated" class="btn-logout" (click)="logout()">Logout</button>

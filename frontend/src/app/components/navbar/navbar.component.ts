@@ -36,4 +36,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
     this.isAuthenticated = false;
   }
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.navigate('/integrate-Ecoommerce');
+    }
+  }
+
 }
