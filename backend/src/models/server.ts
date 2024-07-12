@@ -41,6 +41,25 @@ class Server {
     this.app.use("/api/sprints", routesSprints);
     this.app.use("/api/tasks", routesTasks);
     this.app.use("/api/subtasks", routesSubtasks);
+    this.app.post('/encrypt', async (req, res) => {
+      try {
+          const { data } = req.body;
+          const encryptedData = await encrypt(data);
+          res.status(200).send({ encryptedData });
+      } catch (error) {
+          res.status(500).send('error');
+      }
+    });
+
+    this.app.post('/decrypt', async (req, res) => {
+        try {
+            const { data } = req.body;
+            const decryptedData = await decrypt(data);
+            res.status(200).send({ decryptedData });
+        } catch (error) {
+            res.status(500).send('error');
+        }
+    });
   }
   async connectDB() {
     try {
