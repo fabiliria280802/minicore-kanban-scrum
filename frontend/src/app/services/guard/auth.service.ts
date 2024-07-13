@@ -7,15 +7,15 @@ export class AuthService {
   constructor() { }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('auth_token');
+    return !!localStorage.getItem('auth_token1');
   }
 
   setToken(token: string) {
-    localStorage.setItem('auth_token', token);
+    localStorage.setItem('auth_token1', token);
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_token1');
   }
 }
 
